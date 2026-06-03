@@ -130,8 +130,6 @@ Component-specific standards:
 - Components MUST have corresponding Storybook stories
 - Components MUST have unit tests (Vitest) where applicable
 
-**For detailed coding standards, refer to `../agentic-coding-playbook/docs/CODING_STANDARDS_COMPACT.md`**
-
 ---
 
 ## Svelte AI Tools
@@ -149,7 +147,7 @@ npx @sveltejs/mcp list-sections
 **Purpose:** Discover all available Svelte 5 and SvelteKit documentation sections
 
 **When to use:**
-- FIRST step when asked about Svelte or SvelteKit topics
+- FIRST step when asked about components, Svelte or SvelteKit topics
 - Returns structured list with titles, use_cases, and paths
 - Analyze the `use_cases` field to identify relevant sections
 

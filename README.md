@@ -6,7 +6,6 @@ A comprehensive, adaptable Svelte component library that leverages the U.S. Web 
 
 - Fully customizable Svelte 5.x components
 - USWDS default styling with Section 508 accessibility compliance
-- Framework-agnostic design system support
 - Modular and extensible architecture
 - Optimized for performance and accessibility
 - Comprehensive testing with Vitest and Storybook
@@ -157,5 +156,4 @@ For security concerns, please see [SECURITY.md](./SECURITY.md).
 - [Svelte Documentation](https://svelte.dev/)
 - [USWDS Design System](https://designsystem.digital.gov/)
 - [Section 508 Standards](https://www.section508.gov/)
-- [Project Plan](./PROJECT_PLAN.md)
 - [Architecture Decisions](./docs/adr/)
