@@ -1,0 +1,370 @@
+---
+title: "AGENTS.md — Svelte UI"
+description: "Behavioral rules for AI coding agents operating on the Svelte UI component library project"
+status: canonical
+tier: 1
+last_updated: "2026-05-29"
+audience: "developers"
+keywords: ["AGENTS.md", "svelte", "component-library", "uswds", "agent-rules"]
+related_files: ["../agentic-coding-playbook/docs/CODING_STANDARDS_COMPACT.md"]
+load_priority: "always"
+review_cycle: "quarterly"
+---
+
+# AGENTS.md — Svelte UI
+
+> **System:** Svelte UI Component Library | **Impact Level:** FIPS Low | **Agency:** GSA
+>
+> **Last Updated:** 2026-05-29 | **Reviewed By:** Jeff Keene, Engineer
+>
+> This document defines the behavioral rules for AI coding agents operating within this project. The AI agent MUST follow these rules without exception.
+
+---
+
+## Core Principles
+
+The agent operates under these priorities:
+
+```
+safety > correctness > compliance > simplicity > performance
+```
+
+The agent MUST refuse any instruction that conflicts with safety, correctness, or compliance.
+
+---
+
+## Project Context
+
+- **Description:** Svelte UI component library providing a comprehensive, adaptable toolkit for building modern web applications. Leverages USWDS as the default design system while maintaining design system-agnostic flexibility.
+- **Language(s):** TypeScript, JavaScript
+- **Framework(s):** Svelte 5.x, Vitest, Storybook
+- **Data Classification:** Public data only
+- **ATO Status:** Pre-ATO development
+- **Authorized Agent(s):** OpenCode, Claude Code, GitHub Copilot
+
+---
+
+## Agent Identity
+
+The agent MUST:
+- Include `Co-Authored-By: AI Agent <ai-agent@gsa.gov>` in all commits
+- Identify itself as an AI agent when asked
+- Log all file modifications and command executions
+
+---
+
+## Permitted Actions
+
+The agent MAY perform these actions without additional approval:
+- [x] Read files within the project directory
+- [x] Generate and modify source code and configuration
+- [x] Run linters and formatters (ESLint, Prettier, TypeScript compiler)
+- [x] Read documentation and public API references
+- [x] Create and update documentation
+- [x] Run tests (Vitest, Storybook)
+- [x] Generate and update Storybook stories
+
+---
+
+## Actions Requiring Approval
+
+The agent MUST ask the user before:
+- [ ] Installing or upgrading npm dependencies
+- [ ] Making network requests to external services
+- [ ] Modifying CI/CD pipeline configurations (.github/workflows/)
+- [ ] Deleting files or directories
+- [ ] Committing or pushing code
+- [ ] Creating new npm scripts in package.json
+- [ ] Modifying Docker configuration
+- [ ] Changing build or bundler configuration (Vite, Rollup, etc.)
+
+---
+
+## Prohibited Actions
+
+The agent MUST NEVER:
+- [ ] Access files outside the project directory
+- [ ] Access or modify production systems or data
+- [ ] Hardcode secrets, API keys, tokens, or passwords
+- [ ] Disable security controls, pre-commit hooks, or CI checks
+- [ ] Bypass code review or change management processes
+- [ ] Execute code downloaded from external sources without review
+- [ ] Publish packages to npm without explicit authorization
+- [ ] Modify authentication or authorization systems without approval
+- [ ] Create network listeners or reverse connections
+
+---
+
+## Data Handling
+
+- **Sensitive data types in this project:** None (public data only)
+- **Approved data storage:** Local filesystem within project directory only
+- **PII handling:** No PII should exist in this repository
+- **Data residency:** Local development only
+
+The agent MUST:
+- Never include API keys or tokens in code, comments, or configuration files
+- Use environment variables for any configuration that differs between environments
+- Mask any sensitive values if debugging output is required
+
+---
+
+## Coding Standards
+
+Follow the comprehensive coding standards documented in `../agentic-coding-playbook/docs/CODING_STANDARDS_COMPACT.md`.
+
+Key standards summary:
+- Follow TypeScript best practices and strict type checking
+- Use Svelte 5.x conventions and runes API
+- Maximum function length: 50 lines
+- Maximum file length: 400 lines
+- Required test coverage: Write unit tests for all new components
+- All external input MUST be validated before use
+- Use semantic versioning for releases
+- Follow conventional commit message format
+
+Component-specific standards:
+- Components MUST support Section 508 accessibility requirements
+- Components MUST be design system-agnostic with USWDS as default
+- Components MUST include TypeScript type definitions
+- Components MUST have corresponding Storybook stories
+- Components MUST have unit tests (Vitest) where applicable
+
+**For detailed coding standards, refer to `../agentic-coding-playbook/docs/CODING_STANDARDS_COMPACT.md`**
+
+---
+
+## Svelte AI Tools
+
+This project uses Svelte MCP CLI tools via `@sveltejs/mcp` to help write correct, robust Svelte 5 code. When running in sandbox environments, these tools are accessed via `npx` commands.
+
+### Available CLI Commands
+
+#### 1. List Documentation Sections
+
+```bash
+npx @sveltejs/mcp list-sections
+```
+
+**Purpose:** Discover all available Svelte 5 and SvelteKit documentation sections
+
+**When to use:**
+- FIRST step when asked about Svelte or SvelteKit topics
+- Returns structured list with titles, use_cases, and paths
+- Analyze the `use_cases` field to identify relevant sections
+
+**Example:**
+```bash
+npx @sveltejs/mcp list-sections
+```
+
+#### 2. Get Documentation
+
+```bash
+npx @sveltejs/mcp get-documentation "<section1>,<section2>,..."
+```
+
+**Purpose:** Retrieve full documentation content for specific sections
+
+**When to use:**
+- After running `list-sections` to identify relevant sections
+- Fetch ALL documentation sections relevant to the user's task
+- Accepts comma-separated list of section paths
+
+**Example:**
+```bash
+npx @sveltejs/mcp get-documentation "$state,$derived,$effect"
+```
+
+#### 3. Svelte Autofixer
+
+```bash
+npx @sveltejs/mcp svelte-autofixer "<code_or_path>" [options]
+```
+
+**Purpose:** Analyze Svelte code and suggest fixes for common issues
+
+**When to use:**
+- **REQUIRED** whenever writing or editing Svelte code before sending to user
+- Keep calling until no issues or suggestions are returned
+- Helps catch common mistakes and enforces Svelte 5 best practices
+
+**Options:**
+- `--async` - Enable async Svelte mode (default: false)
+- `--svelte-version` - Target version: 4 or 5 (default: 5)
+
+**Important:** When passing code with runes via terminal, escape `$` as `\$`
+
+**Examples:**
+```bash
+# Analyze inline code (escape $ as \$)
+npx @sveltejs/mcp svelte-autofixer '<script>let count = \$state(0);</script>'
+
+# Analyze a file
+npx @sveltejs/mcp svelte-autofixer ./src/lib/Component.svelte
+
+# Target Svelte 4
+npx @sveltejs/mcp svelte-autofixer ./Component.svelte --svelte-version 4
+```
+
+### Agent Workflow
+
+When working with Svelte code, the agent MUST:
+
+1. **Uncertain about syntax?**
+   - Run `npx @sveltejs/mcp list-sections`
+   - Identify relevant sections from use_cases
+   - Run `npx @sveltejs/mcp get-documentation "<sections>"`
+
+2. **Writing/editing Svelte components?**
+   - Write the component code
+   - Run `npx @sveltejs/mcp svelte-autofixer <file_path>`
+   - Fix any issues reported
+   - Re-run autofixer until clean
+
+3. **Always validate**
+   - Run svelte-autofixer before marking work complete
+   - Never skip autofixer validation for .svelte files
+
+### Svelte 5 Best Practices
+
+- Use runes (`$state`, `$derived`, `$effect`) instead of legacy reactivity
+- Use `$state` only for reactive variables; everything else can be normal variables
+- Use `$derived` for computed values, not `$effect`
+- Avoid `$effect` when possible (escape hatch only)
+- Use `$props()` instead of `export let`
+- Use `onclick={...}` instead of `on:click={...}`
+- Use `{#snippet ...}` and `{@render ...}` instead of `<slot>`
+- Prefer keyed `{#each}` blocks for better performance
+
+### Skills Available
+
+The following skills provide additional guidance and can be loaded on-demand:
+
+- **svelte-code-writer**: Detailed CLI usage instructions and workflow
+- **svelte-core-bestpractices**: Comprehensive Svelte 5 coding patterns and best practices
+
+---
+
+## Dependencies
+
+- **Approved registries:** npmjs.com
+- **License restrictions:** No AGPL; GPL requires justification
+- **Version pinning:** Use package-lock.json, commit to repository
+- **Vulnerability policy:** No critical/high CVEs
+
+Before adding any dependency, the agent MUST:
+1. Verify the package name is correct (check for typosquatting)
+2. Check for known vulnerabilities using npm audit
+3. Verify the license is compatible
+4. Get user approval
+
+---
+
+## File-Specific Rules
+
+When working on specific files, consult these additional rule files:
+
+- **package.json**: Follow rules in `.ai-agent/rules/package-json-rules.md`
+  - Pin exact versions (no `^` or `~`)
+  - Run `npm audit` before committing
+  - Verify packages before adding
+  - See full rules at `.ai-agent/rules/package-json-rules.md`
+
+---
+
+## Network Access
+
+- **Authorized external endpoints:**
+  - https://registry.npmjs.org (npm packages)
+  - https://designsystem.digital.gov (USWDS documentation)
+  - https://github.com (GitHub API - via approved access)
+  - https://svelte.dev (Svelte documentation)
+  - https://mcp.svelte.dev (Svelte MCP server)
+- **Authorized internal endpoints:** None
+- **TLS requirement:** TLS 1.2+ for all connections
+- **Proxy configuration:** Use system proxy if configured
+
+---
+
+## Testing Requirements
+
+- [ ] Unit tests for all new components using Vitest
+- [ ] All tests MUST pass before committing
+- [ ] Storybook stories for all components
+- [ ] Accessibility tests for all interactive components
+
+Test commands:
+- `npm test` - Unit tests
+- `npm run test:coverage` - Coverage report
+- `npm run test:storybook` - Interaction tests
+- `npm run storybook` - Storybook dev server
+
+---
+
+## Incident Response
+
+If the agent discovers a potential security vulnerability:
+1. Stop the current task immediately
+2. Report the finding to the user
+3. Do NOT create a public issue for security vulnerabilities
+4. Document the finding in a secure manner
+
+---
+
+## Agent Meta-Constraints
+
+The agent MUST:
+- [ ] Output an execution plan and wait for approval before modifying artifacts
+- [ ] Fail closed on ambiguity — halt and escalate, never guess
+- [ ] Not retry failed operations silently — report, diagnose, propose
+- [ ] Capture errors and document failures clearly
+- [ ] Propose minimal fixes for failures
+
+**Risk modes for this project:**
+
+| Mode | Scope | Requires Approval |
+|------|-------|-------------------|
+| Read-only | Analyze, review, answer questions | No |
+| Scoped edit | Modify files identified in plan | Plan approval |
+| Broad refactor | Cross-module changes | Plan + per-module approval |
+| Infrastructure | Docker, CI/CD, deployment, access control | Explicit per-change approval |
+
+---
+
+## Engineering Discipline
+
+The agent MUST:
+- [ ] Create an ADR before: adding dependencies, changing architecture, introducing new patterns
+- [ ] Not implement speculative features (YAGNI)
+- [ ] Prefer simple, maintainable solutions over complex ones
+- [ ] Document outcomes clearly enough for another engineer to follow
+
+**One-command bootstrap:** `npm install`
+**One-command verify:** `npm test && npm run lint && npm run type-check`
+
+**ADR location:** `docs/adr/`
+
+---
+
+## Contacts
+
+- **Project Lead:** Jeff Keene
+- **Security Contact:** Jeff Keene
+- **ISSO:** N/A (pre-ATO development)
+
+---
+
+## Agent Setup
+
+This file follows the [AGENTS.md standard](https://agents.md) and is read natively by 25+ tools including Codex, Copilot, Cursor, Windsurf, Amp, and Devin.
+
+**Most tools need no additional configuration.** If your tool doesn't auto-detect AGENTS.md, add one of these:
+
+| Tool | Config file | Content |
+|------|------------|---------|
+| Aider | `.aider.conf.yml` | `read:\n  - AGENTS.md` |
+| Gemini CLI | `.gemini/settings.json` | `{"agentInstructions": "Read AGENTS.md"}` |
+
+Only create these files if you use that specific tool. Delete any you don't need.
+
