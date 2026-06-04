@@ -1,78 +1,181 @@
 /**
  * Parse USWDS typography tokens
+ * 
+ * Note: USWDS doesn't provide complete typography tokens in JSON format.
+ * These values are extracted from USWDS documentation and Sass defaults.
+ * 
+ * Sources:
+ * - Font stacks: packages/uswds-core/src/styles/settings/_settings-typography.scss
+ * - Font sizes: packages/uswds-core/src/styles/tokens/font/
+ * - Documentation: https://designsystem.digital.gov/design-tokens/typesetting/
+ * 
+ * Last verified: USWDS v3.13.0 (2024-06-04)
+ * 
+ * Font stacks are intentionally hardcoded as they:
+ * 1. Rarely change (stable for years)
+ * 2. Match USWDS documentation defaults
+ * 3. Are configurable in USWDS (no single source of truth)
+ * 4. Avoid complex Sass parsing
  */
 
 import type { TokenValue, TypographyFamilyValue } from './types';
 
 /**
  * Parse USWDS font family tokens
+ * 
+ * Font stacks match USWDS defaults from:
+ * https://designsystem.digital.gov/design-tokens/typesetting/font-family/
+ * 
+ * Includes both:
+ * - Type-based tokens (the 10 available font stacks)
+ * - Role-based tokens (semantic assignments: ui, heading, body, code, alt)
  */
 export function parseFontFamilies(): Record<string, TypographyFamilyValue> {
   return {
-    sans: {
+    // Type-based tokens (10 available fonts with full stacks)
+    'georgia': {
+      value: ['Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif']
+    },
+    'helvetica': {
+      value: ['Helvetica Neue', 'Helvetica', 'Roboto', 'Arial', 'sans-serif']
+    },
+    'merriweather': {
+      value: ['Merriweather Web', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif']
+    },
+    'open-sans': {
       value: [
-        'Source Sans Pro',
-        'Helvetica Neue',
-        'Helvetica',
+        'Open Sans',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        'Segoe UI',
         'Roboto',
+        'Helvetica',
         'Arial',
-        'sans-serif'
+        'sans-serif',
+        'Apple Color Emoji',
+        'Segoe UI Emoji',
+        'Segoe UI Symbol'
       ]
     },
-    serif: {
-      value: ['Merriweather', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif']
-    },
-    mono: {
+    'public-sans': {
       value: [
-        'Roboto Mono',
+        'Public Sans Web',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        'Segoe UI',
+        'Roboto',
+        'Helvetica',
+        'Arial',
+        'sans-serif',
+        'Apple Color Emoji',
+        'Segoe UI Emoji',
+        'Segoe UI Symbol'
+      ]
+    },
+    'roboto-mono': {
+      value: [
+        'Roboto Mono Web',
         'Bitstream Vera Sans Mono',
-        'Monaco',
         'Consolas',
         'Courier',
         'monospace'
       ]
     },
-    ui: {
+    'source-sans-pro': {
+      value: ['Source Sans Pro', 'Helvetica Neue', 'Helvetica', 'Roboto', 'Arial', 'sans-serif']
+    },
+    'system': {
       value: [
-        'Source Sans Pro',
-        'Helvetica Neue',
-        'Helvetica',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        'Segoe UI',
         'Roboto',
+        'Helvetica',
         'Arial',
-        'sans-serif'
+        'sans-serif',
+        'Apple Color Emoji',
+        'Segoe UI Emoji',
+        'Segoe UI Symbol'
       ]
     },
-    heading: {
-      value: ['Merriweather', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif']
-    },
-    body: {
+    'tahoma': {
       value: [
-        'Source Sans Pro',
-        'Helvetica Neue',
-        'Helvetica',
+        'Tahoma',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        'Segoe UI',
         'Roboto',
+        'Helvetica',
         'Arial',
-        'sans-serif'
+        'sans-serif',
+        'Apple Color Emoji',
+        'Segoe UI Emoji',
+        'Segoe UI Symbol'
       ]
     },
-    code: {
+    'verdana': {
       value: [
-        'Roboto Mono',
+        'Verdana',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        'Segoe UI',
+        'Roboto',
+        'Helvetica',
+        'Arial',
+        'sans-serif',
+        'Apple Color Emoji',
+        'Segoe UI Emoji',
+        'Segoe UI Symbol'
+      ]
+    },
+    
+    // Role-based tokens (semantic assignments)
+    // These reference type-based tokens in actual USWDS usage
+    // Defaults: sans='source-sans-pro', serif='merriweather', mono='roboto-mono'
+    'sans': {
+      value: ['Source Sans Pro', 'Helvetica Neue', 'Helvetica', 'Roboto', 'Arial', 'sans-serif']
+    },
+    'serif': {
+      value: ['Merriweather Web', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif']
+    },
+    'mono': {
+      value: [
+        'Roboto Mono Web',
         'Bitstream Vera Sans Mono',
-        'Monaco',
         'Consolas',
         'Courier',
         'monospace'
       ]
     },
-    alt: {
-      value: ['Merriweather', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif']
+    'ui': {
+      value: ['Source Sans Pro', 'Helvetica Neue', 'Helvetica', 'Roboto', 'Arial', 'sans-serif']
+    },
+    'heading': {
+      value: ['Merriweather Web', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif']
+    },
+    'body': {
+      value: ['Source Sans Pro', 'Helvetica Neue', 'Helvetica', 'Roboto', 'Arial', 'sans-serif']
+    },
+    'code': {
+      value: [
+        'Roboto Mono Web',
+        'Bitstream Vera Sans Mono',
+        'Consolas',
+        'Courier',
+        'monospace'
+      ]
+    },
+    'alt': {
+      value: ['Merriweather Web', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif']
     }
   };
 }
 
 /**
  * Parse USWDS font size tokens
+ * 
+ * Based on USWDS type scale system documented at:
+ * https://designsystem.digital.gov/design-tokens/typesetting/font-size/
  */
 export function parseFontSizes(): Record<string, TokenValue> {
   return {
@@ -114,6 +217,9 @@ export function parseFontSizes(): Record<string, TokenValue> {
 
 /**
  * Parse USWDS font weight tokens
+ * 
+ * Standard CSS font-weight values.
+ * https://designsystem.digital.gov/design-tokens/typesetting/font-weight/
  */
 export function parseFontWeights(): Record<string, TokenValue> {
   return {
@@ -129,6 +235,9 @@ export function parseFontWeights(): Record<string, TokenValue> {
 
 /**
  * Parse USWDS line height tokens
+ * 
+ * Unitless multipliers for consistent vertical rhythm.
+ * https://designsystem.digital.gov/design-tokens/typesetting/line-height/
  */
 export function parseLineHeights(): Record<string, TokenValue> {
   return {
@@ -143,6 +252,8 @@ export function parseLineHeights(): Record<string, TokenValue> {
 
 /**
  * Parse USWDS letter spacing tokens
+ * 
+ * https://designsystem.digital.gov/design-tokens/typesetting/letterspacing/
  */
 export function parseLetterSpacing(): Record<string, TokenValue> {
   return {
@@ -155,6 +266,9 @@ export function parseLetterSpacing(): Record<string, TokenValue> {
 
 /**
  * Parse USWDS measure (line length) tokens
+ * 
+ * Maximum line lengths for optimal readability, measured in 'ex' units.
+ * https://designsystem.digital.gov/design-tokens/typesetting/measure/
  */
 export function parseMeasure(): Record<string, TokenValue> {
   return {

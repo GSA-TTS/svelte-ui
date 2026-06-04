@@ -2277,6 +2277,127 @@
   },
   "typography": {
     "family": {
+      "georgia": {
+        "value": [
+          "Georgia",
+          "Cambria",
+          "Times New Roman",
+          "Times",
+          "serif"
+        ]
+      },
+      "helvetica": {
+        "value": [
+          "Helvetica Neue",
+          "Helvetica",
+          "Roboto",
+          "Arial",
+          "sans-serif"
+        ]
+      },
+      "merriweather": {
+        "value": [
+          "Merriweather Web",
+          "Georgia",
+          "Cambria",
+          "Times New Roman",
+          "Times",
+          "serif"
+        ]
+      },
+      "open-sans": {
+        "value": [
+          "Open Sans",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          "Segoe UI Symbol"
+        ]
+      },
+      "public-sans": {
+        "value": [
+          "Public Sans Web",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          "Segoe UI Symbol"
+        ]
+      },
+      "roboto-mono": {
+        "value": [
+          "Roboto Mono Web",
+          "Bitstream Vera Sans Mono",
+          "Consolas",
+          "Courier",
+          "monospace"
+        ]
+      },
+      "source-sans-pro": {
+        "value": [
+          "Source Sans Pro",
+          "Helvetica Neue",
+          "Helvetica",
+          "Roboto",
+          "Arial",
+          "sans-serif"
+        ]
+      },
+      "system": {
+        "value": [
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          "Segoe UI Symbol"
+        ]
+      },
+      "tahoma": {
+        "value": [
+          "Tahoma",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          "Segoe UI Symbol"
+        ]
+      },
+      "verdana": {
+        "value": [
+          "Verdana",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          "Segoe UI Symbol"
+        ]
+      },
       "sans": {
         "value": [
           "Source Sans Pro",
@@ -2289,7 +2410,7 @@
       },
       "serif": {
         "value": [
-          "Merriweather",
+          "Merriweather Web",
           "Georgia",
           "Cambria",
           "Times New Roman",
@@ -2299,9 +2420,8 @@
       },
       "mono": {
         "value": [
-          "Roboto Mono",
+          "Roboto Mono Web",
           "Bitstream Vera Sans Mono",
-          "Monaco",
           "Consolas",
           "Courier",
           "monospace"
@@ -2319,7 +2439,7 @@
       },
       "heading": {
         "value": [
-          "Merriweather",
+          "Merriweather Web",
           "Georgia",
           "Cambria",
           "Times New Roman",
@@ -2339,9 +2459,8 @@
       },
       "code": {
         "value": [
-          "Roboto Mono",
+          "Roboto Mono Web",
           "Bitstream Vera Sans Mono",
-          "Monaco",
           "Consolas",
           "Courier",
           "monospace"
@@ -2349,7 +2468,7 @@
       },
       "alt": {
         "value": [
-          "Merriweather",
+          "Merriweather Web",
           "Georgia",
           "Cambria",
           "Times New Roman",
