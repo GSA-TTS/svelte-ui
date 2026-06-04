@@ -54,23 +54,26 @@ export function parseZIndexTokens(): Record<string, TokenValue> {
 
 /**
  * Parse USWDS flex tokens
+ * 
+ * Flex shorthand values for flex-grow, flex-shrink, and flex-basis.
+ * https://designsystem.digital.gov/design-tokens/flex/
  */
 export function parseFlexTokens(): Record<string, TokenValue> {
   return {
-    '1': { value: '1 1 0%' },
-    '2': { value: '2 1 0%' },
-    '3': { value: '3 1 0%' },
-    '4': { value: '4 1 0%' },
-    '5': { value: '5 1 0%' },
-    '6': { value: '6 1 0%' },
-    '7': { value: '7 1 0%' },
-    '8': { value: '8 1 0%' },
-    '9': { value: '9 1 0%' },
-    '10': { value: '10 1 0%' },
-    '11': { value: '11 1 0%' },
-    '12': { value: '12 1 0%' },
-    'auto': { value: '0 1 auto' },
-    'fill': { value: '1 1 0%' }
+    '1': { value: '1 0 0' },
+    '2': { value: '2 0 0' },
+    '3': { value: '3 0 0' },
+    '4': { value: '4 0 0' },
+    '5': { value: '5 0 0' },
+    '6': { value: '6 0 0' },
+    '7': { value: '7 0 0' },
+    '8': { value: '8 0 0' },
+    '9': { value: '9 0 0' },
+    '10': { value: '10 0 0' },
+    '11': { value: '11 0 0' },
+    '12': { value: '12 0 0' },
+    'auto': { value: 'auto' },
+    'fill': { value: '1 0 0' }
   };
 }
 
