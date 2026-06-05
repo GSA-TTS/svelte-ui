@@ -42,6 +42,7 @@ export function parseOpacityTokens(): Record<string, TokenValue> {
  */
 export function parseZIndexTokens(): Record<string, TokenValue> {
   return {
+    'auto': { value: 'auto' },
     'bottom': { value: '-100' },
     '100': { value: '100' },
     '200': { value: '200' },
@@ -54,7 +55,7 @@ export function parseZIndexTokens(): Record<string, TokenValue> {
 
 /**
  * Parse USWDS flex tokens
- * 
+ *
  * Flex shorthand values for flex-grow, flex-shrink, and flex-basis.
  * https://designsystem.digital.gov/design-tokens/flex/
  */
@@ -82,9 +83,9 @@ export function parseFlexTokens(): Record<string, TokenValue> {
  */
 export function parseOrderTokens(): Record<string, TokenValue> {
   return {
-    'first': { value: '-1' },
-    'last': { value: '999' },
-    'initial': { value: '0' },
+    'first': { value: 'first' },
+    'last': { value: 'last' },
+    'initial': { value: 'initial' },
     '0': { value: '0' },
     '1': { value: '1' },
     '2': { value: '2' },
