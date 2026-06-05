@@ -56,3 +56,19 @@ export interface USWDSColorJSON {
     file: string;
   };
 }
+
+/**
+ * Component Token Types
+ */
+
+export interface ComponentTokenDefinition {
+  token: string;          // Component token name (button-bg)
+  semantic: string;       // Semantic token reference (color-primary)
+  category: 'color' | 'spacing' | 'typography' | 'effects' | 'layout';
+  description: string;
+}
+
+export interface ComponentTokens {
+  component: string;
+  tokens: ComponentTokenDefinition[];
+}

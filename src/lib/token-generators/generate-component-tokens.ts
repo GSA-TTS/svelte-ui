@@ -12,11 +12,8 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import {
-  allComponentTokens,
-  type ComponentTokens,
-  type ComponentTokenDefinition
-} from './component-mappings.js';
+import { allComponentTokens } from './component-mappings/index.js';
+import type { ComponentTokens, ComponentTokenDefinition } from './types.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
