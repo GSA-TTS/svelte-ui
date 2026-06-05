@@ -1,8 +1,7 @@
 /**
- * Type definitions for USWDS token parser
+ * Type definitions for token generation and USWDS token parser
  */
 
-// Token value types
 export interface TokenValue {
   value: string;
   px?: number;
@@ -18,7 +17,6 @@ export interface TypographyFamilyValue {
   value: string[];
 }
 
-// Parsed token structure
 export interface ParsedTokens {
   version: string;
   colors: {

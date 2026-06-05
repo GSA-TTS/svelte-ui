@@ -1,6 +1,6 @@
 # Design Token Generators
 
-This directory contains build-time generators for the USWDS design token system.
+This directory contains build-time generators for the design tokens.
 
 ## Overview
 
@@ -35,11 +35,11 @@ design-tokens/ utilities/  types/       contrast-matrix.json
 
 **Script:** `parse-uswds-tokens.ts`
 
-Extracts all design tokens from `@uswds/uswds` and outputs structured JSON.
+Extracts all design tokens from `@uswds/uswds` and USWDS Website Docs then outputs structured JSON.
 
-**Input:** 
+**Input:**
 - USWDS JSON files: `node_modules/@uswds/uswds/packages/uswds-tokens/colors/*.json`
-- Hardcoded tokens: spacing, typography, shadow, opacity, z-index, flex, order
+- Hardcoded USWDS tokens: spacing, typography, shadow, opacity, z-index, flex, order
 
 **Output:** `token-sources/uswds-tokens.json` (52KB, 672 tokens)
 
@@ -47,17 +47,6 @@ Extracts all design tokens from `@uswds/uswds` and outputs structured JSON.
 ```bash
 npm run generate:tokens
 ```
-
-**Token Breakdown:**
-- System colors: 463 tokens (24 families × ~19 grades/vivids)
-- Theme colors: 31 tokens (primary, secondary, accent, base, etc.)
-- State colors: 22 tokens (error, warning, success, info, disabled)
-- Spacing: 41 tokens (pixel, rem, named, negative)
-- Typography: 62 tokens (family, size, weight, line-height, letter-spacing, measure)
-- Other: 53 tokens (shadow, opacity, z-index, flex, order)
-
-**Tests:** 50 tests, 100% passing ✅
-
 ---
 
 ### Phase 2: CSS Token Generator (TODO)
