@@ -13,7 +13,7 @@ import type { TokenValue } from './types';
  * Based on USWDS documentation:
  * https://designsystem.digital.gov/design-tokens/spacing-units/
  */
-export function parseSpacingTokens(): Record<string, TokenValue> {
+export function parseUSWDSSpacingTokens(): Record<string, TokenValue> {
   const spacing: Record<string, TokenValue> = {};
   
   // Pixel tokens

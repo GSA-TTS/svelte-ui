@@ -4,7 +4,7 @@
   "description": "Svelte UI component library with USWDS default styling and design system-agnostic flexibility",
   "type": "module",
   "scripts": {
-    "generate:tokens": "tsx src/lib/generators/parse-uswds-tokens.ts",
+    "generate:tokens": "tsx src/lib/token-generators/parse-uswds-tokens.ts",
     "generate:css": "echo 'TODO: implement CSS generation'",
     "generate:utilities": "echo 'TODO: implement utility generation'",
     "generate:types": "echo 'TODO: implement type generation'",

@@ -7,7 +7,7 @@ import type { TokenValue } from './types';
 /**
  * Parse USWDS shadow tokens
  */
-export function parseShadowTokens(): Record<string, TokenValue> {
+export function parseUSWDSShadowTokens(): Record<string, TokenValue> {
   return {
     'none': { value: 'none' },
     '1': { value: '0 1px 4px 0 rgba(0, 0, 0, 0.1)' },
@@ -21,7 +21,7 @@ export function parseShadowTokens(): Record<string, TokenValue> {
 /**
  * Parse USWDS opacity tokens
  */
-export function parseOpacityTokens(): Record<string, TokenValue> {
+export function parseUSWDSOpacityTokens(): Record<string, TokenValue> {
   return {
     '0': { value: '0' },
     '10': { value: '0.1' },
@@ -40,7 +40,7 @@ export function parseOpacityTokens(): Record<string, TokenValue> {
 /**
  * Parse USWDS z-index tokens
  */
-export function parseZIndexTokens(): Record<string, TokenValue> {
+export function parseUSWDSZIndexTokens(): Record<string, TokenValue> {
   return {
     'auto': { value: 'auto' },
     'bottom': { value: '-100' },
@@ -55,11 +55,11 @@ export function parseZIndexTokens(): Record<string, TokenValue> {
 
 /**
  * Parse USWDS flex tokens
- *
+ * 
  * Flex shorthand values for flex-grow, flex-shrink, and flex-basis.
  * https://designsystem.digital.gov/design-tokens/flex/
  */
-export function parseFlexTokens(): Record<string, TokenValue> {
+export function parseUSWDSFlexTokens(): Record<string, TokenValue> {
   return {
     '1': { value: '1 0 0' },
     '2': { value: '2 0 0' },
@@ -81,7 +81,7 @@ export function parseFlexTokens(): Record<string, TokenValue> {
 /**
  * Parse USWDS order tokens
  */
-export function parseOrderTokens(): Record<string, TokenValue> {
+export function parseUSWDSOrderTokens(): Record<string, TokenValue> {
   return {
     'first': { value: 'first' },
     'last': { value: 'last' },

@@ -6,7 +6,7 @@
  * 
  * Usage:
  *   npm run generate:tokens
- *   tsx src/lib/generators/parse-uswds-tokens.ts
+ *   tsx src/lib/token-generators/parse-uswds-tokens.ts
  */
 
 import { writeFileSync, readFileSync } from 'fs';
@@ -16,23 +16,23 @@ import type { ParsedTokens } from './types';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-import { parseSystemColors } from './parse-colors';
-import { parseThemeColors, parseStateColors } from './parse-theme-state-colors';
-import { parseSpacingTokens } from './parse-spacing';
+import { parseUSWDSSystemColors } from './parse-colors';
+import { parseUSWDSThemeColors, parseUSWDSStateColors } from './parse-theme-state-colors';
+import { parseUSWDSSpacingTokens } from './parse-spacing';
 import {
-  parseFontFamilies,
-  parseFontSizes,
-  parseFontWeights,
-  parseLineHeights,
-  parseLetterSpacing,
-  parseMeasure
+  parseUSWDSFontFamilies,
+  parseUSWDSFontSizes,
+  parseUSWDSFontWeights,
+  parseUSWDSLineHeights,
+  parseUSWDSLetterSpacing,
+  parseUSWDSMeasure
 } from './parse-typography';
 import {
-  parseShadowTokens,
-  parseOpacityTokens,
-  parseZIndexTokens,
-  parseFlexTokens,
-  parseOrderTokens
+  parseUSWDSShadowTokens,
+  parseUSWDSOpacityTokens,
+  parseUSWDSZIndexTokens,
+  parseUSWDSFlexTokens,
+  parseUSWDSOrderTokens
 } from './parse-other-tokens';
 
 /**
@@ -83,61 +83,61 @@ export function parseUSWDSTokens(): ParsedTokens {
   
   // Parse color tokens
   console.log('  Parsing system colors...');
-  tokens.colors.system = parseSystemColors();
+  tokens.colors.system = parseUSWDSSystemColors();
   console.log(`    Found ${Object.keys(tokens.colors.system).length} system color tokens`);
   
   console.log('  Parsing theme colors...');
-  tokens.colors.theme = parseThemeColors();
+  tokens.colors.theme = parseUSWDSThemeColors();
   console.log(`    Found ${Object.keys(tokens.colors.theme).length} theme color tokens`);
   
   console.log('  Parsing state colors...');
-  tokens.colors.state = parseStateColors();
+  tokens.colors.state = parseUSWDSStateColors();
   console.log(`    Found ${Object.keys(tokens.colors.state).length} state color tokens`);
   
   // Parse spacing tokens
   console.log('  Parsing spacing tokens...');
-  tokens.spacing = parseSpacingTokens();
+  tokens.spacing = parseUSWDSSpacingTokens();
   console.log(`    Found ${Object.keys(tokens.spacing).length} spacing tokens`);
   
   // Parse typography tokens
   console.log('  Parsing typography tokens...');
-  tokens.typography.family = parseFontFamilies();
+  tokens.typography.family = parseUSWDSFontFamilies();
   console.log(`    Found ${Object.keys(tokens.typography.family).length} font family tokens`);
   
-  tokens.typography.size = parseFontSizes();
+  tokens.typography.size = parseUSWDSFontSizes();
   console.log(`    Found ${Object.keys(tokens.typography.size).length} font size tokens`);
   
-  tokens.typography.weight = parseFontWeights();
+  tokens.typography.weight = parseUSWDSFontWeights();
   console.log(`    Found ${Object.keys(tokens.typography.weight).length} font weight tokens`);
   
-  tokens.typography.lineHeight = parseLineHeights();
+  tokens.typography.lineHeight = parseUSWDSLineHeights();
   console.log(`    Found ${Object.keys(tokens.typography.lineHeight).length} line height tokens`);
   
-  tokens.typography.letterSpacing = parseLetterSpacing();
+  tokens.typography.letterSpacing = parseUSWDSLetterSpacing();
   console.log(`    Found ${Object.keys(tokens.typography.letterSpacing).length} letter spacing tokens`);
   
-  tokens.typography.measure = parseMeasure();
+  tokens.typography.measure = parseUSWDSMeasure();
   console.log(`    Found ${Object.keys(tokens.typography.measure).length} measure tokens`);
   
   // Parse other tokens
   console.log('  Parsing shadow tokens...');
-  tokens.shadow = parseShadowTokens();
+  tokens.shadow = parseUSWDSShadowTokens();
   console.log(`    Found ${Object.keys(tokens.shadow).length} shadow tokens`);
   
   console.log('  Parsing opacity tokens...');
-  tokens.opacity = parseOpacityTokens();
+  tokens.opacity = parseUSWDSOpacityTokens();
   console.log(`    Found ${Object.keys(tokens.opacity).length} opacity tokens`);
   
   console.log('  Parsing z-index tokens...');
-  tokens.zIndex = parseZIndexTokens();
+  tokens.zIndex = parseUSWDSZIndexTokens();
   console.log(`    Found ${Object.keys(tokens.zIndex).length} z-index tokens`);
   
   console.log('  Parsing flex tokens...');
-  tokens.flex = parseFlexTokens();
+  tokens.flex = parseUSWDSFlexTokens();
   console.log(`    Found ${Object.keys(tokens.flex).length} flex tokens`);
   
   console.log('  Parsing order tokens...');
-  tokens.order = parseOrderTokens();
+  tokens.order = parseUSWDSOrderTokens();
   console.log(`    Found ${Object.keys(tokens.order).length} order tokens`);
   
   // Calculate totals

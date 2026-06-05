@@ -13,7 +13,7 @@ import type { ColorTokenValue } from './types';
  * These are references to system colors and represent semantic meaning.
  * Source: https://designsystem.digital.gov/design-tokens/color/theme-tokens/
  */
-export function parseThemeColors(): Record<string, ColorTokenValue> {
+export function parseUSWDSThemeColors(): Record<string, ColorTokenValue> {
   return {
     // Base (neutrals)
     'base-lightest': { value: 'gray-5', reference: true },
@@ -66,7 +66,7 @@ export function parseThemeColors(): Record<string, ColorTokenValue> {
  * These represent UI state feedback (errors, warnings, success, etc.)
  * Source: https://designsystem.digital.gov/design-tokens/color/state-tokens/
  */
-export function parseStateColors(): Record<string, ColorTokenValue> {
+export function parseUSWDSStateColors(): Record<string, ColorTokenValue> {
   return {
     // Info states
     'info-lighter': { value: 'cyan-5', reference: true },

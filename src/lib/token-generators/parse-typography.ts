@@ -30,7 +30,7 @@ import type { TokenValue, TypographyFamilyValue } from './types';
  * - Type-based tokens (the 10 available font stacks)
  * - Role-based tokens (semantic assignments: ui, heading, body, code, alt)
  */
-export function parseFontFamilies(): Record<string, TypographyFamilyValue> {
+export function parseUSWDSFontFamilies(): Record<string, TypographyFamilyValue> {
   return {
     // Type-based tokens (10 available fonts with full stacks)
     'georgia': {
@@ -177,7 +177,7 @@ export function parseFontFamilies(): Record<string, TypographyFamilyValue> {
  * Based on USWDS type scale system documented at:
  * https://designsystem.digital.gov/design-tokens/typesetting/font-size/
  */
-export function parseFontSizes(): Record<string, TokenValue> {
+export function parseUSWDSFontSizes(): Record<string, TokenValue> {
   return {
     // Named sizes
     'micro': { value: '0.625rem', px: 10 },
@@ -221,7 +221,7 @@ export function parseFontSizes(): Record<string, TokenValue> {
  * Standard CSS font-weight values.
  * https://designsystem.digital.gov/design-tokens/typesetting/font-weight/
  */
-export function parseFontWeights(): Record<string, TokenValue> {
+export function parseUSWDSFontWeights(): Record<string, TokenValue> {
   return {
     thin: { value: '100' },
     light: { value: '300' },
@@ -239,7 +239,7 @@ export function parseFontWeights(): Record<string, TokenValue> {
  * Unitless multipliers for consistent vertical rhythm.
  * https://designsystem.digital.gov/design-tokens/typesetting/line-height/
  */
-export function parseLineHeights(): Record<string, TokenValue> {
+export function parseUSWDSLineHeights(): Record<string, TokenValue> {
   return {
     '1': { value: '1' },
     '2': { value: '1.15' },
@@ -255,7 +255,7 @@ export function parseLineHeights(): Record<string, TokenValue> {
  * 
  * https://designsystem.digital.gov/design-tokens/typesetting/letterspacing/
  */
-export function parseLetterSpacing(): Record<string, TokenValue> {
+export function parseUSWDSLetterSpacing(): Record<string, TokenValue> {
   return {
     'auto': { value: 'initial' },
     '1': { value: '0.025em' },
@@ -270,7 +270,7 @@ export function parseLetterSpacing(): Record<string, TokenValue> {
  * Maximum line lengths for optimal readability, measured in 'ex' units.
  * https://designsystem.digital.gov/design-tokens/typesetting/measure/
  */
-export function parseMeasure(): Record<string, TokenValue> {
+export function parseUSWDSMeasure(): Record<string, TokenValue> {
   return {
     '1': { value: '44ex' },
     '2': { value: '60ex' },

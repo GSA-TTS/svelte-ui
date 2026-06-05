@@ -16,9 +16,9 @@ const USWDS_COLORS_PATH = resolve(
 );
 
 /**
- * Parse a single color family JSON file
+ * Parse a single USWDS color family JSON file
  */
-function parseColorFamily(
+function parseUSWDSColorFamily(
   filePath: string
 ): Record<string, ColorTokenValue> {
   const content = readFileSync(filePath, 'utf-8');
@@ -60,7 +60,7 @@ function parseColorFamily(
 /**
  * Parse all USWDS system color tokens
  */
-export function parseSystemColors(): Record<string, ColorTokenValue> {
+export function parseUSWDSSystemColors(): Record<string, ColorTokenValue> {
   const colorFiles = readdirSync(USWDS_COLORS_PATH).filter(
     (file) => file.endsWith('.json')
   );
@@ -69,7 +69,7 @@ export function parseSystemColors(): Record<string, ColorTokenValue> {
   
   for (const file of colorFiles) {
     const filePath = join(USWDS_COLORS_PATH, file);
-    const familyColors = parseColorFamily(filePath);
+    const familyColors = parseUSWDSColorFamily(filePath);
     allColors = { ...allColors, ...familyColors };
   }
   
