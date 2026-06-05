@@ -1,0 +1,18 @@
+/**
+ * Semantic Tokens - All
+ * 
+ * Convenience import for all semantic tokens
+ * 
+ * Usage:
+ *   @import 'svelte-ui/tokens/semantic/all.css';
+ * 
+ * Note: This requires foundation tokens to be loaded first:
+ *   @import 'svelte-ui/tokens/foundation/uswds/all.css';
+ *   @import 'svelte-ui/tokens/semantic/all.css';
+ */
+
+@import './color.css';
+@import './spacing.css';
+@import './typography.css';
+@import './effects.css';
+@import './layout.css';

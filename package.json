@@ -5,11 +5,13 @@
   "type": "module",
   "scripts": {
     "generate:tokens": "tsx src/lib/token-generators/parse-uswds-tokens.ts",
-    "generate:css": "echo 'TODO: implement CSS generation'",
+    "generate:css": "tsx src/lib/token-generators/generate-css-tokens.ts",
+    "generate:semantic": "tsx src/lib/token-generators/generate-semantic-css.ts",
+    "generate:components": "tsx src/lib/token-generators/generate-component-tokens.ts",
     "generate:utilities": "echo 'TODO: implement utility generation'",
     "generate:types": "echo 'TODO: implement type generation'",
     "generate:contrast": "echo 'TODO: implement contrast matrix generation'",
-    "generate:all": "npm run generate:tokens && npm run generate:css && npm run generate:utilities && npm run generate:types && npm run generate:contrast",
+    "generate:all": "npm run generate:tokens && npm run generate:css && npm run generate:semantic && npm run generate:components && npm run generate:utilities && npm run generate:types && npm run generate:contrast",
     "build": "vite build",
     "prepublishOnly": "npm run build",
     "test": "vitest",
@@ -27,10 +29,26 @@
     ".": {
       "types": "./dist/index.d.ts",
       "svelte": "./dist/svelte-ui.es.js"
-    }
+    },
+    "./tokens/foundation/uswds/all.css": "./src/tokens/foundation/uswds/all.css",
+    "./tokens/foundation/uswds/color.css": "./src/tokens/foundation/uswds/color.css",
+    "./tokens/foundation/uswds/spacing.css": "./src/tokens/foundation/uswds/spacing.css",
+    "./tokens/foundation/uswds/typography.css": "./src/tokens/foundation/uswds/typography.css",
+    "./tokens/foundation/uswds/other.css": "./src/tokens/foundation/uswds/other.css",
+    "./tokens/semantic/all.css": "./src/tokens/semantic/all.css",
+    "./tokens/semantic/color.css": "./src/tokens/semantic/color.css",
+    "./tokens/semantic/spacing.css": "./src/tokens/semantic/spacing.css",
+    "./tokens/semantic/typography.css": "./src/tokens/semantic/typography.css",
+    "./tokens/semantic/effects.css": "./src/tokens/semantic/effects.css",
+    "./tokens/semantic/layout.css": "./src/tokens/semantic/layout.css",
+    "./tokens/components/all.css": "./src/tokens/components/all.css",
+    "./tokens/components/button.css": "./src/tokens/components/button.css",
+    "./tokens/components/input.css": "./src/tokens/components/input.css",
+    "./tokens/components/checkbox.css": "./src/tokens/components/checkbox.css"
   },
   "files": [
     "dist",
+    "src/tokens",
     "!dist/**/*.test.*",
     "!dist/**/*.spec.*"
   ],

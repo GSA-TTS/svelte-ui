@@ -1,0 +1,14 @@
+/**
+ * USWDS Foundation Tokens - All
+ * 
+ * Convenience import for all USWDS foundation tokens
+ * Generated from USWDS v3.13.0
+ * 
+ * Usage:
+ *   @import 'svelte-ui/tokens/foundation/uswds/all.css';
+ */
+
+@import './color.css';
+@import './spacing.css';
+@import './typography.css';
+@import './other.css';
