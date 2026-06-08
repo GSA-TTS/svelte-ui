@@ -2,11 +2,11 @@
  * Tests for USWDS token parser
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import { existsSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import type { ParsedTokens } from '../types';
-import { parseUSWDSTokens } from '../parse-uswds-tokens';
+import { parseUSWDSTokens } from '../parse-tokens/uswds/index';
 
 describe('USWDS Token Parser', () => {
   let tokens: ParsedTokens;

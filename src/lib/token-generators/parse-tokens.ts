@@ -82,15 +82,24 @@ async function main(designSystem: DesignSystem = 'uswds') {
   }
 }
 
-// Run main function with command-line argument or default to 'uswds'
-const designSystemArg = process.argv[2] as DesignSystem | undefined;
-const designSystem = designSystemArg || 'uswds';
-
-// Validate design system argument
-if (designSystemArg && !['uswds', 'material', 'bootstrap'].includes(designSystemArg)) {
-  console.error(`❌ Invalid design system: ${designSystemArg}`);
-  console.error('   Supported: uswds, material, bootstrap');
-  process.exit(1);
+// Run if called directly
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const designSystemArg = process.argv[2] as DesignSystem | undefined;
+  
+  // Validate design system argument
+  const validSystems: DesignSystem[] = ['uswds', 'material', 'bootstrap'];
+  
+  if (designSystemArg && !validSystems.includes(designSystemArg)) {
+    console.error(`\n❌ Error: Invalid design system "${designSystemArg}"\n`);
+    console.error('Valid options: uswds, material, bootstrap\n');
+    console.error('Usage:');
+    console.error('  npm run parse:tokens           # Defaults to uswds');
+    console.error('  npm run parse:tokens uswds');
+    console.error('  npm run parse:tokens material');
+    console.error('  npm run parse:tokens bootstrap\n');
+    process.exit(1);
+  }
+  
+  const designSystem = designSystemArg || 'uswds';
+  main(designSystem);
 }
-
-main(designSystem);
