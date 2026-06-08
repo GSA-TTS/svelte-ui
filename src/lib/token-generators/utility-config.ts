@@ -42,7 +42,7 @@ export type StateVariant = keyof typeof STATE_VARIANTS;
 export type UtilityCategory = 
   | 'color'
   | 'spacing'
-  | 'typography'
+  | 'typesetting'
   | 'display'
   | 'flexbox'
   | 'sizing'
@@ -62,16 +62,16 @@ export const VARIANT_CONFIG = {
    * Which categories get responsive variants at all breakpoints
    */
   responsive: {
-    color: false,      // Colors don't need responsive variants
-    spacing: true,     // Margin, padding, gap - commonly need different values per breakpoint
-    typography: true,  // Font sizes, alignment - commonly responsive
-    display: true,     // Show/hide, flex/block - very commonly responsive
-    flexbox: true,     // Flex direction, justify, align - responsive layouts
-    sizing: true,      // Width, height - commonly need different sizes per breakpoint
-    layout: false,     // Position, float, overflow - rarely breakpoint-specific
-    border: false,     // Border styles rarely change per breakpoint
-    effect: false,     // Shadows, opacity, cursor - usually consistent
-    'z-index': false   // Stacking context doesn't change per breakpoint
+    color: false,        // Colors don't need responsive variants
+    spacing: true,       // Margin, padding, gap - commonly need different values per breakpoint
+    typesetting: true,   // Font sizes, alignment - commonly responsive
+    display: true,       // Show/hide, flex/block - very commonly responsive
+    flexbox: true,       // Flex direction, justify, align - responsive layouts
+    sizing: true,        // Width, height - commonly need different sizes per breakpoint
+    layout: false,       // Position, float, overflow - rarely breakpoint-specific
+    border: false,       // Border styles rarely change per breakpoint
+    effect: false,       // Shadows, opacity, cursor - usually consistent
+    'z-index': false     // Stacking context doesn't change per breakpoint
   },
   
   /**
@@ -82,7 +82,7 @@ export const VARIANT_CONFIG = {
     border: ['hover', 'focus'] as StateVariant[],               // Border color feedback
     effect: ['hover', 'active', 'disabled'] as StateVariant[],  // Shadow/opacity effects
     spacing: [] as StateVariant[],                              // Spacing doesn't use states
-    typography: [] as StateVariant[],                           // Typography doesn't use states
+    typesetting: [] as StateVariant[],                          // Typesetting doesn't use states
     display: [] as StateVariant[],                              // Display doesn't use states
     flexbox: [] as StateVariant[],                              // Flexbox doesn't use states
     sizing: [] as StateVariant[],                               // Sizing doesn't use states

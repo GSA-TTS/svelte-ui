@@ -14,21 +14,23 @@
 import type { UtilityMapping } from '../types.js';
 import { colorUtilities } from './color-utilities.js';
 import { spacingUtilities } from './spacing-utilities.js';
+import { typesettingUtilities } from './typesetting-utilities.js';
 
 /**
  * All utility mappings aggregated from category files
  * 
- * Current count: 220 base utilities
+ * Current count: 294 base utilities
  * - Color: 52 base (156 with state variants)
- * - Spacing: 168 base (1008 with responsive variants)
+ * - Spacing: 183 base (1050 with responsive variants)
+ * - Typesetting: 59 base (~265 with responsive/state variants)
  * 
- * Total with variants: ~1164 classes
+ * Total with variants: ~1471 classes
  */
 export const allUtilityMappings: UtilityMapping[] = [
   ...colorUtilities,
-  ...spacingUtilities
+  ...spacingUtilities,
+  ...typesettingUtilities
   // Add more utility categories here as they are created:
-  // ...typographyUtilities,
   // ...displayUtilities,
   // ...flexboxUtilities,
   // ...sizingUtilities,
