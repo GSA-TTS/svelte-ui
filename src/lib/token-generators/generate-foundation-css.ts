@@ -15,7 +15,7 @@
 import { writeFileSync, mkdirSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { parseUSWDSTokens } from './parse-uswds-tokens.js';
+import { parseUSWDSTokens } from './parse-tokens/uswds/index.js';
 import type { ParsedTokens } from './types.js';
 
 const __filename = fileURLToPath(import.meta.url);

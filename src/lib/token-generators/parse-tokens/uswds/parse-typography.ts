@@ -1,24 +1,13 @@
 /**
  * Parse USWDS typography tokens
  * 
- * Note: USWDS doesn't provide complete typography tokens in JSON format.
- * These values are extracted from USWDS documentation and Sass defaults.
+ * These tokens are hardcoded based on USWDS documentation because they are not
+ * available in JSON format in the USWDS package.
  * 
- * Sources:
- * - Font stacks: packages/uswds-core/src/styles/settings/_settings-typography.scss
- * - Font sizes: packages/uswds-core/src/styles/tokens/font/
- * - Documentation: https://designsystem.digital.gov/design-tokens/typesetting/
- * 
- * Last verified: USWDS v3.13.0 (2024-06-04)
- * 
- * Font stacks are intentionally hardcoded as they:
- * 1. Rarely change (stable for years)
- * 2. Match USWDS documentation defaults
- * 3. Are configurable in USWDS (no single source of truth)
- * 4. Avoid complex Sass parsing
+ * Source: https://designsystem.digital.gov/design-tokens/typesetting/
  */
 
-import type { TokenValue, TypographyFamilyValue } from './types';
+import type { TokenValue, TypographyFamilyValue } from '../../types.js';
 
 /**
  * Parse USWDS font family tokens

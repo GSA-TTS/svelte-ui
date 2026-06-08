@@ -1,11 +1,15 @@
 /**
  * Parse USWDS theme and state color tokens
  * 
- * Theme colors are semantic tokens (primary, secondary, etc.)
- * State colors are for UI states (error, warning, success, info, disabled)
+ * These tokens are hardcoded based on USWDS documentation because they are not
+ * available in JSON format in the USWDS package.
+ * 
+ * Sources:
+ *   - Theme: https://designsystem.digital.gov/design-tokens/color/theme-tokens/
+ *   - State: https://designsystem.digital.gov/design-tokens/color/state-tokens/
  */
 
-import type { ColorTokenValue } from './types';
+import type { ColorTokenValue } from '../../types.js';
 
 /**
  * Parse USWDS theme color tokens

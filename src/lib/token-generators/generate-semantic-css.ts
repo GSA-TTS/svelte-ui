@@ -25,7 +25,7 @@
 import { writeFileSync, mkdirSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { uswdsSemanticMappings, getSemanticMappingsByCategory } from './semantic-mappings.js';
+import { uswdsSemanticMappings, getSemanticMappingsByCategory } from './semantic-mappings/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

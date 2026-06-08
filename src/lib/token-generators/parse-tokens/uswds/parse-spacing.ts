@@ -1,11 +1,13 @@
 /**
  * Parse USWDS spacing tokens
  * 
- * USWDS spacing tokens are based on multiples of 8px, with additional
- * tokens for small sizes, named tokens for large sizes, and negative tokens.
+ * These tokens are hardcoded based on USWDS documentation because they are not
+ * available in JSON format in the USWDS package.
+ * 
+ * Source: https://designsystem.digital.gov/design-tokens/spacing-units/
  */
 
-import type { TokenValue } from './types';
+import type { TokenValue } from '../../types.js';
 
 /**
  * Parse all USWDS spacing unit tokens

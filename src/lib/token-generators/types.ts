@@ -72,3 +72,14 @@ export interface ComponentTokens {
   component: string;
   tokens: ComponentTokenDefinition[];
 }
+
+/**
+ * Semantic Token Types
+ */
+
+export interface SemanticTokenMapping {
+  semantic: string;      // Universal semantic token name
+  foundation: string;    // Foundation token it maps to
+  category: 'color' | 'spacing' | 'typesetting' | 'shadow' | 'opacity' | 'z-index' | 'flex' | 'order';
+  description: string;   // What this token is used for
+}

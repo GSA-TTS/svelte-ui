@@ -1,24 +1,23 @@
 /**
- * Main entry point for parsing all USWDS design tokens
+ * USWDS Token Parser
  * 
- * This script extracts all design tokens from the @uswds/uswds package
- * and outputs them to a structured JSON file.
+ * This module parses all design tokens from the @uswds/uswds package
+ * and exports them in a structured format.
  * 
- * Usage:
- *   npm run generate:tokens
- *   tsx src/lib/token-generators/parse-uswds-tokens.ts
+ * @module parse-tokens/uswds
  */
 
-import { writeFileSync, readFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import type { ParsedTokens } from './types';
+import type { ParsedTokens } from '../../types.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-import { parseUSWDSSystemColors } from './parse-colors';
-import { parseUSWDSThemeColors, parseUSWDSStateColors } from './parse-theme-state-colors';
-import { parseUSWDSSpacingTokens } from './parse-spacing';
+
+import { parseUSWDSSystemColors } from './parse-colors.js';
+import { parseUSWDSThemeColors, parseUSWDSStateColors } from './parse-theme-state-colors.js';
+import { parseUSWDSSpacingTokens } from './parse-spacing.js';
 import {
   parseUSWDSFontFamilies,
   parseUSWDSFontSizes,
@@ -26,14 +25,14 @@ import {
   parseUSWDSLineHeights,
   parseUSWDSLetterSpacing,
   parseUSWDSMeasure
-} from './parse-typography';
+} from './parse-typography.js';
 import {
   parseUSWDSShadowTokens,
   parseUSWDSOpacityTokens,
   parseUSWDSZIndexTokens,
   parseUSWDSFlexTokens,
   parseUSWDSOrderTokens
-} from './parse-other-tokens';
+} from './parse-other-tokens.js';
 
 /**
  * Get USWDS version from package.json
@@ -42,7 +41,7 @@ function getUSWDSVersion(): string {
   try {
     const packagePath = resolve(
       __dirname,
-      '../../../node_modules/@uswds/uswds/package.json'
+      '../../../../../node_modules/@uswds/uswds/package.json'
     );
     const packageData = JSON.parse(readFileSync(packagePath, 'utf-8'));
     return packageData.version;
@@ -163,21 +162,3 @@ export function parseUSWDSTokens(): ParsedTokens {
   return tokens;
 }
 
-/**
- * Main execution
- */
-function main() {
-  console.log('=== USWDS Token Parser ===\n');
-  
-  const tokens = parseUSWDSTokens();
-  
-  const outputPath = resolve(__dirname, 'token-sources/uswds-tokens.json');
-  console.log(`\nWriting tokens to: ${outputPath}`);
-  
-  writeFileSync(outputPath, JSON.stringify(tokens, null, 2), 'utf-8');
-  
-  console.log('✅ Token parsing complete!');
-}
-
-// Run main function
-main();

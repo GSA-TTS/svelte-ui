@@ -48,7 +48,8 @@ Based on project goals and architecture discussions:
 | Clear Organization | Separate foundation (specific) → semantic (universal) → component (scoped) |
 | Easy Customization | Override component tokens without touching component code |
 | Type Safety | TypeScript definitions for all token layers |
-| Minimal Token Layers | Foundation (688) → Semantic (62) → Component (~60) |
+| USWDS Alignment | File structure matches USWDS token categories |
+| Minimal Token Layers | Foundation (688) → Semantic (66) → Component (~60) |
 
 ## Decision
 
@@ -58,18 +59,22 @@ We will implement a **three-layer token architecture**:
 
 The foundation layer contains design-system-specific tokens with their original names.
 
-**Structure:**
+**Structure (matches USWDS token categories):**
 ```
 src/tokens/foundation/
-├── uswds/           # USWDS design tokens
-│   ├── color.css
-│   ├── spacing.css
-│   ├── typography.css
-│   ├── other.css
+├── uswds/              # USWDS design tokens
+│   ├── color.css       # Color tokens (521 tokens)
+│   ├── spacing.css     # Spacing units (41 tokens)
+│   ├── typesetting.css # Font families, sizes, weights, etc. (72 tokens)
+│   ├── shadow.css      # Shadow tokens (6 tokens)
+│   ├── opacity.css     # Opacity tokens (11 tokens)
+│   ├── z-index.css     # Z-index tokens (8 tokens)
+│   ├── flex.css        # Flex tokens (14 tokens)
+│   ├── order.css       # Order tokens (15 tokens)
+│   └── all.css         # Import all
+├── material/           # Material Design tokens (future)
 │   └── all.css
-├── material/        # Material Design tokens (future)
-│   └── all.css
-└── bootstrap/       # Bootstrap tokens (future)
+└── bootstrap/          # Bootstrap tokens (future)
     └── all.css
 ```
 
@@ -92,25 +97,40 @@ src/tokens/foundation/
 ```
 
 **Token Counts (USWDS):**
-- Colors: 521 tokens (463 system + 31 theme + 27 state)
+- Color: 521 tokens (463 system + 31 theme + 27 state)
 - Spacing: 41 tokens
-- Typography: 72 tokens
-- Effects: 54 tokens (shadow, opacity, z-index, flex, order)
+- Typesetting: 72 tokens (families, sizes, weights, line heights, letter spacing, measure)
+- Shadow: 6 tokens
+- Opacity: 11 tokens
+- Z-index: 8 tokens
+- Flex: 14 tokens
+- Order: 15 tokens
 - **Total: 688 foundation tokens**
+
+**File Organization:**
+
+Foundation files are organized to match USWDS design token categories as documented at https://designsystem.digital.gov/design-tokens/. This ensures:
+1. Intuitive mapping between USWDS documentation and our token files
+2. Easy to find tokens by USWDS category name
+3. Clear separation of concerns (color, spacing, typesetting, etc.)
+4. Scalable structure as USWDS adds new token categories
 
 ### Layer 2: Semantic (Universal/Design System Agnostic)
 
 The semantic layer provides universal token names that map to the current foundation layer.
 
-**Structure:**
+**Structure (matches Foundation layer):**
 ```
 src/tokens/semantic/
-├── color.css
-├── spacing.css
-├── typography.css
-├── effects.css
-├── layout.css
-└── all.css
+├── color.css           # Color tokens (26 tokens)
+├── spacing.css         # Spacing tokens (12 tokens)
+├── typesetting.css     # Typography tokens (15 tokens)
+├── shadow.css          # Shadow tokens (3 tokens)
+├── opacity.css         # Opacity tokens (3 tokens)
+├── z-index.css         # Z-index tokens (3 tokens)
+├── flex.css            # Flex tokens (2 tokens)
+├── order.css           # Order tokens (2 tokens)
+└── all.css             # Import all
 ```
 
 **Example - Semantic Layer:**
@@ -136,13 +156,24 @@ src/tokens/semantic/
 }
 ```
 
-**Token Counts (MVP):**
-- Colors: 25 tokens
+**Token Counts:**
+- Color: 26 tokens
 - Spacing: 12 tokens
-- Typography: 12 tokens
-- Effects: 8 tokens
-- Layout: 5 tokens
-- **Total: 62 semantic tokens**
+- Typesetting: 15 tokens
+- Shadow: 3 tokens
+- Opacity: 3 tokens
+- Z-index: 3 tokens
+- Flex: 2 tokens
+- Order: 2 tokens
+- **Total: 66 semantic tokens**
+
+**File Organization:**
+
+Semantic files mirror the foundation layer structure exactly. This provides:
+1. One-to-one mapping between foundation and semantic categories
+2. Predictable file organization across all token layers
+3. Easy mental model: same categories at every layer
+4. Simplified documentation and imports
 
 ### Layer 3: Component (Component-Specific)
 
@@ -431,9 +462,10 @@ npm run generate:all
 5. ✅ **Clear organization** - Three distinct layers with clear purposes
 6. ✅ **Scalable** - Easy to add new design systems and components
 7. ✅ **Type safe** - TypeScript knows all token names across all layers
-8. ✅ **Minimal token counts** - Foundation (688) → Semantic (62) → Component (~60)
+8. ✅ **Minimal token counts** - Foundation (688) → Semantic (66) → Component (~60)
 9. ✅ **Self-documenting** - Component tokens show what's customizable
-10. ✅ **Future-proof** - Architecture supports growth
+10. ✅ **USWDS alignment** - File structure matches official USWDS categories
+11. ✅ **Future-proof** - Architecture supports growth and new USWDS categories
 
 ### Negative
 
@@ -448,33 +480,47 @@ npm run generate:all
 2. 📝 **Bundle size** - ~60KB total for all tokens (acceptable)
 3. 📝 **Token expansion** - All layers will grow as components grow
 
-## Semantic Token Categories (MVP)
+## Token Category Breakdown
 
-### Colors (25 tokens)
-- Brand: primary, secondary, accent
-- Text: text, text-light, text-inverse, text-disabled
-- Background: bg, bg-alt, bg-inverse, bg-disabled
-- Border: border, border-dark
-- Interactive: interactive, interactive-hover, interactive-active, interactive-disabled
-- Feedback: error, error-bg, success, success-bg, warning, warning-bg, info, info-bg
+### Foundation Layer (688 tokens)
 
-### Spacing (12 tokens)
-- Scale: xs, sm, md, lg, xl, 2xl, 3xl
-- Component: padding-sm, padding-md, padding-lg, gap-sm, gap-md
+Organized by USWDS design token categories:
 
-### Typography (12 tokens)
-- Families: font-body, font-heading, font-mono
-- Sizes: text-xs, text-sm, text-base, text-lg, text-xl, text-2xl
-- Weights: weight-normal, weight-medium, weight-bold
+| Category | Tokens | Description |
+|----------|--------|-------------|
+| **Color** | 521 | System colors (463), theme colors (31), state colors (27) |
+| **Spacing** | 41 | Spacing units from 1px to 15rem |
+| **Typesetting** | 72 | Families (18), sizes (30), weights (7), line heights (6), letter spacing (4), measure (7) |
+| **Shadow** | 6 | Box shadow values (1-5, none) |
+| **Opacity** | 11 | Opacity values (0-100 in 10% increments) |
+| **Z-index** | 8 | Layering values (0, 100, 200, 300, 400, 500, bottom, top) |
+| **Flex** | 14 | Flex shorthand values |
+| **Order** | 15 | Flexbox order values (first, last, initial, 0-11) |
 
-### Effects (8 tokens)
-- Radius: radius-sm, radius-md, radius-lg
-- Shadows: shadow-sm, shadow-md, shadow-lg
-- Focus: focus-color, focus-width
+### Semantic Layer (66 tokens)
 
-### Layout (5 tokens)
-- Z-index: z-dropdown, z-modal, z-tooltip
-- Transitions: transition-fast, transition-base
+Universal tokens that map to foundation layer:
+
+| Category | Tokens | Description |
+|----------|--------|-------------|
+| **Color** | 26 | Brand (3), text (4), background (4), border (2), interactive (4), feedback (8), focus (1) |
+| **Spacing** | 12 | Scale (7), component spacing (5) |
+| **Typesetting** | 15 | Families (3), sizes (6), weights (3), line heights (3) |
+| **Shadow** | 3 | Small, medium, large |
+| **Opacity** | 3 | Disabled, hover, overlay |
+| **Z-index** | 3 | Dropdown, modal, tooltip |
+| **Flex** | 2 | Auto, fill |
+| **Order** | 2 | First, last |
+
+### Component Layer (57 tokens)
+
+Component-specific tokens for MVP components:
+
+| Component | Tokens | Description |
+|-----------|--------|-------------|
+| **Button** | 24 | Colors, spacing, typography, effects |
+| **Input** | 17 | Colors, spacing, typography, effects |
+| **Checkbox** | 16 | Colors, spacing, typography, effects |
 
 ## Adding New Design Systems
 
@@ -545,26 +591,37 @@ src/
 │       ├── generate-semantic-css.ts        # Generate semantic CSS
 │       ├── generate-component-tokens.ts    # Generate component CSS
 │       ├── semantic-mappings.ts            # USWDS → Semantic mappings
-│       ├── component-mappings.ts           # Semantic → Component mappings
+│       ├── component-mappings/             # Semantic → Component mappings
+│       │   ├── index.ts                    # Re-export all components
+│       │   ├── button-tokens.ts            # Button token mappings
+│       │   ├── input-tokens.ts             # Input token mappings
+│       │   └── checkbox-tokens.ts          # Checkbox token mappings
 │       └── types.ts                        # Shared types
 └── tokens/
     ├── foundation/
-    │   ├── uswds/                          # USWDS foundation tokens
+    │   ├── uswds/                          # USWDS foundation tokens (688 total)
     │   │   ├── color.css                   # 521 tokens
     │   │   ├── spacing.css                 # 41 tokens
-    │   │   ├── typography.css              # 72 tokens
-    │   │   ├── other.css                   # 54 tokens
+    │   │   ├── typesetting.css             # 72 tokens
+    │   │   ├── shadow.css                  # 6 tokens
+    │   │   ├── opacity.css                 # 11 tokens
+    │   │   ├── z-index.css                 # 8 tokens
+    │   │   ├── flex.css                    # 14 tokens
+    │   │   ├── order.css                   # 15 tokens
     │   │   └── all.css                     # Import all
     │   └── material/                       # Material Design (future)
     │       └── all.css
-    ├── semantic/
-    │   ├── color.css                       # 25 tokens
+    ├── semantic/                           # Universal tokens (66 total)
+    │   ├── color.css                       # 26 tokens
     │   ├── spacing.css                     # 12 tokens
-    │   ├── typography.css                  # 12 tokens
-    │   ├── effects.css                     # 8 tokens
-    │   ├── layout.css                      # 5 tokens
+    │   ├── typesetting.css                 # 15 tokens
+    │   ├── shadow.css                      # 3 tokens
+    │   ├── opacity.css                     # 3 tokens
+    │   ├── z-index.css                     # 3 tokens
+    │   ├── flex.css                        # 2 tokens
+    │   ├── order.css                       # 2 tokens
     │   └── all.css                         # Import all
-    └── components/
+    └── components/                         # Component tokens (57 total)
         ├── button.css                      # 24 tokens
         ├── input.css                       # 17 tokens
         ├── checkbox.css                    # 16 tokens
@@ -586,6 +643,7 @@ The three-layer architecture is successful when:
 - ✅ TypeScript autocomplete works for all token layers
 - ✅ No performance degradation from CSS variable indirection (4 hops acceptable)
 - ✅ Bundle size remains under 100KB for all tokens
+- ✅ File structure aligns with USWDS documentation categories
 
 ## References
 
@@ -606,3 +664,4 @@ The three-layer architecture is successful when:
 |------|--------|--------|
 | 2026-06-05 | Initial three-layer architecture decision | Jeff Keene, AI Agent |
 | 2026-06-05 | Implemented component token layer (57 tokens across 3 components) | Jeff Keene, AI Agent |
+| 2026-06-08 | Reorganized file structure to match USWDS categories; split foundation into 8 files and semantic into 8 files; updated token counts (66 semantic tokens) | Jeff Keene, AI Agent |

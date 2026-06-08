@@ -1,11 +1,10 @@
 /**
- * Semantic token mappings for design system abstraction
+ * USWDS to Semantic Token Mappings
  * 
- * This file defines the universal semantic layer that maps to foundation tokens.
- * Components use semantic tokens for design system independence.
+ * This file defines how USWDS foundation tokens map to universal semantic tokens.
  * 
  * Architecture:
- *   Foundation Layer (USWDS) → Semantic Layer (Universal) → Components
+ *   USWDS Foundation → Semantic Layer (Universal) → Components
  * 
  * Example:
  *   --primary (USWDS) → --color-primary (Semantic) → background-color in Button
@@ -19,24 +18,22 @@
  *   - z-index
  *   - flex
  *   - order
+ * 
+ * @module uswds-semantic-mappings
  */
 
-export interface SemanticTokenMapping {
-  semantic: string;      // Universal semantic token name
-  foundation: string;    // Foundation token it maps to
-  category: 'color' | 'spacing' | 'typesetting' | 'shadow' | 'opacity' | 'z-index' | 'flex' | 'order';
-  description: string;   // What this token is used for
-}
+import type { SemanticTokenMapping } from '../types.js';
 
 /**
- * USWDS to Semantic token mappings (MVP)
+ * USWDS to Semantic token mappings (66 tokens)
  * 
  * These mappings define how USWDS foundation tokens map to universal semantic tokens.
- * When adding a new design system (e.g., Material), create a similar mapping file.
+ * When adding a new design system (e.g., Material), create a similar mapping file
+ * like material-semantic-mappings.ts in this same directory.
  */
 export const uswdsSemanticMappings: SemanticTokenMapping[] = [
   // ===================================
-  // COLOR (25 tokens)
+  // COLOR (26 tokens)
   // ===================================
   
   // Brand Colors (3 tokens)
@@ -494,25 +491,3 @@ export const uswdsSemanticMappings: SemanticTokenMapping[] = [
     description: 'Order last (999)'
   }
 ];
-
-/**
- * Get semantic mappings by category
- */
-export function getSemanticMappingsByCategory(category: SemanticTokenMapping['category']) {
-  return uswdsSemanticMappings.filter(mapping => mapping.category === category);
-}
-
-/**
- * Get all semantic token names
- */
-export function getSemanticTokenNames(): string[] {
-  return uswdsSemanticMappings.map(mapping => mapping.semantic);
-}
-
-/**
- * Get foundation token for a semantic token
- */
-export function getFoundationToken(semanticToken: string): string | undefined {
-  const mapping = uswdsSemanticMappings.find(m => m.semantic === semanticToken);
-  return mapping?.foundation;
-}

@@ -5,14 +5,14 @@
 import { readFileSync, readdirSync } from 'fs';
 import { join, resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import type { USWDSColorJSON, ColorTokenValue } from './types';
+import type { USWDSColorJSON, ColorTokenValue } from '../../types.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const USWDS_COLORS_PATH = resolve(
   __dirname,
-  '../../../node_modules/@uswds/uswds/packages/uswds-tokens/colors'
+  '../../../../../node_modules/@uswds/uswds/packages/uswds-tokens/colors'
 );
 
 /**

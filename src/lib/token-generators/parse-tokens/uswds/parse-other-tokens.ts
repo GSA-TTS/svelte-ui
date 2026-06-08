@@ -1,8 +1,18 @@
 /**
- * Parse other USWDS design tokens (shadow, opacity, z-index, flex, order)
+ * Parse USWDS "other" tokens (shadow, opacity, z-index, flex, order)
+ * 
+ * These tokens are hardcoded based on USWDS documentation because they are not
+ * available in JSON format in the USWDS package.
+ * 
+ * Sources:
+ *   - Shadow: https://designsystem.digital.gov/design-tokens/shadow/
+ *   - Opacity: https://designsystem.digital.gov/design-tokens/opacity/
+ *   - Z-index: https://designsystem.digital.gov/design-tokens/z-index/
+ *   - Flex: https://designsystem.digital.gov/design-tokens/flex/
+ *   - Order: https://designsystem.digital.gov/design-tokens/order/
  */
 
-import type { TokenValue } from './types';
+import type { TokenValue } from '../../types.js';
 
 /**
  * Parse USWDS shadow tokens
