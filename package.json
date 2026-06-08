@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "parse:tokens": "tsx src/lib/token-generators/parse-tokens.ts",
-    "generate:foundation": "tsx src/lib/token-generators/generate-foundation-css.ts",
-    "generate:semantic": "tsx src/lib/token-generators/generate-semantic-css.ts",
+    "generate:foundation": "tsx src/lib/token-generators/generate-foundation-tokens.ts",
+    "generate:semantic": "tsx src/lib/token-generators/generate-semantic-tokens.ts",
     "generate:components": "tsx src/lib/token-generators/generate-component-tokens.ts",
     "generate:utilities": "echo 'TODO: implement utility generation'",
     "generate:types": "echo 'TODO: implement type generation'",

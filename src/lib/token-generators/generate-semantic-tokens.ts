@@ -1,7 +1,7 @@
 /**
- * Generate semantic layer CSS from mappings
+ * Generate Semantic Layer Tokens
  * 
- * This generator creates the universal semantic layer CSS files that map
+ * This generator creates the universal semantic layer token files that map
  * foundation tokens to design-system-agnostic semantic names.
  * 
  * File structure matches USWDS design token categories:
@@ -15,11 +15,11 @@
  *   - order.css
  * 
  * Architecture:
- *   Foundation Layer (USWDS) → Semantic Layer (Universal) → Components
+ *   Foundation Tokens (USWDS) → Semantic Tokens (Universal) → Component Tokens
  * 
  * Usage:
  *   npm run generate:semantic
- *   tsx src/lib/token-generators/generate-semantic-css.ts
+ *   tsx src/lib/token-generators/generate-semantic-tokens.ts
  */
 
 import { writeFileSync, mkdirSync } from 'fs';
@@ -33,9 +33,9 @@ const __dirname = dirname(__filename);
 const OUTPUT_DIR = resolve(__dirname, '../../tokens/semantic');
 
 /**
- * Generate semantic color CSS
+ * Generate semantic color tokens
  */
-function generateSemanticColorCSS(): string {
+function generateSemanticColorTokens(): string {
   const colorMappings = getSemanticMappingsByCategory('color');
   
   const lines: string[] = [
@@ -90,9 +90,9 @@ function generateSemanticColorCSS(): string {
 }
 
 /**
- * Generate semantic spacing CSS
+ * Generate semantic spacing tokens
  */
-function generateSemanticSpacingCSS(): string {
+function generateSemanticSpacingTokens(): string {
   const spacingMappings = getSemanticMappingsByCategory('spacing');
   
   const lines: string[] = [
@@ -139,9 +139,9 @@ function generateSemanticSpacingCSS(): string {
 }
 
 /**
- * Generate semantic typesetting CSS
+ * Generate semantic typesetting tokens
  */
-function generateSemanticTypesettingCSS(): string {
+function generateSemanticTypesettingTokens(): string {
   const typesettingMappings = getSemanticMappingsByCategory('typesetting');
   
   const lines: string[] = [
@@ -214,9 +214,9 @@ function generateSemanticTypesettingCSS(): string {
 }
 
 /**
- * Generate semantic shadow CSS
+ * Generate semantic shadow tokens
  */
-function generateSemanticShadowCSS(): string {
+function generateSemanticShadowTokens(): string {
   const shadowMappings = getSemanticMappingsByCategory('shadow');
   
   const lines: string[] = [
@@ -247,9 +247,9 @@ function generateSemanticShadowCSS(): string {
 }
 
 /**
- * Generate semantic opacity CSS
+ * Generate semantic opacity tokens
  */
-function generateSemanticOpacityCSS(): string {
+function generateSemanticOpacityTokens(): string {
   const opacityMappings = getSemanticMappingsByCategory('opacity');
   
   const lines: string[] = [
@@ -280,9 +280,9 @@ function generateSemanticOpacityCSS(): string {
 }
 
 /**
- * Generate semantic z-index CSS
+ * Generate semantic z-index tokens
  */
-function generateSemanticZIndexCSS(): string {
+function generateSemanticZIndexTokens(): string {
   const zIndexMappings = getSemanticMappingsByCategory('z-index');
   
   const lines: string[] = [
@@ -313,9 +313,9 @@ function generateSemanticZIndexCSS(): string {
 }
 
 /**
- * Generate semantic flex CSS
+ * Generate semantic flex tokens
  */
-function generateSemanticFlexCSS(): string {
+function generateSemanticFlexTokens(): string {
   const flexMappings = getSemanticMappingsByCategory('flex');
   
   const lines: string[] = [
@@ -346,9 +346,9 @@ function generateSemanticFlexCSS(): string {
 }
 
 /**
- * Generate semantic order CSS
+ * Generate semantic order tokens
  */
-function generateSemanticOrderCSS(): string {
+function generateSemanticOrderTokens(): string {
   const orderMappings = getSemanticMappingsByCategory('order');
   
   const lines: string[] = [
@@ -381,7 +381,7 @@ function generateSemanticOrderCSS(): string {
 /**
  * Generate all.css convenience import
  */
-function generateSemanticAllCSS(): string {
+function generateSemanticAllTokens(): string {
   return [
     '/**',
     ' * Semantic Tokens - All',
@@ -411,8 +411,8 @@ function generateSemanticAllCSS(): string {
 /**
  * Main generator function
  */
-export function generateSemanticCSS() {
-  console.log('=== Semantic Layer CSS Generator ===\n');
+export function generateSemanticTokens() {
+  console.log('=== Semantic Layer Token Generator ===\n');
 
   // Create output directory
   mkdirSync(OUTPUT_DIR, { recursive: true });
@@ -432,19 +432,19 @@ export function generateSemanticCSS() {
 
   const totalTokens = Object.values(tokenCounts).reduce((sum, count) => sum + count, 0);
 
-  // Generate CSS files
-  console.log('\nGenerating semantic CSS files...');
+  // Generate token CSS files
+  console.log('\nGenerating semantic token CSS files...');
 
   const files = [
-    { name: 'color.css', content: generateSemanticColorCSS() },
-    { name: 'spacing.css', content: generateSemanticSpacingCSS() },
-    { name: 'typesetting.css', content: generateSemanticTypesettingCSS() },
-    { name: 'shadow.css', content: generateSemanticShadowCSS() },
-    { name: 'opacity.css', content: generateSemanticOpacityCSS() },
-    { name: 'z-index.css', content: generateSemanticZIndexCSS() },
-    { name: 'flex.css', content: generateSemanticFlexCSS() },
-    { name: 'order.css', content: generateSemanticOrderCSS() },
-    { name: 'all.css', content: generateSemanticAllCSS() }
+    { name: 'color.css', content: generateSemanticColorTokens() },
+    { name: 'spacing.css', content: generateSemanticSpacingTokens() },
+    { name: 'typesetting.css', content: generateSemanticTypesettingTokens() },
+    { name: 'shadow.css', content: generateSemanticShadowTokens() },
+    { name: 'opacity.css', content: generateSemanticOpacityTokens() },
+    { name: 'z-index.css', content: generateSemanticZIndexTokens() },
+    { name: 'flex.css', content: generateSemanticFlexTokens() },
+    { name: 'order.css', content: generateSemanticOrderTokens() },
+    { name: 'all.css', content: generateSemanticAllTokens() }
   ];
 
   files.forEach(file => {
@@ -459,7 +459,7 @@ export function generateSemanticCSS() {
     }
   });
 
-  console.log('\n✅ Semantic CSS generation complete!');
+  console.log('\n✅ Semantic token generation complete!');
   console.log(`\nTotal semantic tokens: ${totalTokens}`);
   console.log('\nToken breakdown:');
   Object.entries(tokenCounts).forEach(([category, count]) => {
@@ -469,5 +469,5 @@ export function generateSemanticCSS() {
 
 // Run if called directly
 if (import.meta.url === `file://${process.argv[1]}`) {
-  generateSemanticCSS();
+  generateSemanticTokens();
 }

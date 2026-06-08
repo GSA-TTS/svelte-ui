@@ -300,21 +300,21 @@ Components work unchanged! ✅
 ```
 USWDS Package
     ↓
-Token Parser (parse-uswds-tokens.ts)
+Token Parser (parse-tokens/uswds/index.ts)
     ↓
-Token JSON (uswds-tokens.json)
+Token JSON (token-sources/uswds-tokens.json)
     ↓
-Foundation CSS Generator (generate-css-tokens.ts)
+Foundation Token Generator (generate-foundation-tokens.ts)
     ↓
-Foundation CSS Files (tokens/foundation/uswds/*.css)
+Foundation Token Files (tokens/foundation/uswds/*.css)
     ↓
-Semantic CSS Generator (generate-semantic-css.ts)
+Semantic Token Generator (generate-semantic-tokens.ts)
     ↓
-Semantic CSS Files (tokens/semantic/*.css)
+Semantic Token Files (tokens/semantic/*.css)
     ↓
-Component CSS Generator (generate-component-tokens.ts)
+Component Token Generator (generate-component-tokens.ts)
     ↓
-Component CSS Files (tokens/components/*.css)
+Component Token Files (tokens/components/*.css)
 ```
 
 ### Semantic Token Mapping
@@ -586,17 +586,21 @@ Components continue working unchanged! ✅
 src/
 ├── lib/
 │   └── token-generators/
-│       ├── parse-uswds-tokens.ts           # Parse USWDS tokens
-│       ├── generate-css-tokens.ts          # Generate foundation CSS
-│       ├── generate-semantic-css.ts        # Generate semantic CSS
-│       ├── generate-component-tokens.ts    # Generate component CSS
-│       ├── semantic-mappings.ts            # USWDS → Semantic mappings
-│       ├── component-mappings/             # Semantic → Component mappings
-│       │   ├── index.ts                    # Re-export all components
-│       │   ├── button-tokens.ts            # Button token mappings
-│       │   ├── input-tokens.ts             # Input token mappings
-│       │   └── checkbox-tokens.ts          # Checkbox token mappings
-│       └── types.ts                        # Shared types
+│       ├── parse-tokens/
+│       │   └── uswds/
+│       │       └── index.ts                    # Parse USWDS tokens
+│       ├── generate-foundation-tokens.ts       # Generate foundation tokens
+│       ├── generate-semantic-tokens.ts         # Generate semantic tokens
+│       ├── generate-component-tokens.ts        # Generate component tokens
+│       ├── semantic-mappings/
+│       │   ├── index.ts                        # Re-export mappings
+│       │   └── uswds-semantic-mappings.ts      # USWDS → Semantic mappings
+│       ├── component-mappings/                 # Semantic → Component mappings
+│       │   ├── index.ts                        # Re-export all components
+│       │   ├── button-tokens.ts                # Button token mappings
+│       │   ├── input-tokens.ts                 # Input token mappings
+│       │   └── checkbox-tokens.ts              # Checkbox token mappings
+│       └── types.ts                            # Shared types
 └── tokens/
     ├── foundation/
     │   ├── uswds/                          # USWDS foundation tokens (688 total)
