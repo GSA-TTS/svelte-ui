@@ -12,11 +12,11 @@
   /* Spacing Scale                      */
   /* ================================== */
 
-  --space-xs: var(--spacing-05);
-  --space-sm: var(--spacing-1);
-  --space-md: var(--spacing-2);
-  --space-lg: var(--spacing-3);
-  --space-xl: var(--spacing-4);
+  --space-xs: var(--spacing-1);
+  --space-sm: var(--spacing-2);
+  --space-md: var(--spacing-3);
+  --space-lg: var(--spacing-4);
+  --space-xl: var(--spacing-5);
   --space-2xl: var(--spacing-6);
   --space-3xl: var(--spacing-8);
 
@@ -24,9 +24,9 @@
   /* Component Spacing                  */
   /* ================================== */
 
-  --space-padding-sm: var(--spacing-1);
+  --space-padding-sm: var(--spacing-105);
   --space-padding-md: var(--spacing-2);
-  --space-padding-lg: var(--spacing-3);
+  --space-padding-lg: var(--spacing-205);
   --space-gap-sm: var(--spacing-1);
   --space-gap-md: var(--spacing-2);
 }

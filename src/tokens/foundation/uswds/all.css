@@ -10,5 +10,9 @@
 
 @import './color.css';
 @import './spacing.css';
-@import './typography.css';
-@import './other.css';
+@import './typesetting.css';
+@import './shadow.css';
+@import './opacity.css';
+@import './z-index.css';
+@import './flex.css';
+@import './order.css';

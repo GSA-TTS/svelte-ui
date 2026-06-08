@@ -33,10 +33,6 @@
   --color-bg-alt: var(--base-lightest);
   --color-bg-inverse: var(--base-darkest);
   --color-bg-disabled: var(--disabled-light);
-  --color-error-bg: var(--error-lighter);
-  --color-success-bg: var(--success-lighter);
-  --color-warning-bg: var(--warning-lighter);
-  --color-info-bg: var(--info-lighter);
 
   /* ================================== */
   /* Border Colors                       */
@@ -66,4 +62,10 @@
   --color-warning-bg: var(--warning-lighter);
   --color-info: var(--info);
   --color-info-bg: var(--info-lighter);
+
+  /* ================================== */
+  /* Focus Color                         */
+  /* ================================== */
+
+  --color-focus: var(--primary);
 }
