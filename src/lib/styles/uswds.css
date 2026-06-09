@@ -1,0 +1,14 @@
+/**
+ * USWDS Styles
+ * 
+ * Imports the complete USWDS design system from CDN.
+ * Provides all USWDS utility classes and component styles.
+ * 
+ * Version: 3.13.0
+ * Documentation: https://designsystem.digital.gov/
+ * 
+ * Usage:
+ *   import 'svelte-ui/styles/uswds.css';
+ */
+
+@import url('https://cdn.jsdelivr.net/npm/@uswds/uswds@3.13.0/dist/css/uswds.min.css');

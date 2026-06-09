@@ -1,0 +1,13 @@
+/**
+ * Svelte UI - Main Styles Entry Point
+ * 
+ * Import this file to get the complete Svelte UI design system:
+ *   - USWDS foundation (from CDN)
+ *   - Optional theme customizations
+ * 
+ * Usage:
+ *   import 'svelte-ui/styles';
+ */
+
+@import './uswds.css';
+@import './theme.css';

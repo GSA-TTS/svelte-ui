@@ -115,6 +115,7 @@ Follow the comprehensive coding standards documented in `../agentic-coding-playb
 
 Key standards summary:
 - Follow TypeScript best practices and strict type checking
+- **Use Svelte 5.x exclusively** - No Svelte 4 or legacy syntax
 - Use Svelte 5.x conventions and runes API
 - Maximum function length: 50 lines
 - Maximum file length: 400 lines
@@ -122,27 +123,67 @@ Key standards summary:
 - All external input MUST be validated before use
 - Use semantic versioning for releases
 - Follow conventional commit message format
+- **Avoid unnecessary comments** - Code should be self-documenting; only add comments for complex logic or "why" explanations, not "what"
+- **No decorative CSS comments** - Avoid section dividers like `/* ========== */`; class names should be self-descriptive
 
 Component-specific standards:
 - Components MUST support Section 508 accessibility requirements
 - Components MUST be design system-agnostic with USWDS as default
 - Components MUST include TypeScript type definitions
-- Components MUST have corresponding Storybook stories
-- Components MUST have unit tests (Vitest) where applicable
+- Components MUST have corresponding Storybook stories with interaction tests
+- **Tests are embedded in Storybook stories** - Use `play()` functions for component testing
+- **NO separate `.test.ts` files** - All tests live in `*.stories.ts` files
+- **NO barrel files inside component directories** - Only `src/lib/index.ts` should re-export components
+- **Use catch-all props (`...restProps`)** - Only define component-specific props; let native HTML attributes pass through
+
+Component props pattern:
+```typescript
+// ✅ Good - Only define what's unique to the component
+interface ButtonProps extends HTMLButtonAttributes {
+  variant?: 'default' | 'secondary';
+  size?: 'default' | 'big';
+  // Native props (type, disabled, aria-*, onclick, etc.) come from HTMLButtonAttributes
+}
+
+let {
+  variant = 'default',
+  size = 'default',
+  class: className,
+  children,
+  ...restProps  // Catches all native HTML attributes
+}: ButtonProps = $props();
+
+// Use shorthand when prop name matches attribute name
+<button class={classes} {...restProps}>
+  {@render children?.()}
+</button>
+
+// ❌ Bad - Don't redefine native HTML attributes
+interface ButtonProps extends HTMLButtonAttributes {
+  variant?: 'default' | 'secondary';
+  type?: 'button' | 'submit';        // Already in HTMLButtonAttributes
+  disabled?: boolean;                 // Already in HTMLButtonAttributes
+  ariaDisabled?: boolean;             // Use aria-disabled from HTMLButtonAttributes
+}
+```
+
+File organization:
+- Component structure: `src/lib/components/ComponentName/ComponentName.svelte`
+- Type definitions: `src/lib/components/ComponentName/ComponentName.types.ts`
+- Stories + Tests: `src/lib/components/ComponentName/ComponentName.stories.ts` (includes `play()` functions)
+- **DO NOT create** `index.ts` files inside `src/lib/components/` directories
+- **DO NOT create** separate `.test.ts` files - tests go in stories
+- **ONLY** `src/lib/index.ts` should exist as the library's public API entry point
 
 ---
 
 ## Svelte AI Tools
 
-This project uses Svelte MCP CLI tools via `@sveltejs/mcp` to help write correct, robust Svelte 5 code. When running in sandbox environments, these tools are accessed via `npx` commands.
+This project uses the Svelte MCP server to help write correct, robust Svelte 5 code. The agent connects directly to the MCP server via built-in tools.
 
-### Available CLI Commands
+### Available MCP Tools
 
-#### 1. List Documentation Sections
-
-```bash
-npx @sveltejs/mcp list-sections
-```
+#### 1. svelte_list-sections
 
 **Purpose:** Discover all available Svelte 5 and SvelteKit documentation sections
 
@@ -151,34 +192,19 @@ npx @sveltejs/mcp list-sections
 - Returns structured list with titles, use_cases, and paths
 - Analyze the `use_cases` field to identify relevant sections
 
-**Example:**
-```bash
-npx @sveltejs/mcp list-sections
-```
-
-#### 2. Get Documentation
-
-```bash
-npx @sveltejs/mcp get-documentation "<section1>,<section2>,..."
-```
+#### 2. svelte_get-documentation
 
 **Purpose:** Retrieve full documentation content for specific sections
 
 **When to use:**
 - After running `list-sections` to identify relevant sections
 - Fetch ALL documentation sections relevant to the user's task
-- Accepts comma-separated list of section paths
+- Accepts single section or array of sections
 
-**Example:**
-```bash
-npx @sveltejs/mcp get-documentation "$state,$derived,$effect"
-```
+**Parameters:**
+- `section` (string or array): Section name(s) to retrieve
 
-#### 3. Svelte Autofixer
-
-```bash
-npx @sveltejs/mcp svelte-autofixer "<code_or_path>" [options]
-```
+#### 3. svelte_svelte-autofixer
 
 **Purpose:** Analyze Svelte code and suggest fixes for common issues
 
@@ -187,36 +213,24 @@ npx @sveltejs/mcp svelte-autofixer "<code_or_path>" [options]
 - Keep calling until no issues or suggestions are returned
 - Helps catch common mistakes and enforces Svelte 5 best practices
 
-**Options:**
-- `--async` - Enable async Svelte mode (default: false)
-- `--svelte-version` - Target version: 4 or 5 (default: 5)
-
-**Important:** When passing code with runes via terminal, escape `$` as `\$`
-
-**Examples:**
-```bash
-# Analyze inline code (escape $ as \$)
-npx @sveltejs/mcp svelte-autofixer '<script>let count = \$state(0);</script>'
-
-# Analyze a file
-npx @sveltejs/mcp svelte-autofixer ./src/lib/Component.svelte
-
-# Target Svelte 4
-npx @sveltejs/mcp svelte-autofixer ./Component.svelte --svelte-version 4
-```
+**Parameters:**
+- `code` (string): Svelte component code to analyze
+- `desired_svelte_version` (string or number): Target version (4 or 5, default: 5)
+- `filename` (string, optional): Component filename (e.g., "Button.svelte")
+- `async` (boolean, optional): Enable async Svelte mode
 
 ### Agent Workflow
 
 When working with Svelte code, the agent MUST:
 
 1. **Uncertain about syntax?**
-   - Run `npx @sveltejs/mcp list-sections`
+   - Use `svelte_list-sections` tool
    - Identify relevant sections from use_cases
-   - Run `npx @sveltejs/mcp get-documentation "<sections>"`
+   - Use `svelte_get-documentation` tool with section names
 
 2. **Writing/editing Svelte components?**
    - Write the component code
-   - Run `npx @sveltejs/mcp svelte-autofixer <file_path>`
+   - Use `svelte_svelte-autofixer` tool to validate
    - Fix any issues reported
    - Re-run autofixer until clean
 
@@ -226,9 +240,12 @@ When working with Svelte code, the agent MUST:
 
 ### Svelte 5 Best Practices
 
+**This project uses Svelte 5 exclusively. Never use Svelte 4 or legacy syntax.**
+
 - Use runes (`$state`, `$derived`, `$effect`) instead of legacy reactivity
 - Use `$state` only for reactive variables; everything else can be normal variables
 - Use `$derived` for computed values, not `$effect`
+- Use `$derived.by()` when you need a function body with multiple statements
 - Avoid `$effect` when possible (escape hatch only)
 - Use `$props()` instead of `export let`
 - Use `onclick={...}` instead of `on:click={...}`
@@ -287,16 +304,14 @@ When working on specific files, consult these additional rule files:
 
 ## Testing Requirements
 
-- [ ] Unit tests for all new components using Vitest
-- [ ] All tests MUST pass before committing
-- [ ] Storybook stories for all components
-- [ ] Accessibility tests for all interactive components
+- [x] Storybook stories for all components with `play()` functions for interaction tests
+- [x] All tests MUST pass before committing
+- [x] Accessibility tests for all interactive components
+- **Tests are embedded in `*.stories.ts` files** - NO separate `.test.ts` files
 
 Test commands:
-- `npm test` - Unit tests
-- `npm run test:coverage` - Coverage report
-- `npm run test:storybook` - Interaction tests
-- `npm run storybook` - Storybook dev server
+- `npm run test:storybook` - Run all interaction tests from stories
+- `npm run storybook` - Storybook dev server for visual testing
 
 ---
 
