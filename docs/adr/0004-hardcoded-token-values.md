@@ -37,7 +37,9 @@ We need to decide: Should we parse all tokens from USWDS source files, or is it 
 
 ```typescript
 // Can parse directly from JSON
-parseUSWDSColorFamily('node_modules/@uswds/uswds/packages/uswds-tokens/colors/red.json')
+parseUSWDSColorFamily(
+  "node_modules/@uswds/uswds/packages/uswds-tokens/colors/red.json",
+);
 ```
 
 #### ⚠️ Available as Sass (Requires Compilation)
@@ -45,6 +47,7 @@ parseUSWDSColorFamily('node_modules/@uswds/uswds/packages/uswds-tokens/colors/re
 **Location:** `node_modules/@uswds/uswds/packages/uswds-core/src/styles/tokens/**/*.scss`
 
 **Examples:**
+
 - **Spacing:** `tokens/units/spacing.scss` - Uses `spacing-multiple()` function
 - **Typography:** `tokens/font/typefaces.scss`, `tokens/font/stacks.scss` - Complex Sass maps
 - **Theme/State colors:** `tokens/color/assignments-theme-color.scss` - Sass variables
@@ -55,13 +58,16 @@ parseUSWDSColorFamily('node_modules/@uswds/uswds/packages/uswds-tokens/colors/re
 // Example from USWDS spacing.scss
 $system-spacing: (
   "small": (
-    "05": spacing-multiple(0.5),  // ← Function call, not static value
-    1: spacing-multiple(1),       // ← Needs Sass execution
-  )
+    "05": spacing-multiple(0.5),
+    // ← Function call, not static value
+    1: spacing-multiple(1),
+    // ← Needs Sass execution
+  ),
 );
 ```
 
 To parse this, we would need to:
+
 1. Parse Sass syntax
 2. Execute Sass functions (which call other functions)
 3. Compile to CSS
@@ -77,18 +83,18 @@ To parse this, we would need to:
 
 ### Token Source Summary
 
-| Token Category | Source | Format | Parseable? |
-|----------------|--------|--------|------------|
-| System Colors | JSON files | JSON | ✅ Yes - Already parsing |
-| Theme Colors | Sass variables | Sass map | ⚠️ Requires Sass compiler |
-| State Colors | Sass variables | Sass map | ⚠️ Requires Sass compiler |
-| Spacing | Sass map | Sass function | ⚠️ Requires Sass compiler |
-| Typography | Sass maps | Sass map | ⚠️ Requires Sass compiler |
-| Shadow | Sass palettes | Sass palette | ⚠️ Requires Sass compiler |
-| Opacity | Not in source | N/A | ❌ No - Standard CSS |
-| Z-index | Sass settings | Sass map | ⚠️ Requires Sass compiler |
-| Flex | Not in source | N/A | ❌ No - CSS spec |
-| Order | Not in source | N/A | ❌ No - CSS spec |
+| Token Category | Source         | Format        | Parseable?                |
+| -------------- | -------------- | ------------- | ------------------------- |
+| System Colors  | JSON files     | JSON          | ✅ Yes - Already parsing  |
+| Theme Colors   | Sass variables | Sass map      | ⚠️ Requires Sass compiler |
+| State Colors   | Sass variables | Sass map      | ⚠️ Requires Sass compiler |
+| Spacing        | Sass map       | Sass function | ⚠️ Requires Sass compiler |
+| Typography     | Sass maps      | Sass map      | ⚠️ Requires Sass compiler |
+| Shadow         | Sass palettes  | Sass palette  | ⚠️ Requires Sass compiler |
+| Opacity        | Not in source  | N/A           | ❌ No - Standard CSS      |
+| Z-index        | Sass settings  | Sass map      | ⚠️ Requires Sass compiler |
+| Flex           | Not in source  | N/A           | ❌ No - CSS spec          |
+| Order          | Not in source  | N/A           | ❌ No - CSS spec          |
 
 ### Options Considered
 
@@ -97,21 +103,24 @@ To parse this, we would need to:
 Parse and compile all Sass files to extract computed values.
 
 **Approach:**
+
 ```typescript
-import sass from 'sass';
+import sass from "sass";
 
 const result = sass.compile(
-  'node_modules/@uswds/uswds/packages/uswds-core/src/styles/tokens/units/spacing.scss'
+  "node_modules/@uswds/uswds/packages/uswds-core/src/styles/tokens/units/spacing.scss",
 );
 // Parse CSS output to extract token values
 ```
 
 **Pros:**
+
 - Programmatically extracts all values
 - Guaranteed to match USWDS output
 - Automatically stays in sync with USWDS releases
 
 **Cons:**
+
 - Requires `sass` dependency (~200KB npm package)
 - Significantly slower (seconds vs milliseconds)
 - Complex parsing logic to extract values from compiled CSS
@@ -119,6 +128,7 @@ const result = sass.compile(
 - Need to handle Sass imports, functions, variables
 
 **Performance Impact:**
+
 - Current: ~100-200ms to parse all tokens
 - With Sass: ~2-5 seconds to compile and extract
 
@@ -127,18 +137,21 @@ const result = sass.compile(
 Parse Sass files to AST and extract values without compilation.
 
 **Approach:**
+
 ```typescript
-import { parse } from 'sass-parser';
+import { parse } from "sass-parser";
 
 const ast = parse(sassFile);
 // Walk AST to find variables and maps
 ```
 
 **Pros:**
+
 - Potentially faster than full compilation
 - More control over extraction
 
 **Cons:**
+
 - No standard Sass AST parser for JavaScript
 - Still requires executing Sass functions for computed values
 - Very complex implementation
@@ -149,19 +162,21 @@ const ast = parse(sassFile);
 Manually define token values, verify against USWDS documentation, and test with reference validation.
 
 **Approach:**
+
 ```typescript
 // parse-spacing.ts
 export function parseUSWDSSpacingTokens(): Record<string, TokenValue> {
   return {
-    '1px': { value: '1px', px: 1 },
-    '05': { value: '0.25rem', px: 4, rem: '0.25rem' },
-    '1': { value: '0.5rem', px: 8, rem: '0.5rem' },
+    "1px": { value: "1px", px: 1 },
+    "05": { value: "0.25rem", px: 4, rem: "0.25rem" },
+    "1": { value: "0.5rem", px: 8, rem: "0.5rem" },
     // ... verified against USWDS docs
   };
 }
 ```
 
 **Pros:**
+
 - Fast - milliseconds to execute
 - Simple - no external dependencies
 - Reliable - values are stable (rarely change)
@@ -170,6 +185,7 @@ export function parseUSWDSSpacingTokens(): Record<string, TokenValue> {
 - Documented - links to USWDS source documentation
 
 **Cons:**
+
 - Manual updates needed when USWDS releases new tokens
 - Requires verification against USWDS documentation
 
@@ -187,9 +203,10 @@ We will **hardcode non-color token values** (theme colors, state colors, spacing
    - Inline comments explain token purposes
 
 3. **Validate referential integrity**:
+
    ```typescript
    // Test that theme/state colors reference valid system colors
-   it('should reference valid system colors', () => {
+   it("should reference valid system colors", () => {
      Object.entries(tokens.colors.theme).forEach(([key, token]) => {
        if (token.reference) {
          expect(tokens.colors.system).toHaveProperty(token.value);
@@ -199,13 +216,14 @@ We will **hardcode non-color token values** (theme colors, state colors, spacing
    ```
 
 4. **Version tracking**:
+
    ```typescript
    /**
     * Parse USWDS spacing tokens
-    * 
+    *
     * Based on USWDS documentation:
     * https://designsystem.digital.gov/design-tokens/spacing-units/
-    * 
+    *
     * Last verified: USWDS v3.13.0 (2024-06-04)
     */
    ```
@@ -263,19 +281,19 @@ Revisit this decision if:
 
 ### Current Token Counts (USWDS v3.13.0)
 
-| Category | Count | Source | Method |
-|----------|-------|--------|--------|
-| System Colors | 463 | JSON files | Parsed |
-| Theme Colors | 31 | Hardcoded | Verified against docs |
-| State Colors | 27 | Hardcoded | Verified against docs |
-| Spacing | 41 | Hardcoded | Verified against docs |
-| Typography | 72 | Hardcoded | Verified against docs |
-| Shadow | 6 | Hardcoded | Standard values |
-| Opacity | 11 | Hardcoded | Standard values |
-| Z-index | 8 | Hardcoded | Verified against docs |
-| Flex | 14 | Hardcoded | CSS spec |
-| Order | 15 | Hardcoded | CSS spec |
-| **Total** | **688** | | |
+| Category      | Count   | Source     | Method                |
+| ------------- | ------- | ---------- | --------------------- |
+| System Colors | 463     | JSON files | Parsed                |
+| Theme Colors  | 31      | Hardcoded  | Verified against docs |
+| State Colors  | 27      | Hardcoded  | Verified against docs |
+| Spacing       | 41      | Hardcoded  | Verified against docs |
+| Typography    | 72      | Hardcoded  | Verified against docs |
+| Shadow        | 6       | Hardcoded  | Standard values       |
+| Opacity       | 11      | Hardcoded  | Standard values       |
+| Z-index       | 8       | Hardcoded  | Verified against docs |
+| Flex          | 14      | Hardcoded  | CSS spec              |
+| Order         | 15      | Hardcoded  | CSS spec              |
+| **Total**     | **688** |            |                       |
 
 ### Files Modified
 
@@ -289,6 +307,7 @@ Revisit this decision if:
 ### Test Coverage
 
 42 tests covering:
+
 - Token existence validation
 - Structure validation (hex colors, rem values, etc.)
 - Reference integrity (theme/state → system colors)
@@ -307,6 +326,7 @@ npm run generate:parser-from-uswds
 ```
 
 **Workflow:**
+
 1. Compile USWDS Sass to CSS
 2. Extract computed values
 3. Generate TypeScript parser functions
@@ -323,7 +343,6 @@ npm run generate:parser-from-uswds
 
 ## Revision History
 
-| Date | Change | Author |
-|------|--------|--------|
+| Date       | Change           | Author               |
+| ---------- | ---------------- | -------------------- |
 | 2026-06-05 | Initial decision | Jeff Keene, AI Agent |
-

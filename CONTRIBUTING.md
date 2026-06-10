@@ -6,11 +6,11 @@ Thank you for your interest in improving the Agentic Coding Playbook! This is an
 
 This repo is one of three in the agentic coding ecosystem:
 
-| Repo | Focus | Typical Contributions |
-|------|-------|----------------------|
-| **[Quickstart](https://github.com/GSA-TTS/agentic-coding-quickstart)** | Environment setup | SBX fixes, troubleshooting docs |
-| **[Playbook](https://github.com/GSA-TTS/agentic-coding-playbook)** (you are here) | Standards & practices | Coding standards, skills, templates |
-| **[Patterns](https://github.com/GSA-TTS/agentic-coding-patterns)** | Community sharing | Workflows, lessons learned, examples |
+| Repo                                                                              | Focus                 | Typical Contributions                |
+| --------------------------------------------------------------------------------- | --------------------- | ------------------------------------ |
+| **[Quickstart](https://github.com/GSA-TTS/agentic-coding-quickstart)**            | Environment setup     | SBX fixes, troubleshooting docs      |
+| **[Playbook](https://github.com/GSA-TTS/agentic-coding-playbook)** (you are here) | Standards & practices | Coding standards, skills, templates  |
+| **[Patterns](https://github.com/GSA-TTS/agentic-coding-patterns)**                | Community sharing     | Workflows, lessons learned, examples |
 
 **Not sure where your contribution belongs?** Ask in the agentic-coding Slack channel.
 
@@ -69,10 +69,10 @@ All skills use this frontmatter (see `templates/SKILL.md.template`):
 
 ```yaml
 ---
-name: your-skill-name              # Must match directory name
+name: your-skill-name # Must match directory name
 title: "Human-Readable Title"
 description: "One-line description"
-status: canonical                  # canonical | draft | deprecated
+status: canonical # canonical | draft | deprecated
 tier: 2
 load_priority: on-demand
 audience: ["developers", "agents"]
@@ -150,6 +150,7 @@ make install-hooks    # [OPTIONAL] Install pre-commit hooks
 ```
 
 These hooks run automatically on `git commit` and check for:
+
 - YAML/JSON syntax errors
 - Trailing whitespace and end-of-file fixes
 - Secrets detection (gitleaks)
@@ -172,17 +173,20 @@ sbx exec <sandbox-name> make install-hooks
 **Two workflows for committing changes:**
 
 **Workflow A: Edit in container, verify in container, commit on host**
+
 1. Edit files inside the SBX container
 2. Run `make ci` inside the container to verify all checks pass
 3. Exit the container and commit from your host machine
 4. Pre-commit hooks (if installed on host) will run again on commit
 
 This workflow is recommended because:
+
 - Keeps git history on the host (persistent across container restarts)
 - Verifies changes in the same environment where they'll run in CI
 - No risk of losing commits when containers are destroyed
 
 **Workflow B: Edit in container, install hooks in container, commit in container**
+
 1. Edit files inside the SBX container
 2. Install pre-commit hooks inside the container: `make install-hooks`
 3. Commit changes inside the container
@@ -209,6 +213,7 @@ make ci         # Lint + test + validate + generate-check + SCA audit
 ```
 
 `make generate` automatically keeps these in sync so you don't have to:
+
 - Skills tables in README.md, AGENTS.md, AGENT-INSTRUCTIONS.md
 - Word counts in CONTEXT-GUIDE.md
 - Test count and landscape entry count across all docs
@@ -243,16 +248,16 @@ We follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/) to 
 
 ### Types for Playbook Repository
 
-| Type | Description | Example |
-|------|-------------|---------|
-| `feat` | New skill, doc, or feature | `feat(skills): add federal-decision-records skill` |
-| `fix` | Bug fix in skill or script | `fix(validator): correct frontmatter schema check` |
-| `docs` | Documentation only | `docs: update SECURITY-CONTROLS.md` |
-| `test` | Add or fix tests | `test(validator): add edge case coverage` |
-| `chore` | Maintenance (deps, CI) | `chore(deps): update feedparser to 6.0.11` |
+| Type       | Description                             | Example                                             |
+| ---------- | --------------------------------------- | --------------------------------------------------- |
+| `feat`     | New skill, doc, or feature              | `feat(skills): add federal-decision-records skill`  |
+| `fix`      | Bug fix in skill or script              | `fix(validator): correct frontmatter schema check`  |
+| `docs`     | Documentation only                      | `docs: update SECURITY-CONTROLS.md`                 |
+| `test`     | Add or fix tests                        | `test(validator): add edge case coverage`           |
+| `chore`    | Maintenance (deps, CI)                  | `chore(deps): update feedparser to 6.0.11`          |
 | `refactor` | Code restructuring (no behavior change) | `refactor(validator): simplify frontmatter parsing` |
-| `perf` | Performance improvement | `perf(validator): cache INDEX.yaml reads` |
-| `ci` | CI/CD pipeline changes | `ci: add commitlint enforcement` |
+| `perf`     | Performance improvement                 | `perf(validator): cache INDEX.yaml reads`           |
+| `ci`       | CI/CD pipeline changes                  | `ci: add commitlint enforcement`                    |
 
 ### Common Scopes
 
@@ -266,6 +271,7 @@ We follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/) to 
 ### Examples
 
 ✅ **Good:**
+
 ```
 feat(landscape): add Phase 1 foundation for automated monitoring
 
@@ -293,12 +299,15 @@ data loss.
 ```
 
 ❌ **Bad:**
+
 ```
 update landscape
 ```
+
 ```
 fixed bug
 ```
+
 ```
 WIP: testing stuff
 ```
@@ -321,12 +330,14 @@ Co-authored-by: OpenCode Agent <user@gsa.gov>
 ```
 
 **Format Requirements:**
+
 - Trailer appears after a blank line following the commit body
 - Uses the format: `Co-authored-by: Agent Name <email@gsa.gov>`
 - Email MUST use `@gsa.gov` domain for federal compliance
 - Multiple co-authors each get their own line
 
 **Why we require this:**
+
 - Maintains transparent audit trail per AU-2 (Audit Events)
 - Enables attribution in GitHub UI and contribution graphs
 - Distinguishes human-written from AI-assisted code
@@ -373,12 +384,12 @@ Releases are fully automated. You never need to manually edit CHANGELOG.md, bump
 
 ### Version bump rules (semver)
 
-| Commit Type | Version Bump | Example |
-|-------------|-------------|---------|
-| `feat:` | Minor | 0.4.0 → 0.5.0 |
-| `fix:` | Patch | 0.4.0 → 0.4.1 |
-| `feat!:` or `BREAKING CHANGE:` | Major | 0.4.0 → 1.0.0 |
-| `docs:`, `chore:`, `refactor:`, `test:`, `ci:` | No bump | Included in next release's changelog |
+| Commit Type                                    | Version Bump | Example                              |
+| ---------------------------------------------- | ------------ | ------------------------------------ |
+| `feat:`                                        | Minor        | 0.4.0 → 0.5.0                        |
+| `fix:`                                         | Patch        | 0.4.0 → 0.4.1                        |
+| `feat!:` or `BREAKING CHANGE:`                 | Major        | 0.4.0 → 1.0.0                        |
+| `docs:`, `chore:`, `refactor:`, `test:`, `ci:` | No bump      | Included in next release's changelog |
 
 ### What to do (and not do)
 
@@ -391,6 +402,7 @@ Releases are fully automated. You never need to manually edit CHANGELOG.md, bump
 ### Keeping content accurate
 
 After making changes, run `make generate` to auto-update:
+
 - INDEX.yaml (document and skill metadata)
 - Skills tables in README.md, AGENTS.md, docs/AGENT-INSTRUCTIONS.md
 - Word counts in CONTEXT-GUIDE.md

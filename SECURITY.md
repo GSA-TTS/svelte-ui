@@ -29,6 +29,7 @@ If you find content that is incorrect, outdated, or could lead to insecure imple
 3. **Ask in the agentic-coding Slack channel** if you have questions or need help
 
 Please include:
+
 - Which document and section contains the issue
 - The specific content that is incorrect
 - The authoritative source that contradicts it (NIST publication, OMB memo, etc.)

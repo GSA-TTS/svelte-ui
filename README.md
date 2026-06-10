@@ -27,22 +27,26 @@ docker-compose up -d
 ```
 
 The container will:
+
 - ✅ Automatically install dependencies
 - ✅ Start Storybook on port 6006
 - ✅ Hot reload when you edit components
 - ✅ Run in the background (`-d` flag)
 
 **To view logs:**
+
 ```bash
 docker-compose logs -f
 ```
 
 **To stop:**
+
 ```bash
 docker-compose down
 ```
 
 **To run commands manually:**
+
 ```bash
 # Enter the container
 docker-compose exec dev bash
@@ -57,6 +61,7 @@ npm run build
 ### Local Development (Without Docker)
 
 Requirements:
+
 - Node.js 20+
 - npm 10+
 
@@ -104,12 +109,14 @@ svelte-ui/
 Tests are consolidated in `.stories.ts` files.
 
 ### Unit Tests
+
 ```bash
 npm test                 # Run tests
 npm run test:coverage    # Coverage report
 ```
 
 ### Interaction Tests
+
 ```bash
 npm run storybook        # Manual UI testing
 npm run test:storybook   # Automated CLI testing

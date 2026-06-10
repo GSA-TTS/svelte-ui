@@ -1,7 +1,7 @@
 {
   "name": "Svelte UI Development",
   "image": "node:24-bullseye",
-  
+
   "customizations": {
     "vscode": {
       "extensions": [
@@ -49,7 +49,7 @@
   "postCreateCommand": "npm install",
 
   "remoteUser": "node",
-  
+
   "features": {
     "ghcr.io/devcontainers/features/git:1": {}
   }

@@ -42,16 +42,16 @@ We need to:
 
 Based on project discussions, the token system must:
 
-| Requirement | Approach |
-|-------------|----------|
-| Token Generation | Programmatic from USWDS source (not manual) |
-| Utility Classes | Programmatically generated |
-| Token Coverage | All USWDS tokens from day one (~500+ tokens) |
-| Bundle Strategy | Tree-shakeable imports for optimal bundle size |
-| WCAG Compliance | Computed properties for contrast validation |
-| Naming Convention | Flat structure matching USWDS token names exactly |
-| Customization | Pure CSS variable overrides (no JavaScript config) |
-| Theme Support | `:root` global and component-level scoping with dark mode |
+| Requirement       | Approach                                                  |
+| ----------------- | --------------------------------------------------------- |
+| Token Generation  | Programmatic from USWDS source (not manual)               |
+| Utility Classes   | Programmatically generated                                |
+| Token Coverage    | All USWDS tokens from day one (~500+ tokens)              |
+| Bundle Strategy   | Tree-shakeable imports for optimal bundle size            |
+| WCAG Compliance   | Computed properties for contrast validation               |
+| Naming Convention | Flat structure matching USWDS token names exactly         |
+| Customization     | Pure CSS variable overrides (no JavaScript config)        |
+| Theme Support     | `:root` global and component-level scoping with dark mode |
 
 ### Design Token Categories (from USWDS 3.13.0)
 
@@ -193,12 +193,12 @@ Consumers can import only what they need:
 
 ```typescript
 // Option 1: Import only what you need (smallest bundle)
-import 'svelte-ui/tokens/color';
-import 'svelte-ui/utilities/spacing';
+import "svelte-ui/tokens/color";
+import "svelte-ui/utilities/spacing";
 
 // Option 2: Import everything (convenience)
-import 'svelte-ui/tokens/all';
-import 'svelte-ui/utilities/all';
+import "svelte-ui/tokens/all";
+import "svelte-ui/utilities/all";
 ```
 
 ### 5. Component Integration
@@ -228,6 +228,7 @@ Components reference CSS variables with fallbacks:
 The system supports three levels of customization:
 
 **Level 1: Individual Token Override**
+
 ```css
 :root {
   --primary: #007bff;
@@ -236,6 +237,7 @@ The system supports three levels of customization:
 ```
 
 **Level 2: Component-Level Override**
+
 ```css
 .my-button {
   --button-bg: var(--accent-cool);
@@ -244,6 +246,7 @@ The system supports three levels of customization:
 ```
 
 **Level 3: Wholesale Theme Swap**
+
 ```css
 [data-theme="my-brand"] {
   --primary: #brand-color;
@@ -253,22 +256,24 @@ The system supports three levels of customization:
 ```
 
 ```typescript
-import { setTheme } from 'svelte-ui/utils/theme';
-setTheme('my-brand');
+import { setTheme } from "svelte-ui/utils/theme";
+setTheme("my-brand");
 ```
 
 ### 7. WCAG Contrast Validation
 
 **Runtime Validation:**
-```typescript
-import { checkTokenContrast } from 'svelte-ui/utils/contrast';
 
-const result = checkTokenContrast('primary', 'white');
+```typescript
+import { checkTokenContrast } from "svelte-ui/utils/contrast";
+
+const result = checkTokenContrast("primary", "white");
 // { ratio: 4.58, level: 'AA', passes: true }
 ```
 
 **Build-Time Matrix:**
 Generated JSON file mapping all token pairs to their contrast ratios:
+
 ```json
 {
   "primary": {
@@ -285,30 +290,35 @@ Interactive contrast checker in token documentation stories.
 ## Alternatives Considered
 
 ### Alternative 1: Manual Token Definition
+
 **Approach:** Manually write all CSS custom properties
 **Pros:** Simple, no build step, full control
 **Cons:** Maintenance nightmare (~500 tokens to update manually), error-prone, out of sync with USWDS
 **Decision:** ❌ Rejected - Not scalable or maintainable
 
 ### Alternative 2: Direct USWDS Sass Import
+
 **Approach:** Import USWDS Sass directly, use their mixins/functions
 **Pros:** Automatic USWDS updates, no generators needed
 **Cons:** Requires Sass in consumer projects, not tree-shakeable, harder to customize, doesn't support design system swapping
 **Decision:** ❌ Rejected - Conflicts with tree-shaking and customization requirements
 
 ### Alternative 3: JavaScript Configuration Object
+
 **Approach:** Tokens defined in JS/TS, injected at runtime
 **Pros:** Type-safe, can compute values dynamically
 **Cons:** Runtime overhead, harder to override, no static CSS, conflicts with pure CSS requirement
 **Decision:** ❌ Rejected - User specified pure CSS overrides
 
 ### Alternative 4: Tailwind-Style Utility-Only Approach
+
 **Approach:** Skip CSS variables, only provide utility classes
 **Pros:** Smaller initial learning curve, familiar pattern
 **Cons:** Can't customize via CSS variables, less flexible, conflicts with component-level theming
 **Decision:** ❌ Rejected - Doesn't meet customization requirements
 
 ### Alternative 5: Hybrid Sass + CSS Variables
+
 **Approach:** Use Sass for generation, output CSS variables + utilities
 **Pros:** Leverage Sass ecosystem
 **Cons:** Adds Sass dependency to build, more complex than pure TS generators
@@ -316,16 +326,16 @@ Interactive contrast checker in token documentation stories.
 
 ## Risks and Mitigations
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| USWDS structure change breaks parser | High | Medium | Pin USWDS version (`~3.13.0`), add breaking change tests, document upgrade process |
-| Bundle size too large for consumers | High | Low | Tree-shaking + PurgeCSS integration, document optimization strategies |
-| Generator complexity makes maintenance difficult | Medium | Medium | Comprehensive tests, clear documentation, modular generator design |
-| CSS variable cascade issues | Medium | Low | Clear naming conventions, scoping guidelines, developer documentation |
-| Performance impact from ~500 CSS variables | Low | Very Low | Benchmark tests, modern browsers handle this well |
-| TypeScript type generation errors | Medium | Low | Validate types with existing components, add type tests |
-| Generated files clutter git history | Low | High | Use .gitattributes to mark as generated, consider git-sold separately |
-| USWDS update introduces breaking changes | Medium | Medium | Semver for library, test suite catches token structure changes |
+| Risk                                             | Impact | Probability | Mitigation                                                                         |
+| ------------------------------------------------ | ------ | ----------- | ---------------------------------------------------------------------------------- |
+| USWDS structure change breaks parser             | High   | Medium      | Pin USWDS version (`~3.13.0`), add breaking change tests, document upgrade process |
+| Bundle size too large for consumers              | High   | Low         | Tree-shaking + PurgeCSS integration, document optimization strategies              |
+| Generator complexity makes maintenance difficult | Medium | Medium      | Comprehensive tests, clear documentation, modular generator design                 |
+| CSS variable cascade issues                      | Medium | Low         | Clear naming conventions, scoping guidelines, developer documentation              |
+| Performance impact from ~500 CSS variables       | Low    | Very Low    | Benchmark tests, modern browsers handle this well                                  |
+| TypeScript type generation errors                | Medium | Low         | Validate types with existing components, add type tests                            |
+| Generated files clutter git history              | Low    | High        | Use .gitattributes to mark as generated, consider git-sold separately              |
+| USWDS update introduces breaking changes         | Medium | Medium      | Semver for library, test suite catches token structure changes                     |
 
 ## Success Metrics
 
@@ -360,11 +370,13 @@ The token system is successful when:
 - **ADR-0002:** Consolidate Tests into Stories - Testing approach for components
 
 This ADR builds on ADR-0001's decision to use USWDS as the default design system while maintaining design system-agnostic flexibility. It provides the technical infrastructure to achieve that flexibility through programmatically generated design tokens.
+
 ## Implementation Plan
 
 The token system will be built in 10 phases over 20-29 days.
 
 ### Phase 1: Foundation (Days 1-3)
+
 **Goal:** Extract all USWDS tokens to structured JSON
 
 - Install `@uswds/uswds@~3.13.0` as devDependency
@@ -380,6 +392,7 @@ The token system will be built in 10 phases over 20-29 days.
 **Deliverable:** `uswds-tokens.json` with all USWDS design tokens
 
 ### Phase 2: CSS Token Generation (Days 4-6)
+
 **Goal:** Generate CSS custom property files
 
 - Implement `generate-css-tokens.ts`
@@ -394,6 +407,7 @@ The token system will be built in 10 phases over 20-29 days.
 **Deliverable:** Complete set of CSS token files in `design-tokens/`
 
 ### Phase 3: Utility Class Generation (Days 7-9)
+
 **Goal:** Generate utility classes for all tokens
 
 - Implement `generate-utilities.ts`
@@ -412,6 +426,7 @@ The token system will be built in 10 phases over 20-29 days.
 **Deliverable:** Complete set of utility CSS files in `utilities/`
 
 ### Phase 4: Type Safety (Days 10-11)
+
 **Goal:** Generate comprehensive TypeScript definitions
 
 - Implement `generate-types.ts`
@@ -424,6 +439,7 @@ The token system will be built in 10 phases over 20-29 days.
 **Deliverable:** `design-tokens.ts` with full type definitions
 
 ### Phase 5: WCAG Compliance (Days 12-13)
+
 **Goal:** Add contrast validation capabilities
 
 - Implement contrast calculation utilities
@@ -436,6 +452,7 @@ The token system will be built in 10 phases over 20-29 days.
 **Deliverable:** Contrast utilities and validation matrix
 
 ### Phase 6: Theme System (Days 14-15)
+
 **Goal:** Create default and dark themes
 
 - Create `uswds-light.css` (default theme)
@@ -449,6 +466,7 @@ The token system will be built in 10 phases over 20-29 days.
 **Deliverable:** Complete theme system with dark mode support
 
 ### Phase 7: Build Configuration (Days 16-17)
+
 **Goal:** Integrate generators into build process
 
 - Update `vite.config.ts` for tree-shakeable CSS
@@ -462,6 +480,7 @@ The token system will be built in 10 phases over 20-29 days.
 **Deliverable:** Fully integrated build system
 
 ### Phase 8: Testing (Days 18-20)
+
 **Goal:** Achieve comprehensive test coverage
 
 - Unit tests for all generators (100% coverage)
@@ -475,6 +494,7 @@ The token system will be built in 10 phases over 20-29 days.
 **Deliverable:** Complete test suite with 100% coverage
 
 ### Phase 9: Documentation (Days 21-23)
+
 **Goal:** Create comprehensive documentation
 
 - Create Storybook stories for all token categories
@@ -489,6 +509,7 @@ The token system will be built in 10 phases over 20-29 days.
 **Deliverable:** Complete documentation in Storybook and README
 
 ### Phase 10: Refinement (Days 24-29)
+
 **Goal:** Optimize and polish
 
 - Performance optimization

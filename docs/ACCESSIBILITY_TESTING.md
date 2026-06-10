@@ -9,6 +9,7 @@ This project includes comprehensive accessibility (a11y) testing to ensure Secti
 The `@storybook/addon-a11y` addon provides automated accessibility testing for all stories.
 
 **Features:**
+
 - Automatic accessibility checks powered by axe-core
 - Real-time visual feedback in Storybook UI
 - Fails tests on violations when configured
@@ -16,6 +17,7 @@ The `@storybook/addon-a11y` addon provides automated accessibility testing for a
 - Integration with Storybook test runner
 
 **Usage:**
+
 ```bash
 npm run storybook
 ```
@@ -27,6 +29,7 @@ Open any story and check the "Accessibility" tab in the addon panel to see real-
 The test runner executes all Storybook interaction tests and accessibility checks in CI/CD.
 
 **Features:**
+
 - Runs all `play()` functions from stories
 - Automatically includes a11y checks from the addon
 - CI/CD integration
@@ -43,13 +46,14 @@ const meta = {
   parameters: {
     a11y: {
       // Fail tests on accessibility violations
-      test: 'error',
+      test: "error",
     },
   },
 } satisfies Meta<MyComponent>;
 ```
 
 **Configuration options:**
+
 - `test: 'error'` - Fail tests on violations (recommended)
 - `test: 'warn'` - Log warnings but don't fail
 - `test: false` - Disable automatic testing (not recommended)
@@ -70,7 +74,7 @@ const meta = {
   component: MyComponent,
   parameters: {
     a11y: {
-      test: 'error', // Fail on violations
+      test: "error", // Fail on violations
     },
   },
 } satisfies Meta<MyComponent>;
@@ -84,9 +88,9 @@ export const Default: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    
+
     // Test interactions - accessibility is tested automatically
-    const button = canvas.getByRole('button');
+    const button = canvas.getByRole("button");
     await expect(button).toBeInTheDocument();
     await userEvent.click(button);
   },
@@ -104,15 +108,15 @@ export const Default: Story = {
   },
   parameters: {
     a11y: {
-      test: 'error',
+      test: "error",
       config: {
         rules: [
           {
-            id: 'color-contrast',
+            id: "color-contrast",
             enabled: true,
           },
           {
-            id: 'aria-required-attr',
+            id: "aria-required-attr",
             enabled: true,
           },
         ],
@@ -134,11 +138,11 @@ export const DisabledButton: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    
+
     // Test that disabled state is properly implemented
-    const button = canvas.getByRole('button');
+    const button = canvas.getByRole("button");
     await expect(button).toBeDisabled();
-    
+
     // Accessibility is checked automatically by the addon
   },
 };
@@ -147,21 +151,27 @@ export const DisabledButton: Story = {
 ## Running Tests
 
 ### Development (with UI)
+
 ```bash
 npm run storybook
 ```
+
 Open the Accessibility tab to see real-time results.
 
 ### CI/CD (headless)
+
 ```bash
 npm run test:storybook
 ```
+
 Runs all stories with their interaction tests and accessibility checks.
 
 ### Vitest (component tests)
+
 ```bash
 npm test
 ```
+
 Runs Vitest tests including any story-based tests.
 
 ## CI/CD Integration
@@ -291,4 +301,3 @@ parameters: {
   },
 }
 ```
-

@@ -4,7 +4,7 @@ import type { Snippet } from "svelte";
 /**
  * Button component props
  */
-export interface ButtonProps extends Omit<HTMLButtonAttributes, 'children'> {
+export interface ButtonProps extends Omit<HTMLButtonAttributes, "children"> {
   /**
    * Button variant
    * @default 'default'

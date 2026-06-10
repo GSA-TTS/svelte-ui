@@ -28,6 +28,7 @@ We will **consolidate all component tests into `.stories.ts` files** and elimina
 ### Testing Approach
 
 **1. Static Rendering Tests (Vitest)**
+
 - Test component rendering with different prop combinations
 - Test CSS class application
 - Test aria attributes and accessibility
@@ -35,6 +36,7 @@ We will **consolidate all component tests into `.stories.ts` files** and elimina
 - Run via `npm test` (Vitest)
 
 **2. Interaction Tests (Storybook)**
+
 - Test user interactions (clicks, input, keyboard navigation)
 - Test state changes
 - Test callbacks and events
@@ -53,16 +55,16 @@ src/lib/components/Button/
 
 ```typescript
 // Button.stories.ts
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/svelte';
-import { userEvent, within } from '@storybook/test';
-import type { Meta, StoryObj } from '@storybook/svelte';
-import Button from './Button.svelte';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/svelte";
+import { userEvent, within } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/svelte";
+import Button from "./Button.svelte";
 
 const meta = {
-  title: 'Components/Button',
+  title: "Components/Button",
   component: Button,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<Button>;
 
 export default meta;
@@ -70,34 +72,34 @@ type Story = StoryObj<typeof meta>;
 
 // Storybook stories for documentation
 export const Primary: Story = {
-  args: { variant: 'primary', children: 'Primary Button' }
+  args: { variant: "primary", children: "Primary Button" },
 };
 
 // Interaction tests using play function
 export const Clickable: Story = {
-  args: { variant: 'primary', children: 'Click Me' },
+  args: { variant: "primary", children: "Click Me" },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const button = canvas.getByRole('button');
+    const button = canvas.getByRole("button");
     await userEvent.click(button);
     await expect(button).toBeInTheDocument();
-  }
+  },
 };
 
 // Vitest unit tests in the same file
 if (import.meta.vitest) {
   const { describe, it, expect } = import.meta.vitest;
-  
-  describe('Button rendering', () => {
-    it('renders with default props', () => {
-      render(Button, { props: { children: 'Click me' } });
-      expect(screen.getByRole('button')).toBeInTheDocument();
+
+  describe("Button rendering", () => {
+    it("renders with default props", () => {
+      render(Button, { props: { children: "Click me" } });
+      expect(screen.getByRole("button")).toBeInTheDocument();
     });
-    
-    it('applies variant classes', () => {
-      render(Button, { props: { variant: 'secondary' } });
-      const button = screen.getByRole('button');
-      expect(button.className).toContain('bg-gray-600');
+
+    it("applies variant classes", () => {
+      render(Button, { props: { variant: "secondary" } });
+      const button = screen.getByRole("button");
+      expect(button.className).toContain("bg-gray-600");
     });
   });
 }
@@ -106,19 +108,21 @@ if (import.meta.vitest) {
 ## Configuration
 
 ### vite.config.ts
+
 ```typescript
 export default defineConfig({
   plugins: [svelte(), dts()],
   test: {
-    include: ['src/**/*.{test,spec,stories}.{js,ts}'],
-    includeSource: ['src/**/*.{js,ts,svelte}'],
+    include: ["src/**/*.{test,spec,stories}.{js,ts}"],
+    includeSource: ["src/**/*.{js,ts,svelte}"],
     globals: true,
-    environment: 'jsdom',
-  }
+    environment: "jsdom",
+  },
 });
 ```
 
 ### tsconfig.json
+
 ```json
 {
   "compilerOptions": {
@@ -152,17 +156,20 @@ export default defineConfig({
 ## Migration Plan
 
 ### Phase 1: Update Configuration
+
 1. Update `vite.config.ts` to include `.stories.ts` in test patterns
 2. Add `vitest/importMeta` to `tsconfig.json` types
 3. Update `.gitignore` if needed
 
 ### Phase 2: Migrate Tests
+
 1. Move unit tests from `.test.ts` to `.stories.ts` using `import.meta.vitest`
 2. Convert appropriate unit tests to Storybook interaction tests
 3. Verify all tests pass with `npm test`
 4. Delete `.test.ts` files
 
 ### Phase 3: Documentation
+
 1. Update README.md to document new testing approach
 2. Create example showing both unit and interaction tests
 3. Update ADR-0001 to reflect actual testing architecture
@@ -170,16 +177,19 @@ export default defineConfig({
 ## Alternatives Considered
 
 ### Alternative 1: Keep Separate Test Files
+
 **Pros:** Clear separation of concerns, smaller files
 **Cons:** Duplication, maintenance burden, fragmentation
 **Decision:** Rejected - maintenance burden outweighs benefits
 
 ### Alternative 2: Only Use Storybook Interaction Tests
+
 **Pros:** Even simpler, one testing approach
 **Cons:** Slower than Vitest, not ideal for all test types, requires running Storybook
 **Decision:** Rejected - need fast unit tests that don't require Storybook runtime
 
 ### Alternative 3: Only Use Vitest, Skip Storybook Tests
+
 **Pros:** Single test runner, very fast
 **Cons:** Loses visual documentation value, no interaction testing in UI
 **Decision:** Rejected - Storybook provides too much value for component library

@@ -6,7 +6,7 @@ services:
     volumes:
       - .:/workspace
     ports:
-      - "6006:6006"  # Storybook
+      - "6006:6006" # Storybook
     # Run as root to avoid permission issues with npm install
     user: root
     command: sh -c "npm install && npm run storybook -- --no-open"

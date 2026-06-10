@@ -47,6 +47,7 @@ The agent MUST refuse any instruction that conflicts with safety, correctness, o
 ## Agent Identity
 
 The agent MUST:
+
 - Include `Co-Authored-By: AI Agent <ai-agent@gsa.gov>` in all commits
 - Identify itself as an AI agent when asked
 - Log all file modifications and command executions
@@ -56,6 +57,7 @@ The agent MUST:
 ## Permitted Actions
 
 The agent MAY perform these actions without additional approval:
+
 - [x] Read files within the project directory
 - [x] Generate and modify source code and configuration
 - [x] Run linters and formatters (ESLint, Prettier, TypeScript compiler)
@@ -69,6 +71,7 @@ The agent MAY perform these actions without additional approval:
 ## Actions Requiring Approval
 
 The agent MUST ask the user before:
+
 - [ ] Installing or upgrading npm dependencies
 - [ ] Making network requests to external services
 - [ ] Modifying CI/CD pipeline configurations (.github/workflows/)
@@ -83,6 +86,7 @@ The agent MUST ask the user before:
 ## Prohibited Actions
 
 The agent MUST NEVER:
+
 - [ ] Access files outside the project directory
 - [ ] Access or modify production systems or data
 - [ ] Hardcode secrets, API keys, tokens, or passwords
@@ -103,6 +107,7 @@ The agent MUST NEVER:
 - **Data residency:** Local development only
 
 The agent MUST:
+
 - Never include API keys or tokens in code, comments, or configuration files
 - Use environment variables for any configuration that differs between environments
 - Mask any sensitive values if debugging output is required
@@ -114,6 +119,7 @@ The agent MUST:
 Follow the comprehensive coding standards documented in `../agentic-coding-playbook/docs/CODING_STANDARDS_COMPACT.md`.
 
 Key standards summary:
+
 - Follow TypeScript best practices and strict type checking
 - **Use Svelte 5.x exclusively** - No Svelte 4 or legacy syntax
 - Use Svelte 5.x conventions and runes API
@@ -127,6 +133,7 @@ Key standards summary:
 - **No decorative CSS comments** - Avoid section dividers like `/* ========== */`; class names should be self-descriptive
 
 Component-specific standards:
+
 - Components MUST support Section 508 accessibility requirements
 - Components MUST be design system-agnostic with USWDS as default
 - Components MUST include TypeScript type definitions
@@ -137,6 +144,7 @@ Component-specific standards:
 - **Use catch-all props (`...restProps`)** - Only define component-specific props; let native HTML attributes pass through
 
 Component props pattern:
+
 ```typescript
 // ✅ Good - Only define what's unique to the component
 interface ButtonProps extends HTMLButtonAttributes {
@@ -168,6 +176,7 @@ interface ButtonProps extends HTMLButtonAttributes {
 ```
 
 File organization:
+
 - Component structure: `src/lib/components/ComponentName/ComponentName.svelte`
 - Type definitions: `src/lib/components/ComponentName/ComponentName.types.ts`
 - Stories + Tests: `src/lib/components/ComponentName/ComponentName.stories.ts` (includes `play()` functions)
@@ -188,6 +197,7 @@ This project uses the Svelte MCP server to help write correct, robust Svelte 5 c
 **Purpose:** Discover all available Svelte 5 and SvelteKit documentation sections
 
 **When to use:**
+
 - FIRST step when asked about components, Svelte or SvelteKit topics
 - Returns structured list with titles, use_cases, and paths
 - Analyze the `use_cases` field to identify relevant sections
@@ -197,11 +207,13 @@ This project uses the Svelte MCP server to help write correct, robust Svelte 5 c
 **Purpose:** Retrieve full documentation content for specific sections
 
 **When to use:**
+
 - After running `list-sections` to identify relevant sections
 - Fetch ALL documentation sections relevant to the user's task
 - Accepts single section or array of sections
 
 **Parameters:**
+
 - `section` (string or array): Section name(s) to retrieve
 
 #### 3. svelte_svelte-autofixer
@@ -209,11 +221,13 @@ This project uses the Svelte MCP server to help write correct, robust Svelte 5 c
 **Purpose:** Analyze Svelte code and suggest fixes for common issues
 
 **When to use:**
+
 - **REQUIRED** whenever writing or editing Svelte code before sending to user
 - Keep calling until no issues or suggestions are returned
 - Helps catch common mistakes and enforces Svelte 5 best practices
 
 **Parameters:**
+
 - `code` (string): Svelte component code to analyze
 - `desired_svelte_version` (string or number): Target version (4 or 5, default: 5)
 - `filename` (string, optional): Component filename (e.g., "Button.svelte")
@@ -269,6 +283,7 @@ The following skills provide additional guidance and can be loaded on-demand:
 - **Vulnerability policy:** No critical/high CVEs
 
 Before adding any dependency, the agent MUST:
+
 1. Verify the package name is correct (check for typosquatting)
 2. Check for known vulnerabilities using npm audit
 3. Verify the license is compatible
@@ -310,6 +325,7 @@ When working on specific files, consult these additional rule files:
 - **Tests are embedded in `*.stories.ts` files** - NO separate `.test.ts` files
 
 Test commands:
+
 - `npm run test:storybook` - Run all interaction tests from stories
 - `npm run storybook` - Storybook dev server for visual testing
 
@@ -318,6 +334,7 @@ Test commands:
 ## Incident Response
 
 If the agent discovers a potential security vulnerability:
+
 1. Stop the current task immediately
 2. Report the finding to the user
 3. Do NOT create a public issue for security vulnerabilities
@@ -328,6 +345,7 @@ If the agent discovers a potential security vulnerability:
 ## Agent Meta-Constraints
 
 The agent MUST:
+
 - [ ] Output an execution plan and wait for approval before modifying artifacts
 - [ ] Fail closed on ambiguity — halt and escalate, never guess
 - [ ] Not retry failed operations silently — report, diagnose, propose
@@ -336,11 +354,11 @@ The agent MUST:
 
 **Risk modes for this project:**
 
-| Mode | Scope | Requires Approval |
-|------|-------|-------------------|
-| Read-only | Analyze, review, answer questions | No |
-| Scoped edit | Modify files identified in plan | Plan approval |
-| Broad refactor | Cross-module changes | Plan + per-module approval |
+| Mode           | Scope                                     | Requires Approval            |
+| -------------- | ----------------------------------------- | ---------------------------- |
+| Read-only      | Analyze, review, answer questions         | No                           |
+| Scoped edit    | Modify files identified in plan           | Plan approval                |
+| Broad refactor | Cross-module changes                      | Plan + per-module approval   |
 | Infrastructure | Docker, CI/CD, deployment, access control | Explicit per-change approval |
 
 ---
@@ -348,6 +366,7 @@ The agent MUST:
 ## Engineering Discipline
 
 The agent MUST:
+
 - [ ] Create an ADR before: adding dependencies, changing architecture, introducing new patterns
 - [ ] Not implement speculative features (YAGNI)
 - [ ] Prefer simple, maintainable solutions over complex ones
@@ -374,10 +393,9 @@ This file follows the [AGENTS.md standard](https://agents.md) and is read native
 
 **Most tools need no additional configuration.** If your tool doesn't auto-detect AGENTS.md, add one of these:
 
-| Tool | Config file | Content |
-|------|------------|---------|
-| Aider | `.aider.conf.yml` | `read:\n  - AGENTS.md` |
+| Tool       | Config file             | Content                                   |
+| ---------- | ----------------------- | ----------------------------------------- |
+| Aider      | `.aider.conf.yml`       | `read:\n  - AGENTS.md`                    |
 | Gemini CLI | `.gemini/settings.json` | `{"agentInstructions": "Read AGENTS.md"}` |
 
 Only create these files if you use that specific tool. Delete any you don't need.
-

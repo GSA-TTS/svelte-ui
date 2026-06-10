@@ -10,7 +10,7 @@ const meta = {
   parameters: {
     a11y: {
       // Fail tests on accessibility violations
-      test: 'error',
+      test: "error",
     },
   },
   argTypes: {
@@ -72,11 +72,11 @@ export const Default: Story = {
     const canvas = within(canvasElement);
 
     // Test: Button renders and is in the document
-    const button = canvas.getByRole('button');
+    const button = canvas.getByRole("button");
     await expect(button).toBeInTheDocument();
 
     // Test: Button has correct text content
-    await expect(button).toHaveTextContent('Default Button');
+    await expect(button).toHaveTextContent("Default Button");
 
     // Test: Button is clickable
     await userEvent.click(button);
@@ -96,8 +96,8 @@ export const Secondary: Story = {
     const canvas = within(canvasElement);
 
     // Test: Button has secondary variant class
-    const button = canvas.getByRole('button');
-    await expect(button.className).toContain('usa-button--secondary');
+    const button = canvas.getByRole("button");
+    await expect(button.className).toContain("usa-button--secondary");
 
     // Test: Click interaction
     await userEvent.click(button);
@@ -180,8 +180,8 @@ export const Big: Story = {
     const canvas = within(canvasElement);
 
     // Test: Button has big size class
-    const button = canvas.getByRole('button');
-    await expect(button.className).toContain('usa-button--big');
+    const button = canvas.getByRole("button");
+    await expect(button.className).toContain("usa-button--big");
 
     // Test: Click interaction
     await userEvent.click(button);
@@ -212,7 +212,7 @@ export const Disabled: Story = {
     const canvas = within(canvasElement);
 
     // Test: Button is disabled
-    const button = canvas.getByRole('button');
+    const button = canvas.getByRole("button");
     await expect(button).toBeDisabled();
   },
 };
@@ -246,4 +246,3 @@ export const WithCustomClasses: Story = {
     class: "margin-top-2 width-full",
   },
 };
-

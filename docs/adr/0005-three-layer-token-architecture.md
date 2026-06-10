@@ -31,6 +31,7 @@ We need an architecture that:
 ### Current State
 
 After Phase 1 and Phase 2:
+
 - ✅ 688 USWDS tokens parsed from source
 - ✅ CSS custom properties generated
 - ❌ No clear separation between design-system-specific and universal tokens
@@ -40,16 +41,16 @@ After Phase 1 and Phase 2:
 
 Based on project goals and architecture discussions:
 
-| Requirement | Approach |
-|-------------|----------|
-| Design System Independence | Components use component-specific token names |
-| Multiple Design Systems | Each system has its own foundation layer |
-| Easy Swapping | Change one CSS import, not component code |
-| Clear Organization | Separate foundation (specific) → semantic (universal) → component (scoped) |
-| Easy Customization | Override component tokens without touching component code |
-| Type Safety | TypeScript definitions for all token layers |
-| USWDS Alignment | File structure matches USWDS token categories |
-| Minimal Token Layers | Foundation (688) → Semantic (66) → Component (~60) |
+| Requirement                | Approach                                                                   |
+| -------------------------- | -------------------------------------------------------------------------- |
+| Design System Independence | Components use component-specific token names                              |
+| Multiple Design Systems    | Each system has its own foundation layer                                   |
+| Easy Swapping              | Change one CSS import, not component code                                  |
+| Clear Organization         | Separate foundation (specific) → semantic (universal) → component (scoped) |
+| Easy Customization         | Override component tokens without touching component code                  |
+| Type Safety                | TypeScript definitions for all token layers                                |
+| USWDS Alignment            | File structure matches USWDS token categories                              |
+| Minimal Token Layers       | Foundation (688) → Semantic (66) → Component (~60)                         |
 
 ## Decision
 
@@ -60,6 +61,7 @@ We will implement a **three-layer token architecture**:
 The foundation layer contains design-system-specific tokens with their original names.
 
 **Structure (matches USWDS token categories):**
+
 ```
 src/tokens/foundation/
 ├── uswds/              # USWDS design tokens
@@ -79,17 +81,18 @@ src/tokens/foundation/
 ```
 
 **Example - USWDS Foundation:**
+
 ```css
 /* tokens/foundation/uswds/color.css */
 :root {
   /* System Colors - Raw hex values */
   --red-5: #fef2f2;
   --blue-60v: #005ea2;
-  
+
   /* Theme Colors - References to system */
   --primary: var(--blue-60v);
   --secondary: var(--red-50);
-  
+
   /* State Colors */
   --error: var(--red-warm-50v);
   --success: var(--green-cool-40v);
@@ -97,6 +100,7 @@ src/tokens/foundation/
 ```
 
 **Token Counts (USWDS):**
+
 - Color: 521 tokens (463 system + 31 theme + 27 state)
 - Spacing: 41 tokens
 - Typesetting: 72 tokens (families, sizes, weights, line heights, letter spacing, measure)
@@ -110,6 +114,7 @@ src/tokens/foundation/
 **File Organization:**
 
 Foundation files are organized to match USWDS design token categories as documented at https://designsystem.digital.gov/design-tokens/. This ensures:
+
 1. Intuitive mapping between USWDS documentation and our token files
 2. Easy to find tokens by USWDS category name
 3. Clear separation of concerns (color, spacing, typesetting, etc.)
@@ -120,6 +125,7 @@ Foundation files are organized to match USWDS design token categories as documen
 The semantic layer provides universal token names that map to the current foundation layer.
 
 **Structure (matches Foundation layer):**
+
 ```
 src/tokens/semantic/
 ├── color.css           # Color tokens (26 tokens)
@@ -134,22 +140,23 @@ src/tokens/semantic/
 ```
 
 **Example - Semantic Layer:**
+
 ```css
 /* tokens/semantic/color.css */
 :root {
   /* Brand Colors */
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
-  
+
   /* UI Colors */
   --color-text: var(--base-darkest);
   --color-bg: var(--white);
   --color-border: var(--base-light);
-  
+
   /* Interactive States */
   --color-interactive: var(--primary);
   --color-interactive-hover: var(--primary-dark);
-  
+
   /* Feedback Colors */
   --color-error: var(--error);
   --color-success: var(--success);
@@ -157,6 +164,7 @@ src/tokens/semantic/
 ```
 
 **Token Counts:**
+
 - Color: 26 tokens
 - Spacing: 12 tokens
 - Typesetting: 15 tokens
@@ -170,6 +178,7 @@ src/tokens/semantic/
 **File Organization:**
 
 Semantic files mirror the foundation layer structure exactly. This provides:
+
 1. One-to-one mapping between foundation and semantic categories
 2. Predictable file organization across all token layers
 3. Easy mental model: same categories at every layer
@@ -180,6 +189,7 @@ Semantic files mirror the foundation layer structure exactly. This provides:
 The component layer provides component-specific tokens that map to semantic tokens. This layer makes components highly customizable without modifying component code.
 
 **Structure:**
+
 ```
 src/tokens/components/
 ├── button.css
@@ -189,6 +199,7 @@ src/tokens/components/
 ```
 
 **Example - Component Layer (Button):**
+
 ```css
 /* tokens/components/button.css */
 :root {
@@ -197,16 +208,16 @@ src/tokens/components/
   --button-bg-hover: var(--color-interactive-hover);
   --button-text: var(--color-text-inverse);
   --button-border: var(--color-interactive);
-  
+
   /* Spacing */
   --button-padding-y: var(--space-padding-sm);
   --button-padding-x: var(--space-padding-md);
-  
+
   /* Typography */
   --button-font-family: var(--font-body);
   --button-font-size: var(--text-base);
   --button-font-weight: var(--weight-medium);
-  
+
   /* Effects */
   --button-border-radius: var(--radius-md);
   --button-transition: var(--transition-fast);
@@ -214,6 +225,7 @@ src/tokens/components/
 ```
 
 **Token Counts (MVP):**
+
 - Button: 24 tokens
 - Input: 17 tokens
 - Checkbox: 16 tokens
@@ -242,7 +254,7 @@ src/tokens/components/
     font-weight: var(--button-font-weight);
     transition: var(--button-transition);
   }
-  
+
   .button:hover {
     background-color: var(--button-bg-hover);
   }
@@ -256,18 +268,18 @@ src/tokens/components/
 
 ```css
 /* app.css - Using USWDS */
-@import 'svelte-ui/tokens/foundation/uswds/all.css';
-@import 'svelte-ui/tokens/semantic/all.css';
-@import 'svelte-ui/tokens/components/all.css';
+@import "svelte-ui/tokens/foundation/uswds/all.css";
+@import "svelte-ui/tokens/semantic/all.css";
+@import "svelte-ui/tokens/components/all.css";
 ```
 
 **Switching to Material Design (future):**
 
 ```css
 /* app.css - Switch to Material Design */
-@import 'svelte-ui/tokens/foundation/material/all.css';  /* Change this line */
-@import 'svelte-ui/tokens/semantic/all.css';              /* Keep this line */
-@import 'svelte-ui/tokens/components/all.css';            /* Keep this line */
+@import "svelte-ui/tokens/foundation/material/all.css"; /* Change this line */
+@import "svelte-ui/tokens/semantic/all.css"; /* Keep this line */
+@import "svelte-ui/tokens/components/all.css"; /* Keep this line */
 ```
 
 Components work unchanged! ✅
@@ -323,18 +335,18 @@ Component Token Files (tokens/components/*.css)
 
 ```typescript
 export interface SemanticTokenMapping {
-  semantic: string;      // Universal token name (--color-primary)
-  foundation: string;    // Foundation token (primary)
-  category: 'color' | 'spacing' | 'typography' | 'effects' | 'layout';
+  semantic: string; // Universal token name (--color-primary)
+  foundation: string; // Foundation token (primary)
+  category: "color" | "spacing" | "typography" | "effects" | "layout";
   description: string;
 }
 
 export const uswdsSemanticMappings: SemanticTokenMapping[] = [
   {
-    semantic: 'color-primary',
-    foundation: 'primary',
-    category: 'color',
-    description: 'Primary brand color for buttons, links, and key UI elements'
+    semantic: "color-primary",
+    foundation: "primary",
+    category: "color",
+    description: "Primary brand color for buttons, links, and key UI elements",
   },
   // ... 61 more mappings
 ];
@@ -346,23 +358,23 @@ export const uswdsSemanticMappings: SemanticTokenMapping[] = [
 
 ```typescript
 export interface ComponentTokenDefinition {
-  token: string;          // Component token name (button-bg)
-  semantic: string;       // Semantic token reference (color-primary)
-  category: 'color' | 'spacing' | 'typography' | 'effects' | 'layout';
+  token: string; // Component token name (button-bg)
+  semantic: string; // Semantic token reference (color-primary)
+  category: "color" | "spacing" | "typography" | "effects" | "layout";
   description: string;
 }
 
 export const buttonTokens: ComponentTokens = {
-  component: 'button',
+  component: "button",
   tokens: [
     {
-      token: 'button-bg',
-      semantic: 'color-interactive',
-      category: 'color',
-      description: 'Default button background color'
+      token: "button-bg",
+      semantic: "color-interactive",
+      category: "color",
+      description: "Default button background color",
     },
     // ... 23 more button tokens
-  ]
+  ],
 };
 ```
 
@@ -389,11 +401,13 @@ npm run generate:all
 **Approach:** Components use semantic tokens directly (--color-interactive, --space-padding-sm)
 
 **Pros:**
+
 - Simpler - two layers instead of three
 - Fewer files to maintain
 - Less indirection
 
 **Cons:**
+
 - ❌ Hard to customize individual components without global changes
 - ❌ No component-scoped token overrides
 - ❌ Components can't have sensible defaults independent of semantic layer
@@ -406,11 +420,13 @@ npm run generate:all
 **Approach:** Components use foundation tokens directly (--primary, --spacing-2)
 
 **Pros:**
+
 - Simpler - one layer instead of two
 - Fewer files to maintain
 - Direct mapping, no indirection
 
 **Cons:**
+
 - ❌ Components tied to specific design system
 - ❌ Can't swap design systems without rewriting components
 - ❌ Token name collisions between design systems
@@ -423,10 +439,12 @@ npm run generate:all
 **Approach:** Foundation → Custom Theme Layer → Semantic Layer
 
 **Pros:**
+
 - Maximum flexibility
 - Users can define custom themes
 
 **Cons:**
+
 - ❌ Too complex for MVP
 - ❌ Adds unnecessary indirection
 - ❌ Harder to understand and maintain
@@ -439,11 +457,13 @@ npm run generate:all
 **Approach:** Tokens defined in JS/TS, injected at runtime
 
 **Pros:**
+
 - Type-safe token access
 - Can compute values dynamically
 - Programmatic token manipulation
 
 **Cons:**
+
 - ❌ Runtime overhead
 - ❌ Harder to override with CSS
 - ❌ No static CSS analysis
@@ -486,47 +506,48 @@ npm run generate:all
 
 Organized by USWDS design token categories:
 
-| Category | Tokens | Description |
-|----------|--------|-------------|
-| **Color** | 521 | System colors (463), theme colors (31), state colors (27) |
-| **Spacing** | 41 | Spacing units from 1px to 15rem |
-| **Typesetting** | 72 | Families (18), sizes (30), weights (7), line heights (6), letter spacing (4), measure (7) |
-| **Shadow** | 6 | Box shadow values (1-5, none) |
-| **Opacity** | 11 | Opacity values (0-100 in 10% increments) |
-| **Z-index** | 8 | Layering values (0, 100, 200, 300, 400, 500, bottom, top) |
-| **Flex** | 14 | Flex shorthand values |
-| **Order** | 15 | Flexbox order values (first, last, initial, 0-11) |
+| Category        | Tokens | Description                                                                               |
+| --------------- | ------ | ----------------------------------------------------------------------------------------- |
+| **Color**       | 521    | System colors (463), theme colors (31), state colors (27)                                 |
+| **Spacing**     | 41     | Spacing units from 1px to 15rem                                                           |
+| **Typesetting** | 72     | Families (18), sizes (30), weights (7), line heights (6), letter spacing (4), measure (7) |
+| **Shadow**      | 6      | Box shadow values (1-5, none)                                                             |
+| **Opacity**     | 11     | Opacity values (0-100 in 10% increments)                                                  |
+| **Z-index**     | 8      | Layering values (0, 100, 200, 300, 400, 500, bottom, top)                                 |
+| **Flex**        | 14     | Flex shorthand values                                                                     |
+| **Order**       | 15     | Flexbox order values (first, last, initial, 0-11)                                         |
 
 ### Semantic Layer (66 tokens)
 
 Universal tokens that map to foundation layer:
 
-| Category | Tokens | Description |
-|----------|--------|-------------|
-| **Color** | 26 | Brand (3), text (4), background (4), border (2), interactive (4), feedback (8), focus (1) |
-| **Spacing** | 12 | Scale (7), component spacing (5) |
-| **Typesetting** | 15 | Families (3), sizes (6), weights (3), line heights (3) |
-| **Shadow** | 3 | Small, medium, large |
-| **Opacity** | 3 | Disabled, hover, overlay |
-| **Z-index** | 3 | Dropdown, modal, tooltip |
-| **Flex** | 2 | Auto, fill |
-| **Order** | 2 | First, last |
+| Category        | Tokens | Description                                                                               |
+| --------------- | ------ | ----------------------------------------------------------------------------------------- |
+| **Color**       | 26     | Brand (3), text (4), background (4), border (2), interactive (4), feedback (8), focus (1) |
+| **Spacing**     | 12     | Scale (7), component spacing (5)                                                          |
+| **Typesetting** | 15     | Families (3), sizes (6), weights (3), line heights (3)                                    |
+| **Shadow**      | 3      | Small, medium, large                                                                      |
+| **Opacity**     | 3      | Disabled, hover, overlay                                                                  |
+| **Z-index**     | 3      | Dropdown, modal, tooltip                                                                  |
+| **Flex**        | 2      | Auto, fill                                                                                |
+| **Order**       | 2      | First, last                                                                               |
 
 ### Component Layer (57 tokens)
 
 Component-specific tokens for MVP components:
 
-| Component | Tokens | Description |
-|-----------|--------|-------------|
-| **Button** | 24 | Colors, spacing, typography, effects |
-| **Input** | 17 | Colors, spacing, typography, effects |
-| **Checkbox** | 16 | Colors, spacing, typography, effects |
+| Component    | Tokens | Description                          |
+| ------------ | ------ | ------------------------------------ |
+| **Button**   | 24     | Colors, spacing, typography, effects |
+| **Input**    | 17     | Colors, spacing, typography, effects |
+| **Checkbox** | 16     | Colors, spacing, typography, effects |
 
 ## Adding New Design Systems
 
 To add a new design system (e.g., Material Design):
 
 1. **Create foundation parser:**
+
    ```typescript
    // src/lib/token-generators/parse-material-tokens.ts
    export function parseMaterialTokens(): ParsedTokens {
@@ -535,47 +556,50 @@ To add a new design system (e.g., Material Design):
    ```
 
 2. **Create semantic mappings:**
+
    ```typescript
    // src/lib/token-generators/material-semantic-mappings.ts
    export const materialSemanticMappings: SemanticTokenMapping[] = [
      {
-       semantic: 'color-primary',
-       foundation: 'blue-500',  // Material Design token
-       category: 'color',
-       description: 'Primary brand color'
+       semantic: "color-primary",
+       foundation: "blue-500", // Material Design token
+       category: "color",
+       description: "Primary brand color",
      },
      // ... map all 62 semantic tokens
    ];
    ```
 
 3. **Create component mappings (if different defaults needed):**
+
    ```typescript
    // src/lib/token-generators/material-component-mappings.ts
    // Optional - only if Material Design requires different component defaults
    export const materialButtonTokens: ComponentTokens = {
-     component: 'button',
+     component: "button",
      tokens: [
        {
-         token: 'button-border-radius',
-         semantic: 'radius-sm', // Material uses smaller radius
-         category: 'effects',
-         description: 'Button corner radius'
+         token: "button-border-radius",
+         semantic: "radius-sm", // Material uses smaller radius
+         category: "effects",
+         description: "Button corner radius",
        },
        // ... other customizations
-     ]
+     ],
    };
    ```
 
 4. **Generate foundation CSS:**
+
    ```bash
    npm run generate:css -- --design-system=material
    ```
 
 5. **Users switch imports:**
    ```css
-   @import 'svelte-ui/tokens/foundation/material/all.css';
-   @import 'svelte-ui/tokens/semantic/all.css';
-   @import 'svelte-ui/tokens/components/all.css';
+   @import "svelte-ui/tokens/foundation/material/all.css";
+   @import "svelte-ui/tokens/semantic/all.css";
+   @import "svelte-ui/tokens/components/all.css";
    ```
 
 Components continue working unchanged! ✅
@@ -664,8 +688,8 @@ The three-layer architecture is successful when:
 
 ## Revision History
 
-| Date | Change | Author |
-|------|--------|--------|
-| 2026-06-05 | Initial three-layer architecture decision | Jeff Keene, AI Agent |
-| 2026-06-05 | Implemented component token layer (57 tokens across 3 components) | Jeff Keene, AI Agent |
+| Date       | Change                                                                                                                                                   | Author               |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| 2026-06-05 | Initial three-layer architecture decision                                                                                                                | Jeff Keene, AI Agent |
+| 2026-06-05 | Implemented component token layer (57 tokens across 3 components)                                                                                        | Jeff Keene, AI Agent |
 | 2026-06-08 | Reorganized file structure to match USWDS categories; split foundation into 8 files and semantic into 8 files; updated token counts (66 semantic tokens) | Jeff Keene, AI Agent |
