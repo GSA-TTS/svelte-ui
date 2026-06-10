@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { Snippet } from 'svelte';
   import type { ButtonProps } from './Button.types.js';
 
   let {
