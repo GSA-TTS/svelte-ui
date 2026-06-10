@@ -4,6 +4,7 @@
   "description": "Svelte UI component library with USWDS styling",
   "type": "module",
   "scripts": {
+    "audit": "npm audit --audit-level=high",
     "build": "vite build",
     "prepublishOnly": "npm run build",
     "test": "vitest",
