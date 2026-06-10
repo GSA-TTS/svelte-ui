@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/svelte";
 import { expect, userEvent, within } from "storybook/test";
 import Button from "./Button.svelte";
+import type { ButtonProps } from "./Button.types.js";
 
 const meta = {
   title: "Components/Button",
@@ -54,7 +55,7 @@ const meta = {
       },
     },
   },
-} satisfies Meta<Button>;
+} satisfies Meta<ButtonProps>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
