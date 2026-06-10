@@ -2,6 +2,7 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
 import dts from 'vite-plugin-dts';
+import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 
 export default defineConfig({
 	plugins: [
@@ -10,6 +11,9 @@ export default defineConfig({
 			insertTypesEntry: true,
 			include: ['src/lib/**/*.ts', 'src/lib/**/*.svelte'],
 			exclude: ['src/**/*.test.ts', 'src/**/*.spec.ts', 'src/**/*.stories.ts']
+		}),
+		storybookTest({
+			storybookScript: 'npm run storybook -- --ci'
 		})
 	],
 	build: {
@@ -28,10 +32,15 @@ export default defineConfig({
 		}
 	},
 	test: {
-		include: ['src/**/*.{test,spec,stories}.{js,ts}'],
 		includeSource: ['src/**/*.{js,ts,svelte}'],
 		globals: true,
 		environment: 'jsdom',
+		setupFiles: ['./src/test-setup.ts'],
+		onConsoleLog(log) {
+			if (log.includes('Not implemented: HTMLCanvasElement')) {
+				return false;
+			}
+		},
 		coverage: {
 			provider: 'v8',
 			reporter: ['text', 'json', 'html'],
@@ -42,6 +51,9 @@ export default defineConfig({
 				'**/dist/**'
 			]
 		}
+	},
+	resolve: {
+		conditions: ['browser']
 	},
 	server: {
 		host: '0.0.0.0',

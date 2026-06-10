@@ -5,6 +5,7 @@ const config: StorybookConfig = {
 	addons: [
 		'@storybook/addon-svelte-csf',
 		'@storybook/addon-vitest',
+		'@storybook/addon-a11y',
 	],
 	framework: {
 		name: '@storybook/svelte-vite',

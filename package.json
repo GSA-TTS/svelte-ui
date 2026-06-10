@@ -37,6 +37,7 @@
     "svelte": "5.56.1"
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "10.4.2",
     "@storybook/addon-svelte-csf": "5.1.2",
     "@storybook/addon-vitest": "10.4.2",
     "@storybook/svelte": "10.4.2",

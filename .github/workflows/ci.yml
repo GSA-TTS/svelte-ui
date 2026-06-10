@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies
@@ -29,11 +29,26 @@ jobs:
       - name: Type check
         run: npm run type-check
 
+      - name: Svelte check
+        run: npm run check
+
       - name: Lint
         run: npm run lint
 
       - name: Run unit tests
         run: npm test -- --coverage
+
+      - name: Build Storybook
+        run: npm run build-storybook
+
+      - name: Serve Storybook and run tests
+        run: |
+          npx http-server storybook-static --port 6006 --silent &
+          SERVER_PID=$!
+          echo "Waiting for Storybook server to be ready..."
+          npx wait-on http://localhost:6006 --timeout 60000
+          npm run test:storybook
+          kill $SERVER_PID || true
 
       - name: Upload coverage
         uses: codecov/codecov-action@v4
@@ -41,36 +56,6 @@ jobs:
         with:
           files: ./coverage/coverage-final.json
           flags: unittests
-
-  storybook-interaction-tests:
-    name: Storybook Interaction Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build Storybook
-        run: npm run build-storybook
-
-      - name: Run Storybook interaction tests
-        run: npm run test:storybook
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: storybook-test-report
-          path: test-results/
-          retention-days: 30
 
   build:
     name: Build
@@ -82,7 +67,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies
@@ -90,9 +75,6 @@ jobs:
 
       - name: Build package
         run: npm run build
-
-      - name: Build Storybook
-        run: npm run build-storybook
 
   security:
     name: Security Scan
@@ -104,7 +86,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies
@@ -113,10 +95,8 @@ jobs:
       - name: Run npm audit
         run: npm audit --audit-level=moderate
 
-      - name: Run Snyk security scan
-        uses: snyk/actions/node@master
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        if: github.event_name == 'pull_request'
         with:
-          args: --severity-threshold=high
+          fail-on-severity: moderate
