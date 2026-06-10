@@ -156,11 +156,11 @@ The residual risks associated with AI agent use in this pre-ATO, public data com
 
 ## Section 7: Sign-Off
 
-| Role                   | Name          | Date       | Signature          |
-| ---------------------- | ------------- | ---------- | ------------------ |
-| **Project Owner**      | Jeff Keene    | 2026-05-29 | ********\_******** |
-| **ISSO**               | N/A (Pre-ATO) | N/A        | N/A                |
-| **Approving Official** | TBD           | Pending    | ********\_******** |
+| Role                   | Name          | Date       | Signature                  |
+| ---------------------- | ------------- | ---------- | -------------------------- |
+| **Project Owner**      | Jeff Keene    | 2026-05-29 | **\*\*\*\***\_**\*\*\*\*** |
+| **ISSO**               | N/A (Pre-ATO) | N/A        | N/A                        |
+| **Approving Official** | TBD           | Pending    | **\*\*\*\***\_**\*\*\*\*** |
 
 ---
 
