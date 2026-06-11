@@ -138,6 +138,30 @@ Visit `http://localhost:6006` to view the interactive component documentation.
 
 Please read [CONTRIBUTING.md](./CONTRIBUTING.md) and [AGENTS.md](./AGENTS.md) for details on our code of conduct and the process for submitting pull requests.
 
+## Deployment
+
+This Storybook is automatically deployed to cloud.gov when changes are pushed to the `main` branch (after CI tests pass).
+
+**Live Site:** https://svelte-ui-library.app.cloud.gov
+
+### Quick Deploy
+
+```bash
+# Automated (via GitHub Actions)
+git push origin main
+
+# Manual (requires CF CLI + cloud.gov login)
+npm run deploy
+```
+
+For detailed deployment instructions, see [docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md).
+
+### Deployment Requirements
+
+- Cloud.gov access to `sandbox-gsa` organization
+- Service account credentials configured in GitHub Secrets
+- All CI tests must pass before deployment
+
 ## License
 
 This project is in the public domain within the United States.

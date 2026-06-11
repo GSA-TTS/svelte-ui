@@ -1,0 +1,74 @@
+name: Deploy to cloud.gov
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # Allow manual trigger from GitHub UI
+
+permissions:
+  contents: read
+
+jobs:
+  check-ci:
+    name: Wait for CI to complete
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for CI workflow
+        uses: fountainhead/action-wait-for-check@v1.2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: "Test"
+          ref: ${{ github.sha }}
+          timeoutSeconds: 900 # 15 minutes
+
+  deploy:
+    name: Deploy Storybook to cloud.gov
+    runs-on: ubuntu-latest
+    needs: [check-ci]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Storybook
+        run: npm run deploy:build
+
+      - name: Verify build output
+        run: |
+          echo "Checking Storybook build..."
+          ls -la storybook-static/
+          echo "Checking Staticfile..."
+          cat storybook-static/Staticfile
+
+      - name: Install CF CLI v8
+        run: |
+          wget 'https://packages.cloudfoundry.org/stable?release=linux64-binary&version=8.8.0&source=github-rel' -O /tmp/cf8.tar.gz
+          sudo tar -xzf /tmp/cf8.tar.gz -C /usr/local/bin
+          cf --version
+
+      - name: Deploy to cloud.gov
+        env:
+          CF_USERNAME: ${{ secrets.CF_USERNAME }}
+          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+        run: |
+          cf login -a https://api.fr.cloud.gov -u "$CF_USERNAME" -p "$CF_PASSWORD" -o sandbox-gsa -s jk-sandbox
+          cf push
+
+      - name: Verify deployment
+        run: |
+          echo "================================"
+          echo "✅ Deployment successful!"
+          echo "================================"
+          cf app svelte-ui-library
+          echo ""
+          echo "🌐 Live URL: https://svelte-ui-library.app.cloud.gov"
+          echo "================================"
