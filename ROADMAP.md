@@ -37,6 +37,7 @@ Svelte UI is a comprehensive Svelte component library built specifically for the
 - ✅ USWDS theming support
 
 ---
+
 ## Phase 3: Release Management (In Progress 🚧)
 
 ### Package Publishing
@@ -46,6 +47,7 @@ Svelte UI is a comprehensive Svelte component library built specifically for the
 - [ ] Changelog automation
 - [ ] Release documentation
 - [ ] CDN setup (optional)
+
 ---
 
 ## Phase 4: Core Component Development
