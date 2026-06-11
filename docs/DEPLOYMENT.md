@@ -18,12 +18,14 @@ This document describes how to deploy the Svelte UI Storybook to cloud.gov using
 
 1. **Cloud.gov account** with access to `sandbox-gsa` organization and `jk-sandbox` space
 2. **CF CLI v8** installed:
+
    ```bash
    # macOS
    brew install cloudfoundry/tap/cf-cli@8
 
    # Linux/Windows - see https://docs.cloudfoundry.org/cf-cli/install-go-cli.html
    ```
+
 3. **Node.js 24+** and **npm 10+**
 
 ### For Automated Deployment (GitHub Actions)
@@ -72,6 +74,7 @@ cf service-key svelte-ui-deployer deployer-key
 ```
 
 **Output example:**
+
 ```json
 {
   "username": "some-guid-here",
@@ -84,14 +87,15 @@ cf service-key svelte-ui-deployer deployer-key
 ### Step 6: Configure GitHub Secrets
 
 Navigate to your repository settings:
+
 ```
 https://github.com/<your-org>/svelte-ui/settings/secrets/actions
 ```
 
 Add the following secrets (New repository secret):
 
-| Secret Name | Value | Source |
-|-------------|-------|--------|
+| Secret Name   | Value                     | Source        |
+| ------------- | ------------------------- | ------------- |
 | `CF_USERNAME` | Username from service key | Step 5 output |
 | `CF_PASSWORD` | Password from service key | Step 5 output |
 
@@ -106,6 +110,7 @@ Deployment happens automatically when code is pushed to the `main` branch, **aft
 ### Workflow
 
 1. **Push to main branch:**
+
    ```bash
    git push origin main
    ```
@@ -134,20 +139,21 @@ You can trigger deployment manually without pushing code:
 5. Click **Run workflow**
 
 This is useful for:
+
 - Redeploying after cloud.gov maintenance
 - Testing deployment workflow changes
 - Recovering from failed deployments
 
 ### Deployment Timeline
 
-| Phase | Duration | Notes |
-|-------|----------|-------|
-| Wait for CI | ~5-7 min | CI must pass first |
-| Build Storybook | ~1-2 min | npm ci + build |
-| CF CLI Install | ~30 sec | Download + extract |
-| Deploy to cloud.gov | ~2-3 min | Upload + health check |
-| Verify | ~5 sec | App status check |
-| **Total** | **~10-13 min** | From push to live |
+| Phase               | Duration       | Notes                 |
+| ------------------- | -------------- | --------------------- |
+| Wait for CI         | ~5-7 min       | CI must pass first    |
+| Build Storybook     | ~1-2 min       | npm ci + build        |
+| CF CLI Install      | ~30 sec        | Download + extract    |
+| Deploy to cloud.gov | ~2-3 min       | Upload + health check |
+| Verify              | ~5 sec         | App status check      |
+| **Total**           | **~10-13 min** | From push to live     |
 
 ---
 
@@ -156,27 +162,31 @@ This is useful for:
 ### First-Time Setup
 
 1. **Install CF CLI** (if not already installed):
+
    ```bash
    # macOS
    brew install cloudfoundry/tap/cf-cli@8
-   
+
    # Verify installation
    cf --version
    ```
 
 2. **Login to cloud.gov:**
+
    ```bash
    cf login -a https://api.fr.cloud.gov --sso
    ```
-   
+
    Follow the prompts to authenticate via browser.
 
 3. **Target your organization and space:**
+
    ```bash
    cf target -o sandbox-gsa -s jk-sandbox
    ```
-   
+
    Verify with:
+
    ```bash
    cf target
    ```
@@ -190,6 +200,7 @@ npm run deploy
 ```
 
 This runs:
+
 1. `npm run build-storybook` - Builds Storybook
 2. `npm run deploy:prepare` - Creates Staticfile
 3. `cf push` - Deploys to cloud.gov
@@ -236,6 +247,7 @@ cf apps
 ```
 
 **Expected output:**
+
 ```
 name                requested state   instances   memory   disk   urls
 svelte-ui-library   started           1/1         128M     1G     svelte-ui-library.app.cloud.gov
@@ -278,6 +290,7 @@ Or visit in browser: https://svelte-ui-library.app.cloud.gov
 **Issue:** `npm run build-storybook` fails
 
 **Solution:**
+
 ```bash
 # Clean and rebuild
 rm -rf node_modules storybook-static
@@ -290,6 +303,7 @@ npm run build-storybook
 **Issue:** `Authentication failed` or `Invalid credentials`
 
 **Solution:**
+
 ```bash
 # Re-login with SSO
 cf logout
@@ -304,6 +318,7 @@ cf target
 **Issue:** App shows as "crashed" in `cf apps`
 
 **Solution:**
+
 ```bash
 # Check logs for errors
 cf logs svelte-ui-library --recent
@@ -324,6 +339,7 @@ cf push
 **Issue:** `Error: No Staticfile found in app directory`
 
 **Solution:**
+
 ```bash
 # Ensure build script creates Staticfile
 npm run deploy:build
@@ -341,6 +357,7 @@ cf push
 **Issue:** GitHub Actions deployment fails with authentication error
 
 **Solution:**
+
 1. Verify GitHub Secrets are configured:
    - Repository → Settings → Secrets and variables → Actions
    - Check `CF_USERNAME` and `CF_PASSWORD` exist
@@ -352,6 +369,7 @@ cf push
 **Issue:** `cf: command not found`
 
 **Solution:**
+
 ```bash
 # macOS
 brew install cloudfoundry/tap/cf-cli@8
@@ -372,12 +390,14 @@ cf --version
 ### Change App Configuration
 
 Edit `manifest.yml` to change:
+
 - Memory allocation
 - Number of instances
 - Routes/domains
 - Environment variables
 
 Then redeploy:
+
 ```bash
 npm run deploy
 ```
@@ -464,6 +484,7 @@ cf delete svelte-ui-library
 ```
 
 To redeploy after deletion:
+
 ```bash
 npm run deploy
 ```
@@ -507,6 +528,7 @@ cf app svelte-ui-library
 ```
 
 Look for:
+
 - **state:** `started` (should not be `crashed` or `stopped`)
 - **instances:** `1/1` (all instances running)
 
@@ -539,6 +561,7 @@ The deployment workflow (`.github/workflows/cd.yml`) integrates with the CI work
 ### Deployment Dependencies
 
 The CD workflow requires **all CI jobs to pass**:
+
 - `Test` job
 - `Build` job
 - `Security` job
@@ -547,18 +570,19 @@ If any CI job fails, the deployment is automatically cancelled.
 
 ### Workflow Files
 
-| File | Purpose | Trigger |
-|------|---------|---------|
-| `.github/workflows/ci.yml` | Continuous Integration (tests, builds, security) | Push to `main`, PRs to `main` |
-| `.github/workflows/cd.yml` | Continuous Deployment (deploy to cloud.gov) | Push to `main` (after CI passes) |
-| `manifest.yml` | Cloud.gov app configuration | Used by `cf push` |
-| `.cfignore` | Files to exclude from deployment | Used by `cf push` |
+| File                       | Purpose                                          | Trigger                          |
+| -------------------------- | ------------------------------------------------ | -------------------------------- |
+| `.github/workflows/ci.yml` | Continuous Integration (tests, builds, security) | Push to `main`, PRs to `main`    |
+| `.github/workflows/cd.yml` | Continuous Deployment (deploy to cloud.gov)      | Push to `main` (after CI passes) |
+| `manifest.yml`             | Cloud.gov app configuration                      | Used by `cf push`                |
+| `.cfignore`                | Files to exclude from deployment                 | Used by `cf push`                |
 
 ### Skipping Deployment
 
 To push to `main` without triggering deployment, you cannot skip it directly. Instead:
 
 **Option 1:** Use feature branches and PRs (recommended)
+
 ```bash
 git checkout -b feature/my-changes
 git push origin feature/my-changes
@@ -566,6 +590,7 @@ git push origin feature/my-changes
 ```
 
 **Option 2:** Temporarily disable workflow
+
 - Go to repository → Settings → Actions → Disable "Deploy to cloud.gov"
 - Push changes
 - Re-enable workflow
@@ -593,6 +618,7 @@ git push origin feature/my-changes
 ### Deployment Verification
 
 Always verify deployments:
+
 ```bash
 # Check app is running
 cf app svelte-ui-library
@@ -607,6 +633,7 @@ cf logs svelte-ui-library --recent
 ### Monitoring
 
 Set up monitoring for:
+
 - App uptime and availability
 - Response times
 - Error rates
@@ -653,6 +680,7 @@ Cloud.gov provides basic monitoring in the web dashboard: https://dashboard.fr.c
 ### Cloud.gov Support
 
 For cloud.gov platform issues:
+
 - **Email:** [support@cloud.gov](mailto:support@cloud.gov)
 - **Documentation:** https://docs.cloud.gov
 - **Status Page:** https://cloudgov.statuspage.io
@@ -660,6 +688,7 @@ For cloud.gov platform issues:
 ### Project Support
 
 For project-specific deployment issues:
+
 1. Check this documentation
 2. Review [GitHub Actions logs](https://github.com/your-org/svelte-ui/actions)
 3. Check cloud.gov app logs: `cf logs svelte-ui-library --recent`

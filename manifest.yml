@@ -1,10 +1,10 @@
 ---
 applications:
-- name: svelte-ui-library
-  memory: 128M
-  instances: 1
-  buildpacks:
-    - staticfile_buildpack
-  path: ./storybook-static
-  routes:
-    - route: svelte-ui-library.app.cloud.gov
+  - name: svelte-ui-library
+    memory: 128M
+    instances: 1
+    buildpacks:
+      - staticfile_buildpack
+    path: ./storybook-static
+    routes:
+      - route: svelte-ui-library.app.cloud.gov
