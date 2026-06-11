@@ -16,7 +16,11 @@
     "type-check": "tsc --noEmit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test:storybook": "test-storybook"
+    "test:storybook": "test-storybook",
+    "deploy:prepare": "touch storybook-static/Staticfile",
+    "deploy:build": "npm run build-storybook && npm run deploy:prepare",
+    "deploy:push": "cf push",
+    "deploy": "npm run deploy:build && npm run deploy:push"
   },
   "exports": {
     ".": {

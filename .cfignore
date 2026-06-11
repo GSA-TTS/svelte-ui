@@ -1,0 +1,59 @@
+# .cfignore - Exclude files from cloud.gov deployment
+# Only storybook-static/ should be deployed
+
+# Dependencies
+node_modules/
+
+# Source code (not needed for static site)
+src/
+.storybook/
+
+# Version control
+.git/
+.github/
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Configuration files
+.env*
+.gitignore
+.eslintcache
+tsconfig.json
+vite.config.ts
+svelte.config.js
+eslint.config.js
+package.json
+package-lock.json
+
+# Build artifacts (not storybook-static)
+dist/
+coverage/
+
+# Docker
+Dockerfile
+docker-compose.yml
+.devcontainer/
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Project planning
+PROJECT_PLAN.md
+ROADMAP.md
+CONTRIBUTING.md
+SECURITY.md
+
+# AI agent config
+.ai-agent/
+
+# Test artifacts
+playwright-report/
+test-results/
