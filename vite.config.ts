@@ -24,7 +24,7 @@ export default defineConfig({
       fileName: (format) => `svelte-ui.${format}.js`,
     },
     rollupOptions: {
-      external: ["svelte", "svelte/internal"],
+      external: ["svelte", "svelte/internal", "@uswds/uswds"],
       output: {
         globals: {
           svelte: "Svelte",

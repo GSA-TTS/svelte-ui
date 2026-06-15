@@ -1,427 +1,426 @@
-# Contributing
+# Contributing to Svelte UI
 
-Thank you for your interest in improving the Agentic Coding Playbook! This is an internal repository that benefits from input by practitioners across GSA.
-
-## Ecosystem Overview
-
-This repo is one of three in the agentic coding ecosystem:
-
-| Repo                                                                              | Focus                 | Typical Contributions                |
-| --------------------------------------------------------------------------------- | --------------------- | ------------------------------------ |
-| **[Quickstart](https://github.com/GSA-TTS/agentic-coding-quickstart)**            | Environment setup     | SBX fixes, troubleshooting docs      |
-| **[Playbook](https://github.com/GSA-TTS/agentic-coding-playbook)** (you are here) | Standards & practices | Coding standards, skills, templates  |
-| **[Patterns](https://github.com/GSA-TTS/agentic-coding-patterns)**                | Community sharing     | Workflows, lessons learned, examples |
-
-**Not sure where your contribution belongs?** Ask in the agentic-coding Slack channel.
+Thank you for your interest in contributing to Svelte UI! This component library provides government-ready Svelte components built on the U.S. Web Design System (USWDS).
 
 ## Getting Help
 
-- **Questions:** Ask in the agentic-coding Slack channel
-- **Bugs/improvements:** Open a GitHub issue or submit a PR
-- **Security issues:** See [SECURITY.md](SECURITY.md) — direct fixes preferred
+- **Questions:** [Open a GitHub issue](https://github.com/gsa/svelte-ui/issues/new)
+- **Bugs:** [Report an issue](https://github.com/gsa/svelte-ui/issues/new) with reproduction steps
+- **Security issues:** See [SECURITY.md](./SECURITY.md)
+
+## Quick Links
+
+- [Installation Guide](./docs/INSTALLATION.md)
+- [Version Compatibility](./docs/VERSIONING.md)
+- [Coding Standards](../agentic-coding-playbook/docs/CODING_STANDARDS_COMPACT.md)
+- [Architecture Decisions](./docs/adr/)
+- [Live Storybook](https://svelte-ui-library.app.cloud.gov)
+
+## Development Setup
+
+### Prerequisites
+
+- **Node.js:** 24.x or higher
+- **npm:** 10.x or higher
+- **Git:** For version control
+
+### First-Time Setup
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/gsa/svelte-ui.git
+   cd svelte-ui
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Start Storybook:**
+
+   ```bash
+   npm run storybook
+   ```
+
+   Visit `http://localhost:6006` to view components.
+
+### Development Dependencies
+
+This project uses peer dependencies for USWDS and Svelte:
+
+- **For development:** USWDS and Svelte are in `devDependencies` with exact versions (`3.13.0`, `5.56.1`)
+- **For consumers:** USWDS and Svelte are in `peerDependencies` with caret ranges (`^3.13.0`, `^5.56.1`)
+
+**What this means:**
+
+- We test against exact USWDS 3.13.0 and Svelte 5.56.1 during development
+- Consumers can use compatible versions (3.13.x-3.x.x, 5.56.x-5.x.x)
+- Contributors install normally: `npm install` gets exact versions
 
 ## How to Contribute
 
-The simplest approach:
+We welcome contributions! Here's how to get started:
 
-1. **Fix it directly** — Submit a PR (preferred for internal repos)
-2. **Not sure how?** — Open an issue to discuss first
-3. **Questions?** — Ask in the agentic-coding Slack channel
+### Types of Contributions
 
-## Contribution Guidelines
+- **Bug fixes** - Fix issues in existing components
+- **New components** - Add USWDS components to the library
+- **Documentation** - Improve guides, examples, or Storybook stories
+- **Tests** - Add or improve test coverage
+- **Accessibility** - Enhance Section 508 compliance
 
-### Content Standards
+### Contribution Workflow
 
-- **Every recommendation must cite an authoritative source** (NIST publication, OMB memo, CISA guidance, or OWASP standard)
-- **Keep content tool-agnostic** — never recommend a specific vendor or product
-- **Use plain language** — the audience includes federal employees who may not be NIST specialists
-- **Provide actionable examples** — show what to do, not just what the standard says
-- **Include control mappings** — every section should reference applicable NIST 800-53 controls
+1. **Open an issue first** (for major changes)
+   - Describe the problem or feature
+   - Discuss the approach
+   - Get feedback before starting work
 
-### What We Need
+2. **Fork and create a branch:**
 
-- **Practitioner feedback** — Does this playbook work in your agency's environment?
-- **Gap identification** — What security controls or scenarios are missing?
-- **Plain language improvements** — Where is the playbook unclear or too technical?
-- **Template refinements** — Are the templates practical for real ATO packages?
-- **Framework updates** — Has a referenced NIST publication been updated?
+   ```bash
+   git checkout -b feat/my-new-component
+   ```
 
-### What We Don't Accept
+3. **Make your changes:**
+   - Follow coding standards (see below)
+   - Write or update tests
+   - Update documentation
 
-- Vendor-specific recommendations or product placements
-- Classified or CUI content
-- Content that contradicts published NIST guidance without clear justification
-- Speculative recommendations not grounded in authoritative sources
+4. **Test your changes:**
 
-## How to Add a New Skill
+   ```bash
+   npm run lint           # Check code style
+   npm run type-check     # TypeScript validation
+   npm test               # Run unit tests
+   npm run storybook      # Visual testing
+   ```
 
-1. Copy the template: `cp templates/SKILL.md.template skills/your-skill-name/SKILL.md`
-1. Edit the frontmatter — fill in all required fields (`name` must match directory name)
-1. Write the procedure sections (When to Use, Prerequisites, Procedure, Verification)
-1. Add scripts if needed: `skills/your-skill-name/scripts/`
-1. Validate: `make validate-skills`
-1. Regenerate index: `make generate`
-1. Submit a PR
+5. **Commit using conventional commits:**
 
-### Skill Frontmatter Schema
+   ```bash
+   git commit -m "feat: add TextInput component"
+   ```
 
-All skills use this frontmatter (see `templates/SKILL.md.template`):
+6. **Push and create a Pull Request:**
+   ```bash
+   git push origin feat/my-new-component
+   ```
 
-```yaml
----
-name: your-skill-name # Must match directory name
-title: "Human-Readable Title"
-description: "One-line description"
-status: canonical # canonical | draft | deprecated
-tier: 2
-load_priority: on-demand
-audience: ["developers", "agents"]
-triggers: ["keyword1", "keyword2"]
-dependencies: []
----
-```
+### Adding a New Component
 
-### Skill Requirements
+When adding a new USWDS component:
 
-1. **`name` must match the directory name** — lowercase, hyphens only, max 64 characters
-1. **SKILL.md must be under 500 lines** — move reference material to `references/`
-1. **No policy duplication** — reference docs by path (e.g., `docs/GETTING-STARTED.md Section 4`)
-1. **Scripts must be read-only or generative** — never modify git state or install packages
-1. **Scripts must output structured JSON** — `{"status": "...", "results": [...], "warnings": [...], "errors": [...]}`
-1. **All Python scripts must pass ruff lint** — CI enforces this
+1. **Create component directory:**
 
-## How to Add a Federal AI Guidance Entry
+   ```
+   src/lib/components/ComponentName/
+   ├── ComponentName.svelte
+   ├── ComponentName.types.ts
+   └── ComponentName.stories.ts
+   ```
 
-1. Copy the template: see `templates/landscape-entry.yaml.template` for the entry format with all allowed values
-1. Add the entry to `data/federal-ai-landscape.yaml` under the appropriate section
-1. Increment `total_entries` at the top of the YAML file
-1. Add a corresponding section to `docs/FEDERAL-AI-LANDSCAPE.md`
-1. Update the Status Summary table counts in the markdown
-1. Validate: `make validate-landscape`
-1. Submit a PR
+2. **Component structure:**
+   - Use Svelte 5 runes (`$props`, `$derived`, `$state`)
+   - Use USWDS utility classes
+   - Support Section 508 accessibility
+   - Include TypeScript types
 
-**Allowed categories:** `executive_order`, `omb_memo`, `nist_standard`, `legislation`, `agency_strategy`, `industry_standard`, `white_house_plan`
+3. **Add Storybook story with tests:**
+   - Create stories for all variants
+   - Add `play()` functions for interaction tests
+   - Document props in story
 
-**Allowed statuses:** `active`, `revoked`, `rescinded`, `draft`, `final`
+4. **Export from library:**
+   ```typescript
+   // src/lib/index.ts
+   export { default as ComponentName } from "./components/ComponentName/ComponentName.svelte";
+   export type { ComponentProps } from "./components/ComponentName/ComponentName.types.js";
+   ```
 
-## How to Add a New Document
+## Coding Standards
 
-1. Copy the template: `cp templates/doc.md.template docs/YOUR-DOC.md`
-1. Fill in frontmatter (title, description, status, tier are required)
-1. Write content with NIST control references where applicable
-1. Validate: `make validate-docs`
-1. Regenerate index: `make generate`
-1. Submit a PR
+This project follows strict coding standards to ensure quality and consistency.
 
-## How to Update a NIST Control Mapping
+### Key Standards
 
-NIST controls are referenced in three places:
+- **Svelte 5 only** - Use runes API, no legacy syntax
+- **TypeScript** - All components must be typed
+- **USWDS classes** - Use USWDS utility classes for styling
+- **Accessibility** - Section 508 compliance required
+- **Testing** - Tests in `*.stories.ts` files using `play()` functions
+- **No barrel files** - Only `src/lib/index.ts` exports components
 
-1. **AGENTS.md** — frontmatter `nist_controls` array + inline `<!-- NIST: XX-N -->` comments
-1. **docs/SECURITY-CONTROLS.md** — the master control overlay (36 controls mapped)
-1. **docs/TRACEABILITY.md** — bidirectional control-to-document matrix
+### Component Guidelines
 
-To update a mapping:
+- Maximum function length: 50 lines
+- Use `$props()` instead of `export let`
+- Use `onclick={}` instead of `on:click={}`
+- Use `{#snippet}` and `{@render}` instead of `<slot>`
+- Define only component-specific props, use `...restProps` for HTML attributes
+- Avoid unnecessary comments - code should be self-documenting
 
-1. Update the control in `docs/SECURITY-CONTROLS.md` (add or modify the control section)
-1. Update the traceability matrix in `docs/TRACEABILITY.md`
-1. If the control applies to agent behavior, reference it in the relevant AGENTS.md section
-1. Validate: `make validate-docs`
-1. Submit a PR
+For complete coding standards, see [CODING_STANDARDS_COMPACT.md](../agentic-coding-playbook/docs/CODING_STANDARDS_COMPACT.md).
 
-## First-Time Setup
+## Testing Requirements
 
-Run once after cloning the repo:
+All components must include tests. Tests are embedded in Storybook stories.
 
-```bash
-make setup      # Install dependencies only
-```
+### Test Strategy
 
-### Pre-commit Hooks (Optional)
+- **Unit tests:** Embedded in `*.stories.ts` files using `play()` functions
+- **Interaction tests:** Use `@storybook/test` for user interactions
+- **Visual tests:** Storybook provides visual regression capability
+- **Accessibility tests:** Automated with `@storybook/addon-a11y`
 
-Pre-commit hooks are **optional** for this repository. They are designed for **contributors** who are actively developing this project.
-
-**If you cloned this repo for guidance only** (to reference standards for your own projects), **you do not need to install the hooks**.
-
-**If you are contributing to this repo**, you can opt-in to pre-commit hooks:
+### Running Tests
 
 ```bash
-make install-hooks    # [OPTIONAL] Install pre-commit hooks
+# Run unit tests
+npm test
+
+# Run with coverage
+npm run test:coverage
+
+# Run Storybook interaction tests
+npm run test:storybook
+
+# Visual testing (manual)
+npm run storybook
 ```
 
-These hooks run automatically on `git commit` and check for:
+### Writing Tests
 
-- YAML/JSON syntax errors
-- Trailing whitespace and end-of-file fixes
-- Secrets detection (gitleaks)
-- Python linting and formatting (ruff)
+Tests go in the `play()` function of your story:
 
-**CI enforces the same checks** via `make ci`, so hooks are not required — they just provide faster feedback during local development.
+```typescript
+export const Primary: Story = {
+  args: {
+    children: "Click me",
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole("button");
 
-#### Working in SBX Containers
+    // Test interaction
+    await userEvent.click(button);
 
-Most users will be working **inside Docker SBX containers** per the [Quickstart guidance](https://github.com/GSA-TTS/agentic-coding-quickstart). This creates additional considerations for pre-commit hooks.
-
-**Installing the pre-commit tools in a container:**
-
-When you run `make setup` or `make install-hooks` inside an SBX container, the pre-commit tools are installed in that container's environment:
-
-```bash
-sbx exec <sandbox-name> make install-hooks
+    // Assert result
+    await expect(button).toBeInTheDocument();
+  },
+};
 ```
 
-**Two workflows for committing changes:**
+### Test Coverage Requirements
 
-**Workflow A: Edit in container, verify in container, commit on host**
-
-1. Edit files inside the SBX container
-2. Run `make ci` inside the container to verify all checks pass
-3. Exit the container and commit from your host machine
-4. Pre-commit hooks (if installed on host) will run again on commit
-
-This workflow is recommended because:
-
-- Keeps git history on the host (persistent across container restarts)
-- Verifies changes in the same environment where they'll run in CI
-- No risk of losing commits when containers are destroyed
-
-**Workflow B: Edit in container, install hooks in container, commit in container**
-
-1. Edit files inside the SBX container
-2. Install pre-commit hooks inside the container: `make install-hooks`
-3. Commit changes inside the container
-
-**Important:** SBX containers are ephemeral. If the container is destroyed or recreated, any hooks installed inside it will be lost. You'll need to re-run `make install-hooks` in the new container.
-
-**Recommended practice:**
-
-Before committing on your host machine, verify changes in the container first:
-
-```bash
-sbx exec <sandbox-name> make ci
-```
-
-This ensures all checks pass in the standardized SBX environment before you commit. CI will run the same checks, so catching issues early saves time.
-
-## Before Every PR
-
-**Two commands** handle everything — run these before pushing:
-
-```bash
-make generate   # Auto-updates: INDEX.yaml, skills tables, word counts, test/landscape counts
-make ci         # Lint + test + validate + generate-check + SCA audit
-```
-
-`make generate` automatically keeps these in sync so you don't have to:
-
-- Skills tables in README.md, AGENTS.md, AGENT-INSTRUCTIONS.md
-- Word counts in CONTEXT-GUIDE.md
-- Test count and landscape entry count across all docs
-
-If `make ci` passes, your PR is ready.
-
-## Individual Commands
-
-```bash
-make validate-docs       # Document frontmatter
-make validate-skills     # Skill directories
-make validate-landscape  # Federal AI landscape registry
-make test                # Python test suite
-make lint                # Ruff + markdownlint
-make doctor              # Check environment readiness
-make new-project DIR=x   # Bootstrap a new project
-```
+- All interactive components must have interaction tests
+- All props/variants must be tested
+- Accessibility tests must pass (no violations)
+- Aim for 80%+ code coverage
 
 ## Commit Message Format
 
-We follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/) to maintain a clean, parseable git history and enable automated changelog generation. This standard is enforced by CI — PRs with non-conventional titles will not pass checks.
+We follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/) for automated changelog generation.
 
 ### Format
 
 ```
-<type>[optional scope]: <description>
+<type>(<scope>): <description>
 
 [optional body]
 
-[optional footer(s)]
+[optional footer]
 ```
 
-### Types for Playbook Repository
+### Types
 
-| Type       | Description                             | Example                                             |
-| ---------- | --------------------------------------- | --------------------------------------------------- |
-| `feat`     | New skill, doc, or feature              | `feat(skills): add federal-decision-records skill`  |
-| `fix`      | Bug fix in skill or script              | `fix(validator): correct frontmatter schema check`  |
-| `docs`     | Documentation only                      | `docs: update SECURITY-CONTROLS.md`                 |
-| `test`     | Add or fix tests                        | `test(validator): add edge case coverage`           |
-| `chore`    | Maintenance (deps, CI)                  | `chore(deps): update feedparser to 6.0.11`          |
-| `refactor` | Code restructuring (no behavior change) | `refactor(validator): simplify frontmatter parsing` |
-| `perf`     | Performance improvement                 | `perf(validator): cache INDEX.yaml reads`           |
-| `ci`       | CI/CD pipeline changes                  | `ci: add commitlint enforcement`                    |
-
-### Common Scopes
-
-- `skills` — Skill implementations
-- `validator` — Validation scripts in `scripts/`
-- `landscape` — Federal AI landscape registry
-- `docs` — Documentation files
-- `ci` — CI/CD workflows
-- `deps` — Dependencies
+| Type       | Description             | Example                              |
+| ---------- | ----------------------- | ------------------------------------ |
+| `feat`     | New feature             | `feat: add TextInput component`      |
+| `fix`      | Bug fix                 | `fix: correct button aria-label`     |
+| `docs`     | Documentation           | `docs: update installation guide`    |
+| `style`    | Code style (formatting) | `style: fix indentation`             |
+| `refactor` | Code refactoring        | `refactor: simplify Button logic`    |
+| `test`     | Add/update tests        | `test: add Button interaction tests` |
+| `chore`    | Maintenance             | `chore: update dependencies`         |
 
 ### Examples
 
 ✅ **Good:**
 
 ```
-feat(landscape): add Phase 1 foundation for automated monitoring
+feat(components): add Checkbox component
 
-Implement RSS monitoring and version comparison scripts for
-federal AI guidance. Enables automated detection of new EOs,
-OMB memos, and NIST standards.
+Implements USWDS checkbox with full accessibility support
+including keyboard navigation and screen reader labels.
 
-Related to #46
+Closes #42
 ```
 
 ```
-fix(validator): handle skills with no scripts directory
+fix(button): correct disabled state styling
 
-Previously crashed with FileNotFoundError when validating
-skills without a scripts/ directory.
-
-Closes #48
-```
-
-```
-docs: add cloud.gov sandbox 90-day wipe warning
-
-Warn contributors about ephemeral SBX environments to prevent
-data loss.
+The disabled button was not showing the correct USWDS
+disabled styling due to incorrect class application.
 ```
 
 ❌ **Bad:**
 
 ```
-update landscape
+update stuff
 ```
 
 ```
 fixed bug
 ```
 
-```
-WIP: testing stuff
-```
-
-### Line Length
-
-- **First line (subject):** ≤72 characters (recommended), ≤100 characters (enforced by commitlint)
-- **Body lines:** ≤100 characters for readability
-
 ### AI Agent Attribution
 
-**When AI agents contribute to a commit**, include a `Co-authored-by:` trailer per [AGENTS.md section 2.1](AGENTS.md#21-agent-identification):
+When AI agents contribute, add co-author:
 
 ```
-feat(skills): add new pattern
+feat: add new component
 
-Implementation details...
-
-Co-authored-by: OpenCode Agent <user@gsa.gov>
+Co-authored-by: AI Agent <ai-agent@gsa.gov>
 ```
 
-**Format Requirements:**
+## Release Process
 
-- Trailer appears after a blank line following the commit body
-- Uses the format: `Co-authored-by: Agent Name <email@gsa.gov>`
-- Email MUST use `@gsa.gov` domain for federal compliance
-- Multiple co-authors each get their own line
+Releases use `standard-version` for automated changelog and version management.
 
-**Why we require this:**
-
-- Maintains transparent audit trail per AU-2 (Audit Events)
-- Enables attribution in GitHub UI and contribution graphs
-- Distinguishes human-written from AI-assisted code
-- Supports future AI risk management analysis
-
-See [AGENTS.md](AGENTS.md#21-agent-identification) for full AI attribution requirements.
-
-### Validation
-
-Check your commit message locally before pushing:
+### Release Commands
 
 ```bash
-# Option 1: Use commitlint (if installed via pre-commit hooks)
-npx commitlint --from=HEAD~1
+# Stable releases
+npm run release          # Patch (0.1.0 → 0.1.1)
+npm run release:minor    # Minor (0.1.0 → 0.2.0)
+npm run release:major    # Major (0.1.0 → 1.0.0)
 
-# Option 2: Run the full CI suite (includes commitlint)
-make ci
+# Pre-releases
+npm run release:alpha    # Alpha (0.1.0 → 1.0.0-alpha.0)
+npm run release:beta     # Beta (0.1.0 → 1.0.0-beta.0)
+npm run release:rc       # RC (0.1.0 → 1.0.0-rc.0)
+
+# Bump existing pre-release
+npm run release -- --prerelease
 ```
 
-### Pre-commit Hook (Optional)
-
-Automate validation with our pre-commit config:
+### Publishing to npm
 
 ```bash
-# Install pre-commit hooks
-make install-hooks
+# Stable release
+npm publish
 
-# Your commits will now be validated automatically
+# Pre-releases
+npm run publish:alpha
+npm run publish:beta
+npm run publish:rc
 ```
 
-The commitlint hook is already configured in `.pre-commit-config.yaml`.
+### Full Release Workflow
 
-## Releases
+1. **Ensure all tests pass:**
 
-Releases are fully automated. You never need to manually edit CHANGELOG.md, bump versions, or create tags.
+   ```bash
+   npm run lint && npm run type-check && npm test
+   ```
 
-### How it works
+2. **Create release:**
 
-1. **Merge PRs** with conventional commit titles to `main`
-2. **release-please** automatically opens a "Release PR" that:
-   - Bumps the version in `pyproject.toml` and `.release-please-manifest.json`
-   - Generates CHANGELOG.md entries from commit messages (grouped by type)
-3. **When the Release PR is merged**, a git tag and GitHub Release are created automatically
+   ```bash
+   npm run release
+   ```
 
-### Version bump rules (semver)
+3. **Review generated CHANGELOG.md**
 
-| Commit Type                                    | Version Bump | Example                              |
-| ---------------------------------------------- | ------------ | ------------------------------------ |
-| `feat:`                                        | Minor        | 0.4.0 → 0.5.0                        |
-| `fix:`                                         | Patch        | 0.4.0 → 0.4.1                        |
-| `feat!:` or `BREAKING CHANGE:`                 | Major        | 0.4.0 → 1.0.0                        |
-| `docs:`, `chore:`, `refactor:`, `test:`, `ci:` | No bump      | Included in next release's changelog |
+4. **Push with tags:**
 
-### What to do (and not do)
+   ```bash
+   git push --follow-tags origin main
+   ```
 
-- **Do** use conventional commit format for PR titles — CI enforces this
-- **Do** merge the Release PR when you're ready to cut a release
-- **Do not** manually edit CHANGELOG.md — release-please generates it
-- **Do not** manually bump versions in pyproject.toml — release-please handles this
-- **Do not** manually create git tags — release-please creates them on merge
+5. **Publish to npm:**
+   ```bash
+   npm publish
+   ```
 
-### Keeping content accurate
+### Pre-release Workflow
 
-After making changes, run `make generate` to auto-update:
+Use pre-releases for testing before stable:
 
-- INDEX.yaml (document and skill metadata)
-- Skills tables in README.md, AGENTS.md, docs/AGENT-INSTRUCTIONS.md
-- Word counts in CONTEXT-GUIDE.md
+```bash
+# Create alpha
+npm run release:alpha
+git push --follow-tags origin main
+npm run publish:alpha
 
-Then run `make ci` to verify everything passes before pushing.
+# Bump alpha after fixes
+npm run release -- --prerelease
+git push --follow-tags origin main
+npm run publish:alpha
 
-## Review Process
+# Graduate to stable
+npm run release
+git push --follow-tags origin main
+npm publish
+```
 
-All pull requests require review. Changes to security standards require additional attention.
+See [docs/VERSIONING.md](./docs/VERSIONING.md) for detailed pre-release guidelines.
 
-## Teams
+## Pull Request Process
 
-- **[@GSA-TTS/agentic-coding-team](https://github.com/orgs/GSA-TTS/teams/agentic-coding-team):** Team members — review, contribute, provide feedback
-- **[@GSA-TTS/agentic-coding-admins](https://github.com/orgs/GSA-TTS/teams/agentic-coding-admins):** Repository administrators — merge, release, maintain
+1. **Update documentation** if adding features or changing APIs
+2. **Add/update tests** for all code changes
+3. **Ensure all checks pass:**
+   - Linting (`npm run lint`)
+   - Type checking (`npm run type-check`)
+   - Tests (`npm test`)
+   - Build (`npm run build`)
+4. **Request review** from maintainers
+5. **Address feedback** promptly
+
+### PR Checklist
+
+- [ ] Tests added/updated and passing
+- [ ] Documentation updated
+- [ ] Storybook story created/updated
+- [ ] Accessibility verified (no a11y violations)
+- [ ] USWDS styling correct
+- [ ] Conventional commit format used
+- [ ] CHANGELOG.md will be auto-generated (don't edit manually)
 
 ## Code of Conduct
 
-Be professional, constructive, and respectful. Quality and accuracy matter.
+### Our Standards
 
-## Share What You Learn
+- Be respectful and professional
+- Focus on what's best for the project and community
+- Accept constructive criticism gracefully
+- Show empathy toward other contributors
 
-Discovered a useful workflow or pattern while using this playbook? Consider sharing it in the [Patterns repo](https://github.com/GSA-TTS/agentic-coding-patterns) so others can benefit.
+### Unacceptable Behavior
+
+- Harassment, discrimination, or personal attacks
+- Trolling or insulting/derogatory comments
+- Publishing others' private information
+- Unprofessional conduct
+
+## Project Team
+
+- **Project Owner:** Jeff Keene - Engineer
+- **Agency:** GSA-TTS
+
+## License
+
+By contributing, you agree that your contributions will be licensed under the CC0-1.0 License (public domain).
+
+## Questions?
+
+- Open an issue on GitHub
+- Check existing issues and documentation first
+- Be specific and provide context
+
+Thank you for contributing to Svelte UI! 🎉

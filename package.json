@@ -6,7 +6,17 @@
   "scripts": {
     "audit": "npm audit --audit-level=high",
     "build": "vite build",
-    "prepublishOnly": "npm run build",
+    "verify-package": "bash scripts/verify-package.sh",
+    "prepublishOnly": "npm run verify-package",
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "release:alpha": "standard-version --prerelease alpha",
+    "release:beta": "standard-version --prerelease beta",
+    "release:rc": "standard-version --prerelease rc",
+    "publish:alpha": "npm publish --tag alpha",
+    "publish:beta": "npm publish --tag beta",
+    "publish:rc": "npm publish --tag rc",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "check": "svelte-check --tsconfig ./tsconfig.json",
@@ -39,7 +49,13 @@
     "!dist/**/*.spec.*"
   ],
   "peerDependencies": {
-    "svelte": "5.56.1"
+    "@uswds/uswds": "^3.13.0",
+    "svelte": "^5.56.1"
+  },
+  "peerDependenciesMeta": {
+    "@uswds/uswds": {
+      "optional": false
+    }
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -63,6 +79,7 @@
     "prettier": "3.8.3",
     "prettier-plugin-svelte": "4.1.0",
     "sass": "1.83.4",
+    "standard-version": "9.5.0",
     "storybook": "^10.4.5",
     "svelte": "5.56.1",
     "svelte-check": "4.5.0",
@@ -77,12 +94,15 @@
   "types": "./dist/index.d.ts",
   "keywords": [
     "svelte",
+    "svelte5",
     "component-library",
     "uswds",
     "design-system",
     "accessibility",
     "section-508",
-    "typescript"
+    "typescript",
+    "government",
+    "federal"
   ],
   "repository": {
     "type": "git",
