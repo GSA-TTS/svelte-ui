@@ -43,11 +43,11 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@storybook/addon-a11y": "10.4.2",
+    "@storybook/addon-a11y": "^10.4.5",
     "@storybook/addon-svelte-csf": "5.1.2",
-    "@storybook/addon-vitest": "10.4.2",
-    "@storybook/svelte": "10.4.2",
-    "@storybook/svelte-vite": "10.4.2",
+    "@storybook/addon-vitest": "^10.4.5",
+    "@storybook/svelte": "^10.4.5",
+    "@storybook/svelte-vite": "^10.4.5",
     "@storybook/test-runner": "0.24.4",
     "@sveltejs/vite-plugin-svelte": "5.1.1",
     "@testing-library/svelte": "5.3.1",
@@ -63,7 +63,7 @@
     "prettier": "3.8.3",
     "prettier-plugin-svelte": "4.1.0",
     "sass": "1.83.4",
-    "storybook": "10.4.2",
+    "storybook": "^10.4.5",
     "svelte": "5.56.1",
     "svelte-check": "4.5.0",
     "tslib": "2.8.1",
@@ -93,5 +93,8 @@
   "engines": {
     "node": ">=24.0.0",
     "npm": ">=10.0.0"
+  },
+  "overrides": {
+    "esbuild": "0.28.1"
   }
 }

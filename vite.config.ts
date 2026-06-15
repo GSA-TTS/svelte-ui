@@ -17,6 +17,7 @@ export default defineConfig({
     }),
   ],
   build: {
+    target: "esnext",
     lib: {
       entry: resolve(__dirname, "src/lib/index.ts"),
       name: "SvelteUI",
