@@ -20,22 +20,22 @@ const config: StorybookConfig = {
         "import.meta.vitest": "undefined",
       };
     }
-    
+
     // Set build target to esnext to avoid esbuild transpilation issues
     // with modern JavaScript features (destructuring in for-of loops)
     if (!config.build) {
       config.build = {};
     }
     config.build.target = "esnext";
-    
+
     // Also set optimizeDeps target for dev server
     if (!config.optimizeDeps) {
       config.optimizeDeps = {};
     }
     config.optimizeDeps.esbuildOptions = {
-      target: "esnext"
+      target: "esnext",
     };
-    
+
     return config;
   },
 };
