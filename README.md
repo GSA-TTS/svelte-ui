@@ -11,6 +11,72 @@ A comprehensive, adaptable Svelte component library that leverages the U.S. Web 
 - Comprehensive testing with Vitest and Storybook
 - Interactive documentation with Storybook
 
+## Installation
+
+### Install the package and USWDS
+
+```bash
+npm install svelte-ui @uswds/uswds
+```
+
+### Import USWDS styles
+
+**Option A - From node_modules (Recommended):**
+
+```javascript
+// In your app entry point (e.g., +layout.svelte or main.js)
+import "@uswds/uswds/dist/css/uswds.min.css";
+```
+
+**Option B - From CDN:**
+
+```html
+<!-- In your index.html or app.html -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@uswds/uswds@3.13.0/dist/css/uswds.min.css"
+/>
+```
+
+### Import and use components
+
+```svelte
+<script>
+  import { Button } from 'svelte-ui';
+</script>
+
+<Button>Click me</Button>
+<Button variant="secondary">Secondary Button</Button>
+<Button size="big">Big Button</Button>
+```
+
+### USWDS Assets (Fonts, Icons, Images)
+
+We recommend using the USWDS CDN for assets:
+
+```html
+<!-- Add to your HTML head -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&family=Merriweather:wght@700&family=Roboto+Mono&display=swap"
+  rel="stylesheet"
+/>
+```
+
+For self-hosting assets, see the [USWDS documentation](https://designsystem.digital.gov/documentation/getting-started/developers/).
+
+For detailed installation instructions, see [docs/INSTALLATION.md](./docs/INSTALLATION.md).
+
+## Peer Dependencies
+
+This library requires:
+
+- **USWDS 3.13.x or higher** (but not 4.x)
+- **Svelte 5.56.x or higher** (but not 6.x)
+
+See [docs/VERSIONING.md](./docs/VERSIONING.md) for our version compatibility policy.
+
 ## Quick Start
 
 > **Note:** This is a **component library**, not a full application. Use **Storybook** for component development and documentation.
@@ -101,8 +167,15 @@ svelte-ui/
 ## Available Components
 
 - **Button** - Customizable button component with USWDS styling
-- **TextInput** - Form input with validation and accessibility
-- **Checkbox** - Accessible checkbox with label support
+
+  ```svelte
+  <Button variant="secondary" size="big">Secondary Button</Button>
+  ```
+
+- **TextInput** - Form input with validation and accessibility (planned)
+- **Checkbox** - Accessible checkbox with label support (planned)
+
+See [Storybook documentation](https://svelte-ui-library.app.cloud.gov) for interactive examples.
 
 ## Testing
 
