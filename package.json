@@ -1,5 +1,5 @@
 {
-  "name": "svelte-ui",
+  "name": "@jeffkeene-gsa/svelte-ui-uswds",
   "version": "0.1.1-alpha.0",
   "description": "Svelte UI component library with USWDS styling",
   "type": "module",
@@ -14,7 +14,7 @@
     "release:alpha": "standard-version --prerelease alpha",
     "release:beta": "standard-version --prerelease beta",
     "release:rc": "standard-version --prerelease rc",
-    "publish:alpha": "npm publish --tag alpha",
+    "publish:alpha": "npm publish --tag alpha --access public",
     "publish:beta": "npm publish --tag beta",
     "publish:rc": "npm publish --tag rc",
     "test": "vitest",
