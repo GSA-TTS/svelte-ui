@@ -1,25 +1,13 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+### 0.1.1-alpha.0 (2026-06-17)
 
-## [Unreleased]
 
-### Added
+### Bug Fixes
 
-- USWDS peer dependency (^3.13.0)
-- Installation documentation
-- Version compatibility guide
-- Button component with USWDS styling
-- Automated release workflow with standard-version
-- Build verification script
-
-### Changed
-
-- USWDS now peer dependency (not bundled)
-- Svelte peer dependency uses caret range (^5.56.1)
+* **deps:** resolve npm audit HIGH vulnerabilities blocking deployment ([7fdf4ea](https://github.com/gsa/svelte-ui/commit/7fdf4ea76cdd05f8c1b7fee7bcd92c1f0fa94fba))
 
 ## [0.1.0] - TBD
 
