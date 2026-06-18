@@ -48,7 +48,7 @@ Svelte UI is a comprehensive Svelte component library built specifically for the
 - [x] Versioning strategy (SemVer)
 - [x] Changelog automation (standard-version)
 - [x] Release documentation
-- [ ] First npm publish
+- [x] First npm publish
 - [ ] CDN setup (optional)
 
 ---
