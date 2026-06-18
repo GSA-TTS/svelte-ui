@@ -4,30 +4,28 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [0.2.0-alpha.1](https://github.com/gsa/svelte-ui/compare/v0.1.1-alpha.1...v0.2.0-alpha.1) (2026-06-18)
 
-
 ### ⚠ BREAKING CHANGES
 
-* Package now includes source files. Projects using this
-package should ensure they can process .svelte files.
-* Package now includes source files. Projects using this
-package should ensure they can process .svelte files.
+- Package now includes source files. Projects using this
+  package should ensure they can process .svelte files.
+- Package now includes source files. Projects using this
+  package should ensure they can process .svelte files.
 
 ### Features
 
-* add SSR support by exposing source files ([8a0832b](https://github.com/gsa/svelte-ui/commit/8a0832bcdfa064d1ea21079e9f476379dfaedd5f))
-* add SSR support by exposing source files ([c79749e](https://github.com/gsa/svelte-ui/commit/c79749e6ae3b0851938d4e667b10dd7d00cd6a48))
+- add SSR support by exposing source files ([8a0832b](https://github.com/gsa/svelte-ui/commit/8a0832bcdfa064d1ea21079e9f476379dfaedd5f))
+- add SSR support by exposing source files ([c79749e](https://github.com/gsa/svelte-ui/commit/c79749e6ae3b0851938d4e667b10dd7d00cd6a48))
 
 ## [0.2.0-alpha.0](https://github.com/gsa/svelte-ui/compare/v0.1.1-alpha.1...v0.2.0-alpha.0) (2026-06-18)
 
-
 ### ⚠ BREAKING CHANGES
 
-* Package now includes source files. Projects using this
-package should ensure they can process .svelte files.
+- Package now includes source files. Projects using this
+  package should ensure they can process .svelte files.
 
 ### Features
 
-* add SSR support by exposing source files ([c79749e](https://github.com/gsa/svelte-ui/commit/c79749e6ae3b0851938d4e667b10dd7d00cd6a48))
+- add SSR support by exposing source files ([c79749e](https://github.com/gsa/svelte-ui/commit/c79749e6ae3b0851938d4e667b10dd7d00cd6a48))
 
 ### [0.1.1-alpha.1](https://github.com/gsa/svelte-ui/compare/v0.1.1-alpha.0...v0.1.1-alpha.1) (2026-06-17)
 
