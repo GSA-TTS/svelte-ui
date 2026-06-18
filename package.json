@@ -1,6 +1,6 @@
 {
   "name": "@jeffkeene-gsa/svelte-ui-uswds",
-  "version": "0.2.0-alpha.0",
+  "version": "0.2.0-alpha.1",
   "description": "Svelte UI component library with USWDS styling",
   "type": "module",
   "scripts": {
