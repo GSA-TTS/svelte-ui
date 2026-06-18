@@ -1,6 +1,6 @@
 {
   "name": "@jeffkeene-gsa/svelte-ui-uswds",
-  "version": "0.1.1-alpha.1",
+  "version": "0.2.0-alpha.1",
   "description": "Svelte UI component library with USWDS styling",
   "type": "module",
   "scripts": {
@@ -35,7 +35,8 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "svelte": "./dist/svelte-ui.es.js"
+      "svelte": "./src/lib/index.ts",
+      "default": "./dist/svelte-ui.es.js"
     },
     "./styles": "./src/lib/styles/index.css",
     "./styles/uswds.css": "./src/lib/styles/uswds.css",
@@ -44,9 +45,10 @@
   },
   "files": [
     "dist",
-    "src/lib/styles",
-    "!dist/**/*.test.*",
-    "!dist/**/*.spec.*"
+    "src/lib",
+    "!src/lib/**/*.test.*",
+    "!src/lib/**/*.spec.*",
+    "!src/lib/**/*.stories.*"
   ],
   "peerDependencies": {
     "@uswds/uswds": "^3.13.0",

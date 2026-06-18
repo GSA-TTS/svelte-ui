@@ -53,9 +53,6 @@ export default defineConfig({
       ],
     },
   },
-  resolve: {
-    conditions: ["browser"],
-  },
   server: {
     host: "0.0.0.0",
     port: 5173,
