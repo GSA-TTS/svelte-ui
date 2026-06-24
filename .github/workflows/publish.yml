@@ -1,0 +1,166 @@
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+  issues: write
+
+jobs:
+  validate:
+    name: Validate Release
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.extract.outputs.version }}
+      dist-tag: ${{ steps.extract.outputs.dist-tag }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Verify tag format
+        run: |
+          if [[ ! "${{ github.event.release.tag_name }}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?$ ]]; then
+            echo "Error: Tag format invalid. Expected: vX.Y.Z or vX.Y.Z-prerelease"
+            echo "Got: ${{ github.event.release.tag_name }}"
+            exit 1
+          fi
+          echo "✅ Tag format valid: ${{ github.event.release.tag_name }}"
+
+      - name: Extract version and determine dist-tag
+        id: extract
+        run: |
+          TAG="${{ github.event.release.tag_name }}"
+          VERSION="${TAG#v}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          
+          if [[ "$VERSION" == *"alpha"* ]]; then
+            DIST_TAG="alpha"
+          elif [[ "$VERSION" == *"beta"* ]]; then
+            DIST_TAG="beta"
+          elif [[ "$VERSION" == *"rc"* ]]; then
+            DIST_TAG="rc"
+          else
+            DIST_TAG="latest"
+          fi
+          
+          echo "dist-tag=$DIST_TAG" >> $GITHUB_OUTPUT
+          echo "📦 Version: $VERSION"
+          echo "🏷️  Dist-tag: $DIST_TAG"
+
+      - name: Verify package.json version matches tag
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          TAG_VERSION="${{ steps.extract.outputs.version }}"
+          
+          if [[ "$PACKAGE_VERSION" != "$TAG_VERSION" ]]; then
+            echo "Error: Version mismatch!"
+            echo "package.json: $PACKAGE_VERSION"
+            echo "Git tag: $TAG_VERSION"
+            exit 1
+          fi
+          
+          echo "✅ Version verified: $PACKAGE_VERSION"
+
+  publish:
+    name: Build and Publish to npm
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run type-check
+
+      - name: Svelte check
+        run: npm run check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build package
+        run: npm run build
+
+      - name: Verify package
+        run: npm run verify-package
+
+      - name: Publish to npm
+        run: |
+          echo "📦 Publishing version: ${{ needs.validate.outputs.version }}"
+          echo "🏷️  Using dist-tag: ${{ needs.validate.outputs.dist-tag }}"
+          npm publish --provenance --access public --tag ${{ needs.validate.outputs.dist-tag }}
+
+      - name: Comment on release
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const version = '${{ needs.validate.outputs.version }}';
+            const distTag = '${{ needs.validate.outputs.dist-tag }}';
+            const packageName = '@jeffkeene-gsa/svelte-ui-uswds';
+            
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.release.id,
+              body: `✅ **Published to npm successfully!**
+              
+              📦 **Package:** [\`${packageName}@${version}\`](https://www.npmjs.com/package/${packageName}/v/${version})
+              🏷️ **Dist-tag:** \`${distTag}\`
+              
+              **Install:**
+              \`\`\`bash
+              npm install ${packageName}@${distTag}
+              \`\`\`
+              
+              **Or specific version:**
+              \`\`\`bash
+              npm install ${packageName}@${version}
+              \`\`\`
+              
+              🔒 **Provenance:** [View attestation](https://www.npmjs.com/package/${packageName}/v/${version})
+              `
+            });
+
+      - name: Report failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.release.id,
+              body: `❌ **npm publish failed**
+              
+              The automated publish workflow encountered an error.
+              
+              **Actions run:** [View logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+              
+              **Next steps:**
+              1. Check the workflow logs for details
+              2. Fix any issues
+              3. If needed, you can re-run the workflow from the Actions tab
+              4. See [troubleshooting guide](https://github.com/${{ github.repository }}/blob/main/docs/RELEASE_PROCESS.md#troubleshooting) for common issues
+              `
+            });

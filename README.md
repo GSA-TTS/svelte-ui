@@ -1,5 +1,8 @@
 # Svelte UI - Component Library
 
+[![npm version](https://badge.fury.io/js/@jeffkeene-gsa%2Fsvelte-ui-uswds.svg)](https://www.npmjs.com/package/@jeffkeene-gsa/svelte-ui-uswds)
+[![npm downloads](https://img.shields.io/npm/dm/@jeffkeene-gsa/svelte-ui-uswds.svg)](https://www.npmjs.com/package/@jeffkeene-gsa/svelte-ui-uswds)
+
 A comprehensive, adaptable Svelte component library that leverages the U.S. Web Design System (USWDS) as the default design system while maintaining design system-agnostic flexibility.
 
 ## Features
@@ -13,11 +16,22 @@ A comprehensive, adaptable Svelte component library that leverages the U.S. Web 
 
 ## Installation
 
-### Install the package and USWDS
+> **Note:** This library is currently in alpha. Use the `@alpha` tag for the latest features.  
+> Production-ready stable releases will be announced when available.
+
+### For Alpha Testing (Latest Features)
 
 ```bash
-npm install svelte-ui @uswds/uswds
+npm install @jeffkeene-gsa/svelte-ui-uswds@alpha @uswds/uswds
 ```
+
+### For Stable Releases (When Available)
+
+```bash
+npm install @jeffkeene-gsa/svelte-ui-uswds @uswds/uswds
+```
+
+Check [Releases](https://github.com/GSA-TTS/svelte-ui/releases) for version history.
 
 ### Import USWDS styles
 
@@ -234,6 +248,23 @@ For detailed deployment instructions, see [docs/DEPLOYMENT.md](./docs/DEPLOYMENT
 - Cloud.gov access to `sandbox-gsa` organization
 - Service account credentials configured in GitHub Secrets
 - All CI tests must pass before deployment
+
+## For Maintainers
+
+### Creating Releases
+
+See [Release Process Guide](./docs/RELEASE_PROCESS.md) for step-by-step instructions on creating and publishing releases.
+
+**Quick reference:**
+```bash
+npm run release:alpha  # Alpha release
+npm run release:beta   # Beta release
+npm run release        # Patch release
+npm run release:minor  # Minor release
+npm run release:major  # Major release
+```
+
+After merging the release PR, create a GitHub Release to trigger automated publishing to npm.
 
 ## License
 

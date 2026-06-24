@@ -408,6 +408,49 @@ See [docs/VERSIONING.md](./docs/VERSIONING.md) for detailed pre-release guidelin
 - Publishing others' private information
 - Unprofessional conduct
 
+## For Maintainers
+
+This section is for repository maintainers who have publish access and create releases.
+
+### Creating Releases
+
+**Full Guide:** See [Release Process Guide](./docs/RELEASE_PROCESS.md)
+
+**Quick Overview:**
+
+1. Create release branch: `git checkout -b release/vX.Y.Z`
+2. Run standard-version: `npm run release:alpha`
+3. Push branch and tag: `git push origin release/vX.Y.Z && git push origin vX.Y.Z`
+4. Create release PR to main
+5. Get approval and merge
+6. Create GitHub Release (triggers automated npm publish)
+
+### Release Types
+
+| Type | Command | When to Use |
+|------|---------|-------------|
+| Alpha | `npm run release:alpha` | Early testing, daily releases |
+| Beta | `npm run release:beta` | Feature complete, needs testing |
+| RC | `npm run release:rc` | Release candidate, final testing |
+| Patch | `npm run release` | Bug fixes |
+| Minor | `npm run release:minor` | New features |
+| Major | `npm run release:major` | Breaking changes |
+
+### Publishing
+
+Publishing to npm is **fully automated** via GitHub Actions:
+- Triggers when you publish a GitHub Release
+- Runs full CI test suite
+- Publishes with npm provenance
+- No manual `npm publish` needed
+
+**Requirements:**
+- npm Trusted Publishing configured (already done)
+- GitHub Release published (not draft)
+- All CI checks passing
+
+See [Release Process Guide](./docs/RELEASE_PROCESS.md) for complete details.
+
 ## Project Team
 
 - **Project Owner:** Jeff Keene - Engineer
