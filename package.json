@@ -108,7 +108,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/gsa/svelte-ui"
+    "url": "https://github.com/GSA-TTS/svelte-ui"
   },
   "license": "CC0-1.0",
   "author": "GSA-TTSE",
