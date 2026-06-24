@@ -427,24 +427,26 @@ This section is for repository maintainers who have publish access and create re
 
 ### Release Types
 
-| Type | Command | When to Use |
-|------|---------|-------------|
-| Alpha | `npm run release:alpha` | Early testing, daily releases |
-| Beta | `npm run release:beta` | Feature complete, needs testing |
-| RC | `npm run release:rc` | Release candidate, final testing |
-| Patch | `npm run release` | Bug fixes |
-| Minor | `npm run release:minor` | New features |
-| Major | `npm run release:major` | Breaking changes |
+| Type  | Command                 | When to Use                      |
+| ----- | ----------------------- | -------------------------------- |
+| Alpha | `npm run release:alpha` | Early testing, daily releases    |
+| Beta  | `npm run release:beta`  | Feature complete, needs testing  |
+| RC    | `npm run release:rc`    | Release candidate, final testing |
+| Patch | `npm run release`       | Bug fixes                        |
+| Minor | `npm run release:minor` | New features                     |
+| Major | `npm run release:major` | Breaking changes                 |
 
 ### Publishing
 
 Publishing to npm is **fully automated** via GitHub Actions:
+
 - Triggers when you publish a GitHub Release
 - Runs full CI test suite
 - Publishes with npm provenance
 - No manual `npm publish` needed
 
 **Requirements:**
+
 - npm Trusted Publishing configured (already done)
 - GitHub Release published (not draft)
 - All CI checks passing

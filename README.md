@@ -256,6 +256,7 @@ For detailed deployment instructions, see [docs/DEPLOYMENT.md](./docs/DEPLOYMENT
 See [Release Process Guide](./docs/RELEASE_PROCESS.md) for step-by-step instructions on creating and publishing releases.
 
 **Quick reference:**
+
 ```bash
 npm run release:alpha  # Alpha release
 npm run release:beta   # Beta release

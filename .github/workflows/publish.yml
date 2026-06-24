@@ -37,7 +37,7 @@ jobs:
           TAG="${{ github.event.release.tag_name }}"
           VERSION="${TAG#v}"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
-          
+
           if [[ "$VERSION" == *"alpha"* ]]; then
             DIST_TAG="alpha"
           elif [[ "$VERSION" == *"beta"* ]]; then
@@ -47,7 +47,7 @@ jobs:
           else
             DIST_TAG="latest"
           fi
-          
+
           echo "dist-tag=$DIST_TAG" >> $GITHUB_OUTPUT
           echo "📦 Version: $VERSION"
           echo "🏷️  Dist-tag: $DIST_TAG"
@@ -56,14 +56,14 @@ jobs:
         run: |
           PACKAGE_VERSION=$(node -p "require('./package.json').version")
           TAG_VERSION="${{ steps.extract.outputs.version }}"
-          
+
           if [[ "$PACKAGE_VERSION" != "$TAG_VERSION" ]]; then
             echo "Error: Version mismatch!"
             echo "package.json: $PACKAGE_VERSION"
             echo "Git tag: $TAG_VERSION"
             exit 1
           fi
-          
+
           echo "✅ Version verified: $PACKAGE_VERSION"
 
   publish:
@@ -118,7 +118,7 @@ jobs:
             const version = '${{ needs.validate.outputs.version }}';
             const distTag = '${{ needs.validate.outputs.dist-tag }}';
             const packageName = '@jeffkeene-gsa/svelte-ui-uswds';
-            
+
             github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,

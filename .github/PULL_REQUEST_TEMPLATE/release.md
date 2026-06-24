@@ -8,17 +8,20 @@
 ### Pre-Merge Verification
 
 #### Version & Changelog
+
 - [ ] Version number in `package.json` is correct
 - [ ] `CHANGELOG.md` has been updated with all changes since last release
 - [ ] CHANGELOG entry is in correct format and location
 - [ ] Release commit message follows conventional commits format
 
 #### Code Quality
+
 - [ ] All CI checks pass (type-check, svelte-check, lint, tests, build)
 - [ ] No unexpected file changes (check `git diff`)
 - [ ] No unrelated changes included
 
 #### Git Tags
+
 - [ ] Git tag has been created: `vX.Y.Z`
 - [ ] Tag has been pushed to origin: `git push origin vX.Y.Z`
 - [ ] Tag matches version in package.json

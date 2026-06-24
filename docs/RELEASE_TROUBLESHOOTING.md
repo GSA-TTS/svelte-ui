@@ -22,11 +22,13 @@
 **Symptom:** Workflow fails at "Run tests" step
 
 **Causes:**
+
 - Tests pass locally but fail in CI
 - Environment differences
 - Flaky tests
 
 **Solution:**
+
 ```bash
 # Run tests locally exactly as CI does
 npm ci  # Clean install
@@ -39,6 +41,7 @@ npm test
 ```
 
 **Prevention:**
+
 - Always run full test suite before creating release PR
 - Fix flaky tests immediately
 
@@ -49,11 +52,13 @@ npm test
 **Symptom:** Workflow fails at "Build package" step
 
 **Causes:**
+
 - Build works locally but fails in CI
 - Missing dependencies
 - TypeScript errors
 
 **Solution:**
+
 ```bash
 # Clean build locally
 rm -rf dist node_modules
@@ -66,6 +71,7 @@ npm run check
 ```
 
 **If build passes locally:**
+
 1. Check workflow logs for specific error
 2. May be environment issue
 3. Re-run workflow
@@ -78,6 +84,7 @@ npm run check
 **Symptom:** Workflow fails at "Publish to npm" with 403 error
 
 **Causes:**
+
 - npm Trusted Publishing not configured correctly
 - Workflow file path doesn't match npm configuration
 - Package name/scope permissions issue
@@ -85,6 +92,7 @@ npm run check
 **Solution:**
 
 **Check 1: Verify npm Trusted Publishing configuration**
+
 1. Go to: https://www.npmjs.com/package/@jeffkeene-gsa/svelte-ui-uswds/access
 2. Check "Trusted Publishers" section
 3. Verify:
@@ -93,16 +101,19 @@ npm run check
    - Status: Active
 
 **Check 2: Verify workflow file path**
+
 ```bash
 # Confirm workflow file exists at exact path
 ls -la .github/workflows/publish.yml
 ```
 
 **Check 3: Verify scope permissions**
+
 - Go to: https://www.npmjs.com/settings/@jeffkeene-gsa/packages
 - Confirm you have publish access to scope
 
 **If still failing:**
+
 - Check workflow logs for detailed error message
 - Verify package name in package.json matches npm configuration
 
@@ -113,11 +124,13 @@ ls -la .github/workflows/publish.yml
 **Symptom:** `npm ERR! 403 You cannot publish over the previously published versions`
 
 **Cause:**
+
 - Version already published to npm
 - Forgot to bump version before release
 - Tag reused from previous release
 
 **Solution:**
+
 ```bash
 # Check what versions exist on npm
 npm view @jeffkeene-gsa/svelte-ui-uswds versions
@@ -139,6 +152,7 @@ git push origin v0.3.0-alpha.1
 ```
 
 **Prevention:**
+
 - Always check npm for existing versions before releasing
 - Use standard-version to auto-increment prerelease versions
 
@@ -151,11 +165,13 @@ git push origin v0.3.0-alpha.1
 **Symptom:** Workflow fails at "Verify package.json version matches tag"
 
 **Cause:**
+
 - Manual version edit in package.json
 - Tag created manually instead of by standard-version
 - Mismatch between git tag and package version
 
 **Solution:**
+
 ```bash
 # Check current package version
 node -p "require('./package.json').version"
@@ -171,6 +187,7 @@ git push origin vX.Y.Z
 ```
 
 **Prevention:**
+
 - Always use `npm run release:*` commands
 - Never manually edit version in package.json
 - Never manually create version tags
@@ -182,11 +199,13 @@ git push origin vX.Y.Z
 **Symptom:** CHANGELOG.md doesn't have new version section
 
 **Cause:**
+
 - No commits since last release using conventional commits format
 - standard-version didn't detect changes
 - CHANGELOG was manually edited incorrectly
 
 **Solution:**
+
 ```bash
 # Check commits since last release
 git log v0.2.0-alpha.1..HEAD --oneline
@@ -204,6 +223,7 @@ npm run release:alpha -- --dry-run
 ```
 
 **Prevention:**
+
 - Use conventional commit format for all commits
 - Use commit linter (commitlint) to enforce format
 
@@ -216,6 +236,7 @@ npm run release:alpha -- --dry-run
 **Symptom:** Workflow fails with "Failed to get OIDC token" or similar
 
 **Cause:**
+
 - GitHub OIDC configuration issue
 - Workflow permissions incorrect
 - npm Trusted Publishing not properly configured
@@ -223,20 +244,23 @@ npm run release:alpha -- --dry-run
 **Solution:**
 
 **Check 1: Workflow permissions**
+
 ```yaml
 # In .github/workflows/publish.yml
 permissions:
   contents: read
-  id-token: write  # REQUIRED for OIDC
+  id-token: write # REQUIRED for OIDC
   issues: write
 ```
 
 **Check 2: npm Trusted Publishing**
+
 1. Go to npm package settings
 2. Verify Trusted Publishing is configured
 3. Verify repository and workflow path match exactly
 
 **Check 3: Re-run workflow**
+
 - Sometimes transient OIDC issues resolve on retry
 
 ---
@@ -248,10 +272,12 @@ permissions:
 **Symptom:** `fatal: tag 'vX.Y.Z' already exists`
 
 **Cause:**
+
 - Previous release attempt with same version
 - Tag not cleaned up from failed release
 
 **Solution:**
+
 ```bash
 # List existing tags
 git tag --list | grep vX.Y.Z
@@ -267,6 +293,7 @@ npm run release:alpha
 ```
 
 **Warning:** Only delete tags that haven't been published to npm. Check npm first:
+
 ```bash
 npm view @jeffkeene-gsa/svelte-ui-uswds versions
 ```
@@ -278,11 +305,13 @@ npm view @jeffkeene-gsa/svelte-ui-uswds versions
 **Symptom:** Tag doesn't appear in "Choose a tag" dropdown when creating release
 
 **Cause:**
+
 - Tag wasn't pushed to remote
 - Tag push failed
 - GitHub UI not refreshed
 
 **Solution:**
+
 ```bash
 # Check if tag exists locally
 git tag --list | grep vX.Y.Z
@@ -303,6 +332,7 @@ git push origin vX.Y.Z
 **Symptom:** CI fails on lint check
 
 **Solution:**
+
 ```bash
 # Run lint locally
 npm run lint
@@ -323,6 +353,7 @@ git push origin release/branch-name
 **Symptom:** CI fails on type-check
 
 **Solution:**
+
 ```bash
 # Run type check locally
 npm run type-check
@@ -345,6 +376,7 @@ git push origin release/branch-name
 **Workaround:** Wait for GitHub to recover. With current security settings (tokens disallowed), you cannot publish manually without temporarily changing npm settings.
 
 **If absolutely critical:**
+
 1. Go to npm package settings
 2. Temporarily change publishing access to allow tokens
 3. Create granular token
@@ -361,17 +393,20 @@ git push origin release/branch-name
 **Symptom:** Published version has critical bug
 
 **Within 72 hours:**
+
 ```bash
 npm unpublish @jeffkeene-gsa/svelte-ui-uswds@X.Y.Z
 ```
 
 **After 72 hours (unpublish blocked):**
+
 ```bash
 # Deprecate the version
 npm deprecate @jeffkeene-gsa/svelte-ui-uswds@X.Y.Z "Critical bug, use X.Y.Z+1 instead"
 ```
 
 **Then immediately:**
+
 1. Fix the bug
 2. Create hotfix release with bumped version
 3. Announce the fix
@@ -391,6 +426,7 @@ If you encounter an issue not covered here:
 ---
 
 **Related Documentation:**
+
 - [Release Process Guide](./RELEASE_PROCESS.md)
 - [Rollback Procedures](./RELEASE_PROCESS.md#rollback-procedures)
 - [FAQ](./RELEASE_PROCESS.md#faq)

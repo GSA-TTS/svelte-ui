@@ -11,12 +11,14 @@ Click **"Draft a new release"**
 #### 4.2 Choose Tag
 
 In the **"Choose a tag"** dropdown:
+
 1. Select the tag you just merged: `v0.3.0-alpha.0`
 2. Target should auto-select: `main`
 
 #### 4.3 Release Title
 
 Enter the release title (same as tag):
+
 ```
 v0.3.0-alpha.0
 ```
@@ -24,27 +26,33 @@ v0.3.0-alpha.0
 #### 4.4 Release Description
 
 **Option A: Auto-generate release notes** (Recommended)
+
 1. Click **"Generate release notes"**
 2. GitHub will create a list of commits and contributors
 3. Edit as needed to add context or highlights
 
 **Option B: Copy from CHANGELOG.md**
+
 1. Open `CHANGELOG.md` in repository
 2. Find the section for this version
 3. Copy the content
 4. Paste into description field
 
 **Example format:**
+
 ```markdown
 ## Features
+
 - Add Accordion component
 - Add Alert component with variants
 
 ## Bug Fixes
+
 - Fix Button accessibility issues
 - Update USWDS to 3.13.0
 
 ## Documentation
+
 - Update installation guide
 - Add component usage examples
 ```
@@ -52,9 +60,11 @@ v0.3.0-alpha.0
 #### 4.5 Set Pre-release Flag
 
 **For alpha, beta, or rc versions:**
+
 - ☑ **Check** "Set as a pre-release"
 
 **For stable versions:**
+
 - ☐ Leave unchecked
 
 **This affects how the release appears on GitHub and npm.**
@@ -64,6 +74,7 @@ v0.3.0-alpha.0
 Click **"Publish release"** (NOT "Save draft")
 
 **What happens next:**
+
 1. ✅ GitHub Release is published
 2. ✅ GitHub Actions workflow triggers automatically
 3. ✅ Workflow runs full CI test suite
@@ -81,6 +92,7 @@ The "Publish to npm" workflow starts automatically.
 **Monitor at:** https://github.com/GSA-TTS/svelte-ui/actions
 
 **Jobs to watch:**
+
 1. **validate** - Quick pre-flight checks (~30 seconds)
    - Verifies tag format
    - Extracts version and dist-tag
@@ -176,11 +188,13 @@ When you click "Draft a new release", you'll see:
 #### Tag Selection
 
 **If tag doesn't appear in dropdown:**
+
 1. Verify tag was pushed: `git push origin v0.3.0-alpha.0`
 2. Refresh the page
 3. Check tags list: https://github.com/GSA-TTS/svelte-ui/tags
 
 **If you select wrong tag:**
+
 - Click "Choose a tag" again and select correct one
 - The tag determines which code is published
 
@@ -189,18 +203,21 @@ When you click "Draft a new release", you'll see:
 The "Set as a pre-release" checkbox affects:
 
 **When CHECKED (pre-release):**
+
 - ✅ Release marked with "Pre-release" badge on GitHub
 - ✅ Does NOT show as "Latest" release on repository
 - ✅ Does NOT notify watchers by default
 - ✅ Appropriate for alpha, beta, rc versions
 
 **When UNCHECKED (stable release):**
+
 - ✅ Release marked as "Latest" on GitHub
 - ✅ Shows prominently on repository page
 - ✅ Notifies repository watchers
 - ✅ Appropriate for stable versions only
 
 **Rule of thumb:**
+
 ```
 Version contains "alpha", "beta", or "rc" → CHECK the box
 Version is X.Y.Z with no suffix → UNCHECK the box
@@ -218,6 +235,7 @@ Version is X.Y.Z with no suffix → UNCHECK the box
 https://www.npmjs.com/package/@jeffkeene-gsa/svelte-ui-uswds
 
 **Verify:**
+
 - [ ] New version appears in version list
 - [ ] Correct dist-tag is shown (alpha/beta/rc/latest)
 - [ ] "Published X minutes ago" timestamp is recent
@@ -227,6 +245,7 @@ https://www.npmjs.com/package/@jeffkeene-gsa/svelte-ui-uswds
 https://www.npmjs.com/package/@jeffkeene-gsa/svelte-ui-uswds/v/0.3.0-alpha.0
 
 **Verify:**
+
 - [ ] Version number is correct
 - [ ] Package contents look correct
 - [ ] Dependencies are correct (peer dependencies)
@@ -273,4 +292,3 @@ npm view @jeffkeene-gsa/svelte-ui-uswds dist-tags
 ```
 
 ---
-

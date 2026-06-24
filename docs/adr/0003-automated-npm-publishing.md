@@ -44,12 +44,14 @@ We will implement automated npm publishing using **GitHub Actions** with **npm T
 **Trigger:** Manual GitHub Release creation (maintainer control point)
 
 **Authentication:** npm Trusted Publishing (OpenID Connect)
+
 - No manual tokens required
 - Short-lived credentials (minutes)
 - Automatic provenance generation
 - npm's recommended approach
 
 **Workflow:**
+
 1. Maintainer creates release branch
 2. Runs `npm run release:alpha` (standard-version updates version, CHANGELOG, creates tag)
 3. Creates release PR to main
@@ -59,6 +61,7 @@ We will implement automated npm publishing using **GitHub Actions** with **npm T
 7. Workflow runs full CI, builds, and publishes to npm with provenance
 
 **Security:**
+
 - npm publishing access requires 2FA
 - npm tokens disallowed (forces OIDC or human 2FA)
 - GitHub Actions uses OIDC (no secrets in repository)
@@ -72,16 +75,19 @@ We will implement automated npm publishing using **GitHub Actions** with **npm T
 ### Alternative 1: Token-based Authentication
 
 **Approach:**
+
 - Store npm access token in GitHub Secrets
 - Workflow uses token to authenticate
 - Token rotated periodically
 
 **Pros:**
+
 - Simpler initial setup
 - Works with older CI/CD systems
 - Well-documented pattern
 
 **Cons:**
+
 - Long-lived credentials (security risk)
 - Requires token rotation maintenance
 - npm explicitly warns against this approach
@@ -95,15 +101,18 @@ We will implement automated npm publishing using **GitHub Actions** with **npm T
 ### Alternative 2: Fully Manual Publishing
 
 **Approach:**
+
 - Maintainer runs `npm publish` from local machine
 - No automation
 
 **Pros:**
+
 - Maximum human control
 - No automation complexity
 - Simple to understand
 
 **Cons:**
+
 - Time-consuming (~20+ minutes per release)
 - Error-prone (easy to forget steps)
 - Doesn't scale with daily releases
@@ -117,16 +126,19 @@ We will implement automated npm publishing using **GitHub Actions** with **npm T
 ### Alternative 3: Publish on Every Merge to Main
 
 **Approach:**
+
 - Workflow triggers on push to main
 - Every merge automatically publishes
 - Fully automated
 
 **Pros:**
+
 - Truly continuous deployment
 - No manual steps after merge
 - Simple automation
 
 **Cons:**
+
 - Too aggressive (every merge publishes)
 - No human review checkpoint before publish
 - Harder to batch multiple changes
@@ -139,16 +151,19 @@ We will implement automated npm publishing using **GitHub Actions** with **npm T
 ### Alternative 4: Publish on Git Tag Push
 
 **Approach:**
+
 - Workflow triggers when tag is pushed
 - No GitHub Release creation needed
 - One less manual step
 
 **Pros:**
+
 - Simpler workflow (one less step)
 - Direct tag-to-publish flow
 - Still have control point (when to push tag)
 
 **Cons:**
+
 - Loses GitHub Release UI benefits
 - No centralized release notes
 - No pre-release marking in GitHub
@@ -164,12 +179,14 @@ We will implement automated npm publishing using **GitHub Actions** with **npm T
 ### Positive Consequences
 
 ✅ **Faster Releases**
+
 - Publishing takes ~5 minutes (automated) vs ~20+ minutes (manual)
 - Enables daily release cadence
 - Reduces time from code-complete to published
 - Allows rapid iteration on alpha releases
 
 ✅ **Better Security**
+
 - No long-lived tokens to manage or rotate
 - OIDC provides short-lived, scoped credentials (expire in minutes)
 - npm provenance links package to source automatically
@@ -177,6 +194,7 @@ We will implement automated npm publishing using **GitHub Actions** with **npm T
 - Reduces attack surface (no static credentials to steal)
 
 ✅ **Improved Audit Trail**
+
 - GitHub Actions logs every publish attempt
 - npm provenance attestations verify source
 - GitHub Releases provide clear changelog
@@ -184,18 +202,21 @@ We will implement automated npm publishing using **GitHub Actions** with **npm T
 - Immutable record (can't be modified after publish)
 
 ✅ **Reduced Human Error**
+
 - Automated dist-tag determination (alpha/beta/rc/latest)
 - Automated version verification (tag matches package.json)
 - Consistent process every time
 - Pre-publish checks catch common mistakes
 
 ✅ **Scales with Team**
+
 - Any maintainer can follow documented process
 - No special npm token distribution needed
 - Clear ownership (provenance shows who triggered release)
 - Process documented in RELEASE_PROCESS.md
 
 ✅ **npm Provenance**
+
 - Automatic attestation generation
 - Links published package to exact GitHub commit
 - Verifiable supply chain security
@@ -206,45 +227,53 @@ We will implement automated npm publishing using **GitHub Actions** with **npm T
 ### Negative Consequences
 
 ⚠️ **Initial Setup Complexity**
+
 - Requires npm Trusted Publishing configuration
 - Requires GitHub Actions workflow creation
 - Maintainers must learn new release process
 - More moving parts than simple `npm publish`
 
 **Mitigation:**
+
 - Comprehensive documentation in RELEASE_PROCESS.md
 - Troubleshooting guide for common issues
 - Release PR template with checklist
 - This ADR documents decision rationale
 
 ⚠️ **Dependency on GitHub Actions**
+
 - If GitHub is down, automated publishing is blocked
 - Cannot publish during GitHub outages
 - Emergency manual publish requires temporarily changing npm settings
 
 **Mitigation:**
+
 - Document emergency manual publish procedure
 - GitHub Actions has high uptime (99.9%+)
 - Most outages are < 30 minutes
 - Can wait for recovery in most cases
 
 ⚠️ **Two-Step Release Process**
+
 - Must merge PR AND create GitHub Release (two manual steps)
 - More steps than direct `npm publish` from local machine
 - Additional time overhead (~2-3 minutes for release creation)
 
 **Mitigation:**
+
 - GitHub Release creation is quick (~2-3 minutes)
 - Provides review opportunity (last checkpoint)
 - Can batch multiple PRs before releasing
 - Manual trigger provides control over timing
 
 ⚠️ **Learning Curve**
+
 - New maintainers must learn release process
 - Different from traditional `npm publish` workflow
 - Must understand GitHub Releases
 
 **Mitigation:**
+
 - Step-by-step guide in RELEASE_PROCESS.md
 - Release PR template guides through process
 - FAQ section addresses common questions
@@ -296,12 +325,14 @@ We will implement automated npm publishing using **GitHub Actions** with **npm T
 ### Configuration
 
 **npm Configuration:**
+
 - Trusted Publishing: GitHub OIDC
 - Repository: `GSA-TTS/svelte-ui`
 - Workflow: `.github/workflows/publish.yml`
 - Publishing access: 2FA required, tokens disallowed
 
 **GitHub Actions:**
+
 - Permissions: `contents: read`, `id-token: write`, `issues: write`
 - Trigger: `release.types.published`
 - Runs on: `ubuntu-latest`
