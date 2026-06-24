@@ -11,8 +11,8 @@
     { "type": "build", "hidden": true },
     { "type": "ci", "hidden": true }
   ],
-  "commitUrlFormat": "https://github.com/gsa/svelte-ui/commit/{{hash}}",
-  "compareUrlFormat": "https://github.com/gsa/svelte-ui/compare/{{previousTag}}...{{currentTag}}",
-  "issueUrlFormat": "https://github.com/gsa/svelte-ui/issues/{{id}}",
+  "commitUrlFormat": "https://github.com/GSA-TTS/svelte-ui/commit/{{hash}}",
+  "compareUrlFormat": "https://github.com/GSA-TTS/svelte-ui/compare/{{previousTag}}...{{currentTag}}",
+  "issueUrlFormat": "https://github.com/GSA-TTS/svelte-ui/issues/{{id}}",
   "userUrlFormat": "https://github.com/{{user}}"
 }
