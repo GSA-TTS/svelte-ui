@@ -11,7 +11,7 @@ const preview: Preview = {
     },
     options: {
       showPanel: true,
-      panelPosition: 'bottom',
+      panelPosition: "bottom",
     },
   },
 };
