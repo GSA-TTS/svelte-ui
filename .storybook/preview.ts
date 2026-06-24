@@ -9,6 +9,10 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    test: {
+      // Ensure the test addon is enabled in built Storybook
+      dangerouslyIgnoreUnhandledErrors: false,
+    },
   },
 };
 

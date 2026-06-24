@@ -9,7 +9,8 @@
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "bradlc.vscode-tailwindcss",
-        "ms-vscode.vscode-typescript-next"
+        "ms-vscode.vscode-typescript-next",
+        "vitest.explorer"
       ],
       "settings": {
         "editor.formatOnSave": true,
