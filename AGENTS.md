@@ -3,10 +3,14 @@ title: "AGENTS.md — Svelte UI"
 description: "Behavioral rules for AI coding agents operating on the Svelte UI component library project"
 status: canonical
 tier: 1
-last_updated: "2026-05-29"
+last_updated: "2026-06-25"
 audience: "developers"
 keywords: ["AGENTS.md", "svelte", "component-library", "uswds", "agent-rules"]
-related_files: ["../agentic-coding-playbook/docs/CODING_STANDARDS_COMPACT.md"]
+related_files:
+  [
+    "../agentic-coding-playbook/docs/CODING_STANDARDS_COMPACT.md",
+    ".ai-agent/skills/storybook-component-stories.md",
+  ]
 load_priority: "always"
 review_cycle: "quarterly"
 ---
@@ -15,7 +19,7 @@ review_cycle: "quarterly"
 
 > **System:** Svelte UI Component Library | **Impact Level:** FIPS Low | **Agency:** GSA
 >
-> **Last Updated:** 2026-05-29 | **Reviewed By:** Jeff Keene, Engineer
+> **Last Updated:** 2026-06-25 | **Reviewed By:** Jeff Keene, Engineer
 >
 > This document defines the behavioral rules for AI coding agents operating within this project. The AI agent MUST follow these rules without exception.
 
@@ -138,8 +142,10 @@ Component-specific standards:
 - Components MUST be design system-agnostic with USWDS as default
 - Components MUST include TypeScript type definitions
 - Components MUST have corresponding Storybook stories with interaction tests
-- **Tests are embedded in Storybook stories** - Use `play()` functions for component testing
-- **NO separate `.test.ts` files** - All tests live in `*.stories.ts` files
+- **Stories use Svelte CSF format** - All stories MUST be `.stories.svelte` files using `@storybook/addon-svelte-csf`
+- **Tests are embedded in Storybook stories** - Use `play` props on `<Story>` components for testing
+- **NO separate `.test.ts` files** - All tests live in `*.stories.svelte` files
+- **NO `.stories.ts` files** - Use Svelte CSF (`.stories.svelte`) instead
 - **NO barrel files inside component directories** - Only `src/lib/index.ts` should re-export components
 - **Use catch-all props (`...restProps`)** - Only define component-specific props; let native HTML attributes pass through
 
@@ -179,9 +185,10 @@ File organization:
 
 - Component structure: `src/lib/components/ComponentName/ComponentName.svelte`
 - Type definitions: `src/lib/components/ComponentName/ComponentName.types.ts`
-- Stories + Tests: `src/lib/components/ComponentName/ComponentName.stories.ts` (includes `play()` functions)
+- Stories + Tests: `src/lib/components/ComponentName/ComponentName.stories.svelte` (Svelte CSF with `play` props)
 - **DO NOT create** `index.ts` files inside `src/lib/components/` directories
 - **DO NOT create** separate `.test.ts` files - tests go in stories
+- **DO NOT create** `.stories.ts` files - use `.stories.svelte` with Svelte CSF
 - **ONLY** `src/lib/index.ts` should exist as the library's public API entry point
 
 ---
@@ -272,6 +279,29 @@ The following skills provide additional guidance and can be loaded on-demand:
 
 - **svelte-code-writer**: Detailed CLI usage instructions and workflow
 - **svelte-core-bestpractices**: Comprehensive Svelte 5 coding patterns and best practices
+- **storybook-component-stories** (`.ai-agent/skills/storybook-component-stories.md`): Comprehensive guide for writing Storybook stories and tests
+
+**When to use the Storybook skills document:**
+
+The agent MUST consult `.ai-agent/skills/storybook-component-stories.md` when:
+
+1. **Creating new Storybook stories** for any component
+2. **Writing `play` props** for interaction tests
+3. **Choosing between story patterns** (simple, asChild, snippet)
+4. **Adding snippet children stories** to demonstrate complex HTML content
+5. **Uncertain about story patterns** or best practices
+6. **Troubleshooting story issues** or test failures
+7. **Need examples** of existing story implementations
+
+The skills document provides:
+
+- Complete Svelte CSF story file templates
+- All story type patterns (simple, asChild, snippet)
+- When to use each pattern
+- Testing patterns with `play` props and query selectors
+- Best practices and common mistakes to avoid
+- Real-world examples from Button, Link, Tag, and TagInContext components
+- Checklist for comprehensive story coverage
 
 ---
 
@@ -319,10 +349,10 @@ When working on specific files, consult these additional rule files:
 
 ## Testing Requirements
 
-- [x] Storybook stories for all components with `play()` functions for interaction tests
+- [x] Storybook stories for all components with `play` props for interaction tests
 - [x] All tests MUST pass before committing
 - [x] Accessibility tests for all interactive components
-- **Tests are embedded in `*.stories.ts` files** - NO separate `.test.ts` files
+- **Tests are embedded in `*.stories.svelte` files** - NO separate `.test.ts` files
 
 Test commands:
 
