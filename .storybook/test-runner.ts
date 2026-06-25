@@ -1,8 +1,7 @@
 import type { TestRunnerConfig } from "@storybook/test-runner";
-import { getStoryContext } from "@storybook/test-runner";
 
 const config: TestRunnerConfig = {
-  async preVisit(page, context) {
+  async preVisit(page) {
     // This ensures Svelte stories are properly loaded
     await page.evaluate(() => {
       if (typeof window !== "undefined") {
