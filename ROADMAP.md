@@ -61,9 +61,9 @@ Svelte UI is a comprehensive Svelte component library built specifically for the
 
 ### Basic Components
 
-- [ ] Button (variants, sizes, states)
-- [ ] Link
-- [ ] Tag/Badge
+- [x] Button (variants, sizes, states)
+- [x] Link
+- [x] Tag/Badge
 
 ### Form Components
 
