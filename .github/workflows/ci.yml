@@ -50,7 +50,7 @@ jobs:
           SERVER_PID=$!
           echo "Waiting for Storybook server to be ready..."
           npx wait-on http://localhost:6006 --timeout 60000
-          npm run test:storybook
+          npm run test:storybook -- --index-json
           kill $SERVER_PID || true
 
       - name: Upload coverage
