@@ -2,7 +2,7 @@ import type { Preview } from "@storybook/svelte";
 import "../src/lib/styles/index.css";
 
 const preview: Preview = {
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
     docs: {
       toc: true,

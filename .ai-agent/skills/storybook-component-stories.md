@@ -59,6 +59,7 @@ src/lib/components/ComponentName/
 ```
 
 **Key Points:**
+
 - Use `<script module>` context (required for `defineMeta`)
 - Import `defineMeta` from `@storybook/addon-svelte-csf`
 - Destructure `Story` component from `defineMeta()` return value
@@ -159,7 +160,7 @@ For complex layouts that need to react to args/controls:
   play={async ({ canvasElement }) => {
     const tag = canvasElement.querySelector('.usa-tag');
     await expect(tag?.textContent).toBe('New');
-    
+
     const paragraph = canvasElement.querySelector('p');
     await expect(paragraph?.textContent).toContain('marked as');
   }}
@@ -314,12 +315,12 @@ Tests are defined as `play` props on the `<Story>` component:
   name="Example"
   play={async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    
+
     // ✅ Good - semantic queries
     const button = canvas.getByRole('button');
     const link = canvas.getByRole('link');
     const label = canvas.getByLabelText('Email');
-    
+
     // ⚠️ Fallback - class/element queries
     const tag = canvasElement.querySelector('.usa-tag');
   }}
@@ -387,11 +388,11 @@ Stories should have clear, descriptive names:
 
 ### Story Pattern Selection
 
-| Scenario | Pattern | Reason |
-|----------|---------|--------|
-| Just passing props | Simple `<Story args={{...}} />` | No snippet needed |
-| Complex layout, fixed content | `asChild` | No args needed |
-| Complex layout + dynamic args | `{#snippet template(args)}` | Args need to work |
+| Scenario                      | Pattern                         | Reason            |
+| ----------------------------- | ------------------------------- | ----------------- |
+| Just passing props            | Simple `<Story args={{...}} />` | No snippet needed |
+| Complex layout, fixed content | `asChild`                       | No args needed    |
+| Complex layout + dynamic args | `{#snippet template(args)}`     | Args need to work |
 
 ### Story Coverage
 
@@ -419,7 +420,7 @@ For links in stories, prevent navigation using:
 <!-- ❌ Don't use hash links in Storybook -->
 <Story
   name="Bad Example"
-  args={{ href: '#', children: 'Link text' }}  
+  args={{ href: '#', children: 'Link text' }}
   <!-- Will cause unwanted navigation -->
 />
 ```
@@ -581,7 +582,7 @@ The `Story` component from `defineMeta` is fully typed based on your component p
   const { Story } = defineMeta({
     component: MyComponent,
   });
-  
+
   // Story args are automatically typed from ComponentProps<MyComponent>
 </script>
 
@@ -620,12 +621,12 @@ For custom snippet templates, you can add explicit types:
 Component props should extend native HTML element attributes:
 
 ```typescript
-import type { HTMLButtonAttributes } from 'svelte/elements';
-import type { Snippet } from 'svelte';
+import type { HTMLButtonAttributes } from "svelte/elements";
+import type { Snippet } from "svelte";
 
-export interface ButtonProps extends Omit<HTMLButtonAttributes, 'children'> {
-  variant?: 'default' | 'secondary';
-  size?: 'default' | 'big';
+export interface ButtonProps extends Omit<HTMLButtonAttributes, "children"> {
+  variant?: "default" | "secondary";
+  size?: "default" | "big";
   children?: Snippet | string;
 }
 ```
