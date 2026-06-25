@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/GSA-TTS/svelte-ui/compare/v0.2.0-alpha.4...v0.2.0) (2026-06-25)
+
 ## [0.2.0-alpha.4](https://github.com/GSA-TTS/svelte-ui/compare/v0.2.0-alpha.3...v0.2.0-alpha.4) (2026-06-25)
 
 ## [0.2.0-alpha.3](https://github.com/GSA-TTS/svelte-ui/compare/v0.2.0-alpha.1...v0.2.0-alpha.3) (2026-06-24)
