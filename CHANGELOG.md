@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.1](https://github.com/GSA-TTS/svelte-ui/compare/v1.0.0...v1.0.1) (2026-06-29)
+
+### Bug Fixes
+
+- **types:** correct TypeScript declaration file path ([#26](https://github.com/GSA-TTS/svelte-ui/issues/26))
+  - Update `types` path from `./dist/index.d.ts` to `./dist/src/lib/index.d.ts`
+  - This matches the actual location where vite-plugin-dts generates types
+  - Fixes TypeScript "Cannot find module" errors when consuming the package
+
 ## [1.0.0](https://github.com/GSA-TTS/svelte-ui/compare/v0.2.0...v1.0.0) (2026-06-29)
 
 ### ⚠️ BREAKING CHANGES
