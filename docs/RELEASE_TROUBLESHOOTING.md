@@ -93,7 +93,7 @@ npm run check
 
 **Check 1: Verify npm Trusted Publishing configuration**
 
-1. Go to: https://www.npmjs.com/package/@jeffkeene-gsa/svelte-ui-uswds/access
+1. Go to: https://www.npmjs.com/package/@gsa-tts/svelte-ui-uswds/access
 2. Check "Trusted Publishers" section
 3. Verify:
    - Repository: `GSA-TTS/svelte-ui`
@@ -133,7 +133,7 @@ ls -la .github/workflows/publish.yml
 
 ```bash
 # Check what versions exist on npm
-npm view @jeffkeene-gsa/svelte-ui-uswds versions
+npm view @gsa-tts/svelte-ui-uswds versions
 
 # If version exists, you must bump to next version
 # Delete the GitHub Release (doesn't delete tag)
@@ -295,7 +295,7 @@ npm run release:alpha
 **Warning:** Only delete tags that haven't been published to npm. Check npm first:
 
 ```bash
-npm view @jeffkeene-gsa/svelte-ui-uswds versions
+npm view @gsa-tts/svelte-ui-uswds versions
 ```
 
 ---
@@ -395,14 +395,14 @@ git push origin release/branch-name
 **Within 72 hours:**
 
 ```bash
-npm unpublish @jeffkeene-gsa/svelte-ui-uswds@X.Y.Z
+npm unpublish @gsa-tts/svelte-ui-uswds@X.Y.Z
 ```
 
 **After 72 hours (unpublish blocked):**
 
 ```bash
 # Deprecate the version
-npm deprecate @jeffkeene-gsa/svelte-ui-uswds@X.Y.Z "Critical bug, use X.Y.Z+1 instead"
+npm deprecate @gsa-tts/svelte-ui-uswds@X.Y.Z "Critical bug, use X.Y.Z+1 instead"
 ```
 
 **Then immediately:**
