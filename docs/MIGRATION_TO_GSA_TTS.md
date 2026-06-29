@@ -155,12 +155,12 @@ npm WARN deprecated @jeffkeene-gsa/svelte-ui-uswds: This package has moved to @g
 
 ## Timeline
 
-| Date | Event |
-|------|-------|
+| Date          | Event                                                       |
+| ------------- | ----------------------------------------------------------- |
 | June 17, 2026 | First version of `@jeffkeene-gsa/svelte-ui-uswds` published |
-| June 25, 2026 | Last version (0.2.0) published to old package |
-| June 29, 2026 | Migration to `@gsa-tts/svelte-ui-uswds` v1.0.0 |
-| June 29, 2026 | Old package deprecated with warning |
+| June 25, 2026 | Last version (0.2.0) published to old package               |
+| June 29, 2026 | Migration to `@gsa-tts/svelte-ui-uswds` v1.0.0              |
+| June 29, 2026 | Old package deprecated with warning                         |
 
 ---
 
@@ -169,12 +169,14 @@ npm WARN deprecated @jeffkeene-gsa/svelte-ui-uswds: This package has moved to @g
 ### Issue: Old package still installed
 
 **Symptom:**
+
 ```bash
 npm list @jeffkeene-gsa/svelte-ui-uswds
 # Shows: @jeffkeene-gsa/svelte-ui-uswds@0.2.0
 ```
 
 **Solution:**
+
 ```bash
 npm uninstall @jeffkeene-gsa/svelte-ui-uswds
 npm install @gsa-tts/svelte-ui-uswds
@@ -187,6 +189,7 @@ npm install
 ### Issue: Import errors after migration
 
 **Symptom:**
+
 ```
 Error: Cannot find module '@jeffkeene-gsa/svelte-ui-uswds'
 ```
@@ -209,6 +212,7 @@ If found, update them to `@gsa-tts/svelte-ui-uswds`.
 ### Issue: Dependency conflicts
 
 **Symptom:**
+
 ```
 npm ERR! ERESOLVE unable to resolve dependency tree
 ```
