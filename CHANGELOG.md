@@ -6,16 +6,16 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### ⚠️ BREAKING CHANGES
 
-* **package:** Package has migrated to the official GSA-TTS npm organization. The package name has changed from `@jeffkeene-gsa/svelte-ui-uswds` to `@gsa-tts/svelte-ui-uswds`. Users must update their dependencies.
+- **package:** Package has migrated to the official GSA-TTS npm organization. The package name has changed from `@jeffkeene-gsa/svelte-ui-uswds` to `@gsa-tts/svelte-ui-uswds`. Users must update their dependencies.
 
 ### Package
 
-* **migration:** migrate to @gsa-tts npm organization ([af1257b](https://github.com/GSA-TTS/svelte-ui/commit/af1257b))
-  * Update package name from `@jeffkeene-gsa/svelte-ui-uswds` to `@gsa-tts/svelte-ui-uswds`
-  * Set version to 1.0.0 to mark official organizational release
-  * Add comprehensive migration guide in `docs/MIGRATION_TO_GSA_TTS.md`
-  * Update all documentation references to new package name
-  * Update CI/CD workflow references
+- **migration:** migrate to @gsa-tts npm organization ([af1257b](https://github.com/GSA-TTS/svelte-ui/commit/af1257b))
+  - Update package name from `@jeffkeene-gsa/svelte-ui-uswds` to `@gsa-tts/svelte-ui-uswds`
+  - Set version to 1.0.0 to mark official organizational release
+  - Add comprehensive migration guide in `docs/MIGRATION_TO_GSA_TTS.md`
+  - Update all documentation references to new package name
+  - Update CI/CD workflow references
 
 ### Migration
 
@@ -25,9 +25,9 @@ See [Migration Guide](./docs/MIGRATION_TO_GSA_TTS.md) for detailed instructions 
 
 ### Notes
 
-* Old package (`@jeffkeene-gsa/svelte-ui-uswds`) will be deprecated with a warning
-* All components and APIs remain backward compatible
-* No breaking changes to code - only package name changed
+- Old package (`@jeffkeene-gsa/svelte-ui-uswds`) will be deprecated with a warning
+- All components and APIs remain backward compatible
+- No breaking changes to code - only package name changed
 
 ## [0.2.0](https://github.com/GSA-TTS/svelte-ui/compare/v0.2.0-alpha.4...v0.2.0) (2026-06-25)
 
