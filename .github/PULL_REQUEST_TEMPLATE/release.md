@@ -46,13 +46,13 @@ After this PR merges, complete these steps to publish:
   - Check for success comment on release
 
 - [ ] **Verify on npm**
-  - Visit: https://www.npmjs.com/package/@jeffkeene-gsa/svelte-ui-uswds
+  - Visit: https://www.npmjs.com/package/@gsa-tts/svelte-ui-uswds
   - Confirm new version appears
   - Check dist-tag is correct (alpha/beta/rc/latest)
 
 - [ ] **Test installation** (optional but recommended)
   ```bash
-  npm install @jeffkeene-gsa/svelte-ui-uswds@alpha  # or appropriate tag
+  npm install @gsa-tts/svelte-ui-uswds@alpha  # or appropriate tag
   ```
 
 ---

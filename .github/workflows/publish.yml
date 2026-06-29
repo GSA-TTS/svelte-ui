@@ -110,4 +110,4 @@ jobs:
           echo "🏷️  Using dist-tag: ${{ needs.validate.outputs.dist-tag }}"
           npm publish --provenance --access public --tag ${{ needs.validate.outputs.dist-tag }}
           echo "✅ Published successfully!"
-          echo "📦 Package: https://www.npmjs.com/package/@jeffkeene-gsa/svelte-ui-uswds/v/${{ needs.validate.outputs.version }}"
+          echo "📦 Package: https://www.npmjs.com/package/@gsa-tts/svelte-ui-uswds/v/${{ needs.validate.outputs.version }}"

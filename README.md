@@ -1,7 +1,7 @@
 # Svelte UI - Component Library
 
-[![npm version](https://badge.fury.io/js/@jeffkeene-gsa%2Fsvelte-ui-uswds.svg)](https://www.npmjs.com/package/@jeffkeene-gsa/svelte-ui-uswds)
-[![npm downloads](https://img.shields.io/npm/dm/@jeffkeene-gsa/svelte-ui-uswds.svg)](https://www.npmjs.com/package/@jeffkeene-gsa/svelte-ui-uswds)
+[![npm version](https://badge.fury.io/js/@gsa-tts%2Fsvelte-ui-uswds.svg)](https://www.npmjs.com/package/@gsa-tts/svelte-ui-uswds)
+[![npm downloads](https://img.shields.io/npm/dm/@gsa-tts/svelte-ui-uswds.svg)](https://www.npmjs.com/package/@gsa-tts/svelte-ui-uswds)
 
 A comprehensive, adaptable Svelte component library that leverages the U.S. Web Design System (USWDS) as the default design system while maintaining design system-agnostic flexibility.
 
@@ -22,13 +22,13 @@ A comprehensive, adaptable Svelte component library that leverages the U.S. Web 
 ### For Alpha Testing (Latest Features)
 
 ```bash
-npm install @jeffkeene-gsa/svelte-ui-uswds@alpha @uswds/uswds
+npm install @gsa-tts/svelte-ui-uswds@alpha @uswds/uswds
 ```
 
 ### For Stable Releases (When Available)
 
 ```bash
-npm install @jeffkeene-gsa/svelte-ui-uswds @uswds/uswds
+npm install @gsa-tts/svelte-ui-uswds @uswds/uswds
 ```
 
 Check [Releases](https://github.com/GSA-TTS/svelte-ui/releases) for version history.

@@ -22,7 +22,7 @@
 
 ## Overview
 
-This guide documents the automated npm publishing process for `@jeffkeene-gsa/svelte-ui-uswds`.
+This guide documents the automated npm publishing process for `@gsa-tts/svelte-ui-uswds`.
 
 ### Process Summary
 
@@ -54,7 +54,7 @@ Merge PR → Create GitHub Release → Automation Publishes to npm ✨
 
 ### Required Access
 
-- [ ] npm account with publish access to `@jeffkeene-gsa` scope
+- [ ] npm account with publish access to `@gsa-tts` scope
 - [ ] GitHub repository maintainer access (can approve PRs)
 - [ ] Git configured with GitHub authentication
 
@@ -419,14 +419,14 @@ When publishing succeeds, the workflow posts a comment on your GitHub Release:
 ```
 ✅ Published to npm successfully!
 
-📦 Package: @jeffkeene-gsa/svelte-ui-uswds@0.3.0-alpha.0
+📦 Package: @gsa-tts/svelte-ui-uswds@0.3.0-alpha.0
 🏷️ Dist-tag: alpha
 
 Install:
-npm install @jeffkeene-gsa/svelte-ui-uswds@alpha
+npm install @gsa-tts/svelte-ui-uswds@alpha
 
 Or specific version:
-npm install @jeffkeene-gsa/svelte-ui-uswds@0.3.0-alpha.0
+npm install @gsa-tts/svelte-ui-uswds@0.3.0-alpha.0
 
 🔒 Provenance: View attestation
 ```
@@ -537,7 +537,7 @@ Version is X.Y.Z with no suffix → UNCHECK the box
 #### 6.1 Verify on npmjs.com
 
 **Check package page:**
-https://www.npmjs.com/package/@jeffkeene-gsa/svelte-ui-uswds
+https://www.npmjs.com/package/@gsa-tts/svelte-ui-uswds
 
 **Verify:**
 
@@ -547,7 +547,7 @@ https://www.npmjs.com/package/@jeffkeene-gsa/svelte-ui-uswds
 - [ ] Provenance attestation badge is visible
 
 **Check version page:**
-https://www.npmjs.com/package/@jeffkeene-gsa/svelte-ui-uswds/v/0.3.0-alpha.0
+https://www.npmjs.com/package/@gsa-tts/svelte-ui-uswds/v/0.3.0-alpha.0
 
 **Verify:**
 
@@ -560,23 +560,23 @@ https://www.npmjs.com/package/@jeffkeene-gsa/svelte-ui-uswds/v/0.3.0-alpha.0
 
 ```bash
 # Test alpha tag installation
-npm install @jeffkeene-gsa/svelte-ui-uswds@alpha
+npm install @gsa-tts/svelte-ui-uswds@alpha
 
 # Or test specific version
-npm install @jeffkeene-gsa/svelte-ui-uswds@0.3.0-alpha.0
+npm install @gsa-tts/svelte-ui-uswds@0.3.0-alpha.0
 
 # Verify installed version
-npm list @jeffkeene-gsa/svelte-ui-uswds
+npm list @gsa-tts/svelte-ui-uswds
 ```
 
 #### 6.3 Verify Provenance Attestation
 
 ```bash
 # View package metadata with provenance
-npm view @jeffkeene-gsa/svelte-ui-uswds@0.3.0-alpha.0 --json
+npm view @gsa-tts/svelte-ui-uswds@0.3.0-alpha.0 --json
 
 # Check for attestations field
-npm view @jeffkeene-gsa/svelte-ui-uswds@0.3.0-alpha.0 --json | grep -A 5 attestations
+npm view @gsa-tts/svelte-ui-uswds@0.3.0-alpha.0 --json | grep -A 5 attestations
 ```
 
 **Expected:** Attestations field should link to GitHub repository and workflow.
@@ -585,7 +585,7 @@ npm view @jeffkeene-gsa/svelte-ui-uswds@0.3.0-alpha.0 --json | grep -A 5 attesta
 
 ```bash
 # View all dist-tags
-npm view @jeffkeene-gsa/svelte-ui-uswds dist-tags
+npm view @gsa-tts/svelte-ui-uswds dist-tags
 
 # Expected output:
 # {
