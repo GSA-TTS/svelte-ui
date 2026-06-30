@@ -38,7 +38,7 @@ Svelte UI is a comprehensive Svelte component library built specifically for the
 
 ---
 
-## Phase 3: Release Management (In Progress 🚧)
+## Phase 3: Release Management (Complete ✅)
 
 ### Package Publishing
 
@@ -49,11 +49,10 @@ Svelte UI is a comprehensive Svelte component library built specifically for the
 - [x] Changelog automation (standard-version)
 - [x] Release documentation
 - [x] First npm publish
-- [ ] CDN setup (optional)
 
 ---
 
-## Phase 4: Core Component Development
+## Phase 4: Core Component Development (In Progress 🚧)
 
 **Goal:** Build foundational Svelte components using token system
 
@@ -67,14 +66,13 @@ Svelte UI is a comprehensive Svelte component library built specifically for the
 
 ### Form Components
 
-- [ ] TextInput
-- [ ] Textarea
+- [x] TextInput
+- [x] Textarea
 - [ ] Select
 - [ ] Checkbox
 - [ ] Radio
-- [ ] Label
-- [ ] FormField (wrapper)
 - [ ] Fieldset
+- [ ] Form
 
 ### Feedback Components
 

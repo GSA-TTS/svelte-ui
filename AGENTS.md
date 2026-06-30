@@ -135,6 +135,7 @@ Key standards summary:
 - Follow conventional commit message format
 - **Avoid unnecessary comments** - Code should be self-documenting; only add comments for complex logic or "why" explanations, not "what"
 - **No decorative CSS comments** - Avoid section dividers like `/* ========== */`; class names should be self-descriptive
+- **No comments in `.types.ts` files** - TypeScript types are self-documenting; do not add JSDoc comments, descriptions, or @default annotations
 
 Component-specific standards:
 
