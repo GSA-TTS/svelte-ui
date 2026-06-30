@@ -1,6 +1,6 @@
 {
   "name": "@gsa-tts/svelte-ui-uswds",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Svelte UI component library with USWDS styling",
   "type": "module",
   "scripts": {
@@ -94,7 +94,7 @@
     "vitest": "4.1.8"
   },
   "svelte": "./dist/svelte-ui.es.js",
-  "types": "./dist/src/lib/index.d.ts",
+  "types": "./dist/index.d.ts",
   "keywords": [
     "svelte",
     "svelte5",
