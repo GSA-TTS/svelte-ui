@@ -3,9 +3,14 @@
  *
  * Import this file to get the complete Svelte UI design system:
  *   - USWDS foundation (from CDN)
+ *   - Custom overrides for USWDS styles
  *
  * Usage:
  *   import 'svelte-ui/styles';
  */
 
 @import "./uswds.css";
+
+.usa-label--error {
+  margin-top: 1.5rem;
+}
