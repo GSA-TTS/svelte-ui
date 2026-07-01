@@ -1,0 +1,363 @@
+# Form Validation with Zod
+
+This recipe demonstrates how to integrate [Zod](https://github.com/colinhacks/zod) schema validation with Svelte UI form components.
+
+## Overview
+
+Svelte UI components are designed as **presentation-only** components. They provide props for displaying validation states (`error`, `errorMessage`) but don't include validation logic themselves. This keeps the components flexible and allows you to use any validation approach you prefer.
+
+This recipe shows how to add client-side validation using Zod, a TypeScript-first schema validation library.
+
+## Installation
+
+First, install Zod in your project:
+
+```bash
+npm install zod
+```
+
+## Basic Pattern
+
+The basic pattern involves:
+
+1. Define a Zod schema for your data
+2. Maintain validation state in your parent component
+3. Run validation on user interaction (blur, change, or submit)
+4. Pass validation results to component props
+
+### Single Input Example
+
+```svelte
+<script lang="ts">
+  import { z } from 'zod';
+  import { TextInput } from '@gsa-tts/svelte-ui-uswds';
+
+  const emailSchema = z.string().email('Please enter a valid email address');
+
+  let email = $state('');
+  let error = $state<string | undefined>(undefined);
+
+  function validateEmail() {
+    const result = emailSchema.safeParse(email);
+    error = result.success ? undefined : result.error.errors[0].message;
+  }
+</script>
+
+<TextInput
+  id="email"
+  label="Email Address"
+  bind:value={email}
+  onblur={validateEmail}
+  error={!!error}
+  errorMessage={error}
+  type="email"
+/>
+```
+
+## Complete Form Example
+
+Here's a more comprehensive example with multiple fields and form submission:
+
+```svelte
+<script lang="ts">
+  import { z } from 'zod';
+  import { TextInput, Textarea, Button } from '@gsa-tts/svelte-ui-uswds';
+
+  const formSchema = z.object({
+    firstName: z.string().min(1, 'First name is required'),
+    lastName: z.string().min(1, 'Last name is required'),
+    email: z.string().email('Please enter a valid email address'),
+    phone: z.string().regex(/^\d{3}-\d{3}-\d{4}$/, 'Phone must be in format: XXX-XXX-XXXX'),
+    message: z.string().min(10, 'Message must be at least 10 characters'),
+  });
+
+  type FormData = z.infer<typeof formSchema>;
+  type FormErrors = Partial<Record<keyof FormData, string>>;
+
+  let formData = $state<FormData>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: '',
+  });
+
+  let errors = $state<FormErrors>({});
+  let isSubmitting = $state(false);
+  let submitSuccess = $state(false);
+
+  function validateField(field: keyof FormData) {
+    const fieldSchema = formSchema.shape[field];
+    const result = fieldSchema.safeParse(formData[field]);
+
+    if (result.success) {
+      errors[field] = undefined;
+    } else {
+      errors[field] = result.error.errors[0].message;
+    }
+  }
+
+  async function handleSubmit(event: SubmitEvent) {
+    event.preventDefault();
+
+    const result = formSchema.safeParse(formData);
+
+    if (!result.success) {
+      errors = result.error.errors.reduce((acc, err) => {
+        const field = err.path[0] as keyof FormData;
+        acc[field] = err.message;
+        return acc;
+      }, {} as FormErrors);
+      return;
+    }
+
+    isSubmitting = true;
+    errors = {};
+
+    try {
+      // Submit your form data here
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(result.data),
+      });
+
+      submitSuccess = true;
+    } catch (error) {
+      console.error('Submission error:', error);
+    } finally {
+      isSubmitting = false;
+    }
+  }
+</script>
+
+<form onsubmit={handleSubmit}>
+  <div class="grid-row grid-gap">
+    <div class="grid-col-6">
+      <TextInput
+        id="firstName"
+        label="First Name"
+        bind:value={formData.firstName}
+        onblur={() => validateField('firstName')}
+        error={!!errors.firstName}
+        errorMessage={errors.firstName}
+        required
+      />
+    </div>
+    <div class="grid-col-6">
+      <TextInput
+        id="lastName"
+        label="Last Name"
+        bind:value={formData.lastName}
+        onblur={() => validateField('lastName')}
+        error={!!errors.lastName}
+        errorMessage={errors.lastName}
+        required
+      />
+    </div>
+  </div>
+
+  <TextInput
+    id="email"
+    label="Email Address"
+    type="email"
+    bind:value={formData.email}
+    onblur={() => validateField('email')}
+    error={!!errors.email}
+    errorMessage={errors.email}
+    required
+  />
+
+  <TextInput
+    id="phone"
+    label="Phone Number"
+    type="tel"
+    helpText="Format: XXX-XXX-XXXX"
+    bind:value={formData.phone}
+    onblur={() => validateField('phone')}
+    error={!!errors.phone}
+    errorMessage={errors.phone}
+    required
+  />
+
+  <Textarea
+    id="message"
+    label="Message"
+    bind:value={formData.message}
+    onblur={() => validateField('message')}
+    error={!!errors.message}
+    errorMessage={errors.message}
+    required
+  />
+
+  {#if submitSuccess}
+    <div class="usa-alert usa-alert--success" role="alert">
+      <div class="usa-alert__body">
+        <p class="usa-alert__text">Your message has been sent successfully!</p>
+      </div>
+    </div>
+  {/if}
+
+  <Button type="submit" disabled={isSubmitting}>
+    {isSubmitting ? 'Submitting...' : 'Submit'}
+  </Button>
+</form>
+```
+## Async Validation
+
+For validations that require server-side checks (e.g., checking if username is available):
+
+```svelte
+<script lang="ts">
+  import { z } from 'zod';
+  import { TextInput } from '@gsa-tts/svelte-ui-uswds';
+
+  const usernameSchema = z
+    .string()
+    .min(3, 'Username must be at least 3 characters')
+    .max(20, 'Username must be less than 20 characters')
+    .regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores');
+
+  let username = $state('');
+  let error = $state<string | undefined>(undefined);
+  let isChecking = $state(false);
+
+  async function validateUsername() {
+    const syncResult = usernameSchema.safeParse(username);
+
+    if (!syncResult.success) {
+      error = syncResult.error.errors[0].message;
+      return;
+    }
+
+    isChecking = true;
+
+    try {
+      const response = await fetch(`/api/check-username?username=${encodeURIComponent(username)}`);
+      const data = await response.json();
+
+      if (!data.available) {
+        error = 'Username is already taken';
+      } else {
+        error = undefined;
+      }
+    } catch (err) {
+      error = 'Unable to verify username availability';
+    } finally {
+      isChecking = false;
+    }
+  }
+</script>
+
+<TextInput
+  id="username"
+  label="Username"
+  bind:value={username}
+  onblur={validateUsername}
+  error={!!error}
+  errorMessage={error}
+  helpText={isChecking ? 'Checking availability...' : undefined}
+  required
+/>
+```
+
+## Sharing Schemas Between Client and Server
+
+In SvelteKit applications, you can share Zod schemas between form validation and server-side form actions:
+
+```typescript
+// src/lib/schemas/contact.ts
+import { z } from 'zod';
+
+export const contactFormSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  email: z.string().email('Please enter a valid email address'),
+  message: z.string().min(10, 'Message must be at least 10 characters'),
+});
+
+export type ContactFormData = z.infer<typeof contactFormSchema>;
+```
+
+```typescript
+// src/routes/contact/+page.server.ts
+import { fail } from '@sveltejs/kit';
+import { contactFormSchema } from '$lib/schemas/contact';
+
+export const actions = {
+  default: async ({ request }) => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+
+    const result = contactFormSchema.safeParse(data);
+
+    if (!result.success) {
+      return fail(400, {
+        errors: result.error.flatten().fieldErrors,
+      });
+    }
+
+    // Process validated data
+    // ...
+
+    return { success: true };
+  },
+};
+```
+
+```svelte
+<!-- src/routes/contact/+page.svelte -->
+<script lang="ts">
+  import { enhance } from '$app/forms';
+  import { contactFormSchema } from '$lib/schemas/contact';
+  import { TextInput, Textarea, Button } from '@gsa-tts/svelte-ui-uswds';
+
+  let { form } = $props();
+</script>
+
+<form method="POST" use:enhance>
+  <TextInput
+    id="name"
+    name="name"
+    label="Name"
+    error={!!form?.errors?.name}
+    errorMessage={form?.errors?.name?.[0]}
+    required
+  />
+
+  <TextInput
+    id="email"
+    name="email"
+    label="Email"
+    type="email"
+    error={!!form?.errors?.email}
+    errorMessage={form?.errors?.email?.[0]}
+    required
+  />
+
+  <Textarea
+    id="message"
+    name="message"
+    label="Message"
+    error={!!form?.errors?.message}
+    errorMessage={form?.errors?.message?.[0]}
+    required
+  />
+
+  <Button type="submit">Submit</Button>
+</form>
+```
+
+## Best Practices
+
+1. **Validate on blur or submit, not on every keystroke** - This provides a better user experience for most fields
+2. **Use specific error messages** - Generic errors like "Invalid input" aren't helpful
+3. **Show success states** - Use the `success` prop when validation passes to provide positive feedback
+4. **Handle edge cases** - Consider empty values, special characters, and internationalization
+5. **Test your validation** - Write tests for both valid and invalid inputs
+6. **Accessibility** - Ensure error messages are associated with inputs using `aria-describedby`
+
+## Additional Resources
+
+- [Zod Documentation](https://zod.dev/)
+- [Form Validation Best Practices](https://www.w3.org/WAI/WCAG21/Understanding/error-identification.html)
+- [Section 508 Form Guidance](https://www.section508.gov/develop/forms)
