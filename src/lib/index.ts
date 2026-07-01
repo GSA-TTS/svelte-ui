@@ -16,3 +16,6 @@ export type { TextareaProps } from "./components/Textarea/Textarea.types.js";
 
 export { default as Select } from "./components/Select/Select.svelte";
 export type { SelectProps } from "./components/Select/Select.types.js";
+
+export { default as Checkbox } from "./components/Checkbox/Checkbox.svelte";
+export type { CheckboxProps } from "./components/Checkbox/Checkbox.types.js";

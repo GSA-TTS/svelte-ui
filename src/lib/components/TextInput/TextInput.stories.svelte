@@ -1,6 +1,6 @@
 <script module lang="ts">
   import { defineMeta } from '@storybook/addon-svelte-csf';
-  import { expect, userEvent, within } from 'storybook/test';
+  import { expect, userEvent, within, fn } from 'storybook/test';
   import TextInput from './TextInput.svelte';
 
   const { Story } = defineMeta({
@@ -11,6 +11,11 @@
       a11y: {
         test: 'error',
       },
+    },
+    args :{
+      onchange: fn(),
+      onfocus: fn(),
+      onblur: fn(),
     },
     argTypes: {
       error: {
@@ -91,7 +96,7 @@
     const canvas = within(canvasElement);
     const input = canvas.getByRole('textbox');
     const label = canvas.getByText('Text input label');
-    
+
     await expect(input).toBeInTheDocument();
     await expect(input.className).toContain('usa-input');
     await expect(input).toHaveAttribute('id', 'input-default');
@@ -105,7 +110,7 @@
   play={async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const input = canvas.getByRole('textbox');
-    
+
     await expect(input).toHaveValue('Example text');
   }}
 />
@@ -121,7 +126,7 @@
     const canvas = within(canvasElement);
     const input = canvas.getByRole('textbox');
     const hint = canvasElement.querySelector('.usa-hint');
-    
+
     await expect(input).toHaveAttribute('aria-describedby', 'input-help-hint');
     await expect(hint?.textContent).toBe('Enter your full name as it appears on your ID');
   }}
@@ -141,7 +146,7 @@
     const input = canvas.getByRole('textbox');
     const label = canvas.getByText('Email address');
     const errorMsg = canvasElement.querySelector('.usa-error-message');
-    
+
     await expect(input).toHaveAttribute('aria-invalid', 'true');
     await expect(input.className).toContain('usa-input--error');
     await expect(label.className).toContain('usa-label--error');
@@ -162,7 +167,7 @@
   play={async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const input = canvas.getByRole('textbox');
-    
+
     await expect(input.className).toContain('usa-input--success');
     await expect(input).not.toHaveAttribute('aria-invalid');
   }}
@@ -174,7 +179,7 @@
   play={async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const input = canvas.getByRole('textbox');
-    
+
     await expect(input).toBeDisabled();
   }}
 />
@@ -186,7 +191,7 @@
     const canvas = within(canvasElement);
     const input = canvas.getByRole('textbox');
     const asterisk = canvasElement.querySelector('.usa-hint--required');
-    
+
     await expect(input).toBeRequired();
     await expect(input).toHaveAttribute('id', 'input-required');
     await expect(asterisk?.textContent).toBe('*');
@@ -200,7 +205,7 @@
     const canvas = within(canvasElement);
     const input = canvas.getByRole('textbox');
     const optionalText = canvasElement.querySelector('.usa-hint');
-    
+
     await expect(input).not.toBeRequired();
     await expect(optionalText?.textContent).toBe('(optional)');
   }}
@@ -212,7 +217,7 @@
   play={async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const input = canvas.getByRole('textbox');
-    
+
     await expect(input.className).toContain('usa-input--sm');
   }}
 />
@@ -223,7 +228,7 @@
   play={async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const input = canvas.getByRole('textbox');
-    
+
     await expect(input.className).toContain('usa-input--md');
   }}
 />
@@ -234,7 +239,7 @@
   play={async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const input = canvas.getByRole('textbox');
-    
+
     await expect(input.className).toContain('usa-input');
     await expect(input.className).toContain('margin-top-2');
   }}
@@ -246,10 +251,10 @@
   play={async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const input = canvas.getByRole('textbox');
-    
+
     await userEvent.tab();
     await expect(input).toHaveFocus();
-    
+
     await userEvent.type(input, 'Test text');
     await expect(input).toHaveValue('Test text');
   }}
