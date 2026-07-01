@@ -13,3 +13,6 @@ export type { TextInputProps } from "./components/TextInput/TextInput.types.js";
 
 export { default as Textarea } from "./components/Textarea/Textarea.svelte";
 export type { TextareaProps } from "./components/Textarea/Textarea.types.js";
+
+export { default as Select } from "./components/Select/Select.svelte";
+export type { SelectProps } from "./components/Select/Select.types.js";
