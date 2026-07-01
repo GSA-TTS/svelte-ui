@@ -16,6 +16,9 @@ const preview: Preview = {
     options: {
       showPanel: true,
       panelPosition: "bottom",
+      storySort: {
+        order: ["Components", "Recipes", "*"],
+      },
     },
   },
 };
