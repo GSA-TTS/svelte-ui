@@ -1,6 +1,6 @@
 <script module lang="ts">
   import { defineMeta } from '@storybook/addon-svelte-csf';
-  import { expect, userEvent, within } from 'storybook/test';
+  import { expect, userEvent, within, fn } from 'storybook/test';
   import Textarea from './Textarea.svelte';
 
   const { Story } = defineMeta({
@@ -11,6 +11,11 @@
       a11y: {
         test: 'error',
       },
+    },
+    args :{
+      onchange: fn(),
+      onfocus: fn(),
+      onblur: fn(),
     },
     argTypes: {
       error: {

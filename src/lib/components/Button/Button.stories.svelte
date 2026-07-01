@@ -1,6 +1,6 @@
 <script module lang="ts">
   import { defineMeta } from '@storybook/addon-svelte-csf';
-  import { expect, userEvent, within } from 'storybook/test';
+  import { expect, userEvent, within, fn } from 'storybook/test';
   import Button from './Button.svelte';
 
   const { Story } = defineMeta({
@@ -11,6 +11,9 @@
       a11y: {
         test: 'error',
       },
+    },
+    args :{
+      onclick: fn(),
     },
     argTypes: {
       variant: {

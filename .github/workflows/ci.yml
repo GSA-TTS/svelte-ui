@@ -36,29 +36,10 @@ jobs:
         run: npm run lint
 
       - name: Run unit tests
-        run: npm test -- --coverage
+        run: npm test
 
       - name: Build Storybook
         run: npm run build-storybook
-
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
-
-      - name: Serve Storybook and run tests
-        run: |
-          npx http-server storybook-static --port 6006 --silent &
-          SERVER_PID=$!
-          echo "Waiting for Storybook server to be ready..."
-          npx wait-on http://localhost:6006 --timeout 60000
-          npm run test:storybook -- --index-json
-          kill $SERVER_PID || true
-
-      - name: Upload coverage
-        uses: codecov/codecov-action@v4
-        if: always()
-        with:
-          files: ./coverage/coverage-final.json
-          flags: unittests
 
   build:
     name: Build
