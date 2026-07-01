@@ -19,3 +19,6 @@ export type { SelectProps } from "./components/Select/Select.types.js";
 
 export { default as Checkbox } from "./components/Checkbox/Checkbox.svelte";
 export type { CheckboxProps } from "./components/Checkbox/Checkbox.types.js";
+
+export { default as Radio } from "./components/Radio/Radio.svelte";
+export type { RadioProps } from "./components/Radio/Radio.types.js";

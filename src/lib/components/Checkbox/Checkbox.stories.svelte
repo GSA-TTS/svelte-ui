@@ -14,7 +14,6 @@
     },
     args :{
       onchange: fn(),
-      onblur: fn(),
     },
     argTypes: {
       tile: {
@@ -75,7 +74,7 @@
   play={async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const checkbox = canvas.getByRole('checkbox');
-    const label = canvas.getByText('Checkbox label');
+    const label = canvas.getByLabelText('Checkbox label');
     const wrapper = canvasElement.querySelector('.usa-checkbox');
 
     await expect(checkbox).toBeInTheDocument();
