@@ -4,7 +4,7 @@ This directory contains recipes and patterns for using Svelte UI components in c
 
 ## Available Recipes
 
-- [Form Validation with Zod](./form-validation-with-zod.md) - Integrate Zod schema validation with form components
+- [Form Validation with Zod](./form-validation-with-zod.mdx) - Integrate Zod schema validation with form components
 
 ## What are Recipes?
 
@@ -23,5 +23,5 @@ If you have a useful pattern or integration you'd like to share, please:
 ## Recipe Categories
 
 ### Form Handling
-- [Form Validation with Zod](./form-validation-with-zod.md)
+- [Form Validation with Zod](./form-validation-with-zod.mdx)
 

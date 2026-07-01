@@ -1,3 +1,7 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Recipes/Form Validation with Zod" />
+
 # Form Validation with Zod
 
 This recipe demonstrates how to integrate [Zod](https://github.com/colinhacks/zod) schema validation with Svelte UI form components.
@@ -115,7 +119,6 @@ Here's a more comprehensive example with multiple fields and form submission:
     errors = {};
 
     try {
-      // Submit your form data here
       await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -203,6 +206,47 @@ Here's a more comprehensive example with multiple fields and form submission:
   </Button>
 </form>
 ```
+
+## Real-Time Validation
+
+For real-time validation on every keystroke:
+
+```svelte
+<script lang="ts">
+  import { z } from 'zod';
+  import { TextInput } from '@gsa-tts/svelte-ui-uswds';
+
+  const passwordSchema = z
+    .string()
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .regex(/[0-9]/, 'Password must contain at least one number');
+
+  let password = $state('');
+  let error = $state<string | undefined>(undefined);
+
+  $effect(() => {
+    if (password.length > 0) {
+      const result = passwordSchema.safeParse(password);
+      error = result.success ? undefined : result.error.errors[0].message;
+    } else {
+      error = undefined;
+    }
+  });
+</script>
+
+<TextInput
+  id="password"
+  label="Password"
+  type="password"
+  bind:value={password}
+  error={!!error}
+  errorMessage={error}
+  required
+/>
+```
+
 ## Async Validation
 
 For validations that require server-side checks (e.g., checking if username is available):
@@ -349,7 +393,7 @@ export const actions = {
 
 ## Best Practices
 
-1. **Validate on blur or submit, not on every keystroke** - This provides a better user experience for most fields
+1. **Validate on blur, not on every keystroke** - This provides a better user experience for most fields
 2. **Use specific error messages** - Generic errors like "Invalid input" aren't helpful
 3. **Show success states** - Use the `success` prop when validation passes to provide positive feedback
 4. **Handle edge cases** - Consider empty values, special characters, and internationalization
