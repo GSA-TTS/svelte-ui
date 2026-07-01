@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta } from "@storybook/addon-docs/blocks";
 
 <Meta title="Recipes/Form Validation with Zod" />
 
@@ -311,12 +311,12 @@ In SvelteKit applications, you can share Zod schemas between form validation and
 
 ```typescript
 // src/lib/schemas/contact.ts
-import { z } from 'zod';
+import { z } from "zod";
 
 export const contactFormSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  email: z.string().email('Please enter a valid email address'),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Please enter a valid email address"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
 });
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
@@ -324,8 +324,8 @@ export type ContactFormData = z.infer<typeof contactFormSchema>;
 
 ```typescript
 // src/routes/contact/+page.server.ts
-import { fail } from '@sveltejs/kit';
-import { contactFormSchema } from '$lib/schemas/contact';
+import { fail } from "@sveltejs/kit";
+import { contactFormSchema } from "$lib/schemas/contact";
 
 export const actions = {
   default: async ({ request }) => {

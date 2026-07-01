@@ -17,7 +17,7 @@ const preview: Preview = {
       showPanel: true,
       panelPosition: "bottom",
       storySort: {
-        order: ['Components', 'Recipes', '*'],
+        order: ["Components", "Recipes", "*"],
       },
     },
   },
