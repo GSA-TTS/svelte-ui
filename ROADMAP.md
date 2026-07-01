@@ -70,7 +70,7 @@ Svelte UI is a comprehensive Svelte component library built specifically for the
 - [x] Textarea
 - [x] Select
 - [x] Checkbox
-- [ ] Radio
+- [x] Radio
 - [ ] ComboBox
 - [ ] Fieldset
 - [ ] Form

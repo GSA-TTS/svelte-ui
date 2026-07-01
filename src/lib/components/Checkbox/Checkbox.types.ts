@@ -1,7 +1,9 @@
 import type { HTMLInputAttributes } from "svelte/elements";
 
-export interface CheckboxProps
-  extends Omit<HTMLInputAttributes, "type" | "children"> {
+export interface CheckboxProps extends Omit<
+  HTMLInputAttributes,
+  "type" | "children"
+> {
   tile?: boolean;
   helpText?: string;
   label: string;
