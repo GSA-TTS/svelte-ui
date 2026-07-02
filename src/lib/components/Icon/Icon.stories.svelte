@@ -1,6 +1,6 @@
 <script module lang="ts">
   import { defineMeta } from '@storybook/addon-svelte-csf';
-  import { expect, within } from 'storybook/test';
+  import { expect } from 'storybook/test';
   import Icon from './Icon.svelte';
 
   const { Story } = defineMeta({
@@ -38,8 +38,6 @@
   name="Default"
   args={{ name: 'add' }}
   play={async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
     const svg = canvasElement.querySelector('svg');
     await expect(svg).toBeInTheDocument();
     await expect(svg?.classList.contains('usa-icon')).toBe(true);
