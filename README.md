@@ -80,6 +80,38 @@ We recommend using the USWDS CDN for assets:
 
 For self-hosting assets, see the [USWDS documentation](https://designsystem.digital.gov/documentation/getting-started/developers/).
 
+### Icon Component Setup
+
+The Icon component requires the USWDS icon sprite to be publicly accessible in your application.
+
+**For SvelteKit projects:**
+
+```bash
+cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/uswds-icons.svg static/assets/
+```
+
+**For Vite projects:**
+
+```bash
+cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/uswds-icons.svg public/assets/
+```
+
+The sprite must be accessible at `/assets/uswds-icons.svg` for icons to render correctly.
+
+**Usage:**
+
+```svelte
+<script>
+  import { Icon } from '@gsa-tts/svelte-ui-uswds';
+</script>
+
+<Icon name="add" />
+<Icon name="close" size={5} />
+<Icon name="search" size={7} />
+```
+
+**Available icons:** See [USWDS Icons](https://designsystem.digital.gov/components/icon/) for the full list of 243 icon names.
+
 For detailed installation instructions, see [docs/INSTALLATION.md](./docs/INSTALLATION.md).
 
 ## Peer Dependencies
@@ -186,8 +218,20 @@ svelte-ui/
   <Button variant="secondary" size="big">Secondary Button</Button>
   ```
 
-- **TextInput** - Form input with validation and accessibility (planned)
-- **Checkbox** - Accessible checkbox with label support (planned)
+- **Icon** - USWDS icon component with 243 icons
+
+  ```svelte
+  <Icon name="add" />
+  <Icon name="close" size={5} />
+  ```
+
+- **Link** - Accessible link component with USWDS styling
+- **Tag** - Badge/tag component for labels and status indicators
+- **TextInput** - Form input with validation and accessibility
+- **Textarea** - Multi-line text input component
+- **Select** - Dropdown select component
+- **Checkbox** - Accessible checkbox with label support
+- **Radio** - Radio button input component
 
 See [Storybook documentation](https://svelte-ui-library.app.cloud.gov) for interactive examples.
 

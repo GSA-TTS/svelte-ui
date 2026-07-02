@@ -22,3 +22,6 @@ export type { CheckboxProps } from "./components/Checkbox/Checkbox.types.js";
 
 export { default as Radio } from "./components/Radio/Radio.svelte";
 export type { RadioProps } from "./components/Radio/Radio.types.js";
+
+export { default as Icon } from "./components/Icon/Icon.svelte";
+export type { IconProps } from "./components/Icon/Icon.types.js";
