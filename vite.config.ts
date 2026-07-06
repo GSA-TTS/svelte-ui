@@ -8,9 +8,11 @@ export default defineConfig({
   plugins: [
     svelte(),
     dts({
-      insertTypesEntry: true,
-      include: ["src/lib/**/*.ts", "src/lib/**/*.svelte"],
-      exclude: ["src/**/*.test.ts", "src/**/*.spec.ts", "src/**/*.stories.ts"],
+      include: ["src/lib/**/*.ts"],
+      exclude: ["src/**/*.test.ts", "src/**/*.spec.ts", "src/**/*.stories.ts", "src/**/*.stories.svelte"],
+      entryRoot: "src/lib",
+      outDir: "dist",
+      rollupTypes: false,
     }),
     storybookTest({
       storybookScript: "npm run storybook -- --ci",
