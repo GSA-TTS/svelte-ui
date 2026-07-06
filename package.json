@@ -94,7 +94,7 @@
     "vitest": "4.1.8"
   },
   "svelte": "./dist/svelte-ui.es.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/src/lib/index.d.ts",
   "keywords": [
     "svelte",
     "svelte5",

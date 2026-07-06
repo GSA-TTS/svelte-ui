@@ -14,19 +14,19 @@ Complete installation instructions for the Svelte UI component library.
 ### 1. Install the Package
 
 ```bash
-npm install svelte-ui @uswds/uswds
+npm install @gsa-tts/svelte-ui-uswds @uswds/uswds
 ```
 
 Using yarn:
 
 ```bash
-yarn add svelte-ui @uswds/uswds
+yarn add @gsa-tts/svelte-ui-uswds @uswds/uswds
 ```
 
 Using pnpm:
 
 ```bash
-pnpm add svelte-ui @uswds/uswds
+pnpm add @gsa-tts/svelte-ui-uswds @uswds/uswds
 ```
 
 ### 2. Import USWDS Styles
@@ -54,7 +54,7 @@ import "@uswds/uswds/dist/css/uswds.min.css";
 
 ```svelte
 <script>
-  import { Button } from 'svelte-ui';
+  import { Button } from '@gsa-tts/svelte-ui-uswds';
 </script>
 
 <Button>Click me</Button>
@@ -71,7 +71,7 @@ import "@uswds/uswds/dist/css/uswds.min.css";
 1. **Install dependencies:**
 
    ```bash
-   npm install svelte-ui @uswds/uswds
+   npm install @gsa-tts/svelte-ui-uswds @uswds/uswds
    ```
 
 2. **Import USWDS in your root layout:**
@@ -90,7 +90,7 @@ import "@uswds/uswds/dist/css/uswds.min.css";
    ```svelte
    <!-- src/routes/+page.svelte -->
    <script>
-     import { Button } from 'svelte-ui';
+     import { Button } from '@gsa-tts/svelte-ui-uswds';
    </script>
 
    <h1>Welcome</h1>
@@ -104,7 +104,7 @@ import "@uswds/uswds/dist/css/uswds.min.css";
 1. **Install dependencies:**
 
    ```bash
-   npm install svelte-ui @uswds/uswds
+   npm install @gsa-tts/svelte-ui-uswds @uswds/uswds
    ```
 
 2. **Import USWDS in your main entry:**
@@ -126,7 +126,7 @@ import "@uswds/uswds/dist/css/uswds.min.css";
    ```svelte
    <!-- src/App.svelte -->
    <script>
-     import { Button } from 'svelte-ui';
+     import { Button } from '@gsa-tts/svelte-ui-uswds';
    </script>
 
    <main>
@@ -202,24 +202,24 @@ For optimal TypeScript support, ensure your `tsconfig.json` includes:
 import "@uswds/uswds/dist/css/uswds.min.css";
 
 // Then import components
-import { Button } from "svelte-ui";
+import { Button } from "@gsa-tts/svelte-ui-uswds";
 ```
 
 ### Peer dependency warnings
 
 **Problem:** npm warns about missing peer dependencies.
 
-**Solution:** Install both svelte-ui and @uswds/uswds:
+**Solution:** Install both @gsa-tts/svelte-ui-uswds and @uswds/uswds:
 
 ```bash
-npm install svelte-ui @uswds/uswds
+npm install @gsa-tts/svelte-ui-uswds @uswds/uswds
 ```
 
 ### TypeScript errors
 
 **Problem:** TypeScript can't find module declarations.
 
-**Solution:** Ensure you have the latest version of svelte-ui. Types are included in the package.
+**Solution:** Ensure you have the latest version of @gsa-tts/svelte-ui-uswds. Types are included in the package.
 
 ### Build errors with Vite
 
