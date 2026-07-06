@@ -9,7 +9,12 @@ export default defineConfig({
     svelte(),
     dts({
       include: ["src/lib/**/*.ts"],
-      exclude: ["src/**/*.test.ts", "src/**/*.spec.ts", "src/**/*.stories.ts", "src/**/*.stories.svelte"],
+      exclude: [
+        "src/**/*.test.ts",
+        "src/**/*.spec.ts",
+        "src/**/*.stories.ts",
+        "src/**/*.stories.svelte",
+      ],
       entryRoot: "src/lib",
       outDir: "dist",
       rollupTypes: false,
