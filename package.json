@@ -1,6 +1,6 @@
 {
   "name": "@gsa-tts/svelte-ui-uswds",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Svelte UI component library with USWDS styling",
   "type": "module",
   "scripts": {
