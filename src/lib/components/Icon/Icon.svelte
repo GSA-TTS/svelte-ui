@@ -9,18 +9,18 @@
    * <Icon name="search" size={7} />
    * ```
    *
-   * **Setup:** Ensure `/assets/uswds-icons.svg` is accessible in your application.
-   * Copy `node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/uswds-icons.svg`
+   * **Setup:** Ensure `/assets/img/uswds-icons.svg` is accessible in your application.
+   * Copy `node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/uswds-icons.svg`
    * to your public directory.
    *
    * **For SvelteKit projects:**
    * ```bash
-   * cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/uswds-icons.svg static/assets/
+   * cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/uswds-icons.svg static/assets/img/
    * ```
    *
    * **For Vite projects:**
    * ```bash
-   * cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/uswds-icons.svg public/assets/
+   * cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/uswds-icons.svg public/assets/img/
    * ```
    *
    * **Available icons:** See [USWDS Icons](https://designsystem.digital.gov/components/icon/)
@@ -57,5 +57,5 @@
   role="img"
   {...restProps}
 >
-  <use href="/assets/uswds-icons.svg#{name}"></use>
+  <use href="/assets/img/uswds-icons.svg#{name}"></use>
 </svg>
