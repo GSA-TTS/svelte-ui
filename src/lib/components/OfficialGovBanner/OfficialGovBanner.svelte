@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { OfficialGovBannerProps } from './OfficialGovBanner.types.js';
-  import Icon from '../Icon/Icon.svelte';
   import USFlag from '../images/USFlag/USFlag.svelte';
   import DotGovIcon from '../images/DotGovIcon/DotGovIcon.svelte';
   import HttpsIcon from '../images/HttpsIcon/HttpsIcon.svelte';
