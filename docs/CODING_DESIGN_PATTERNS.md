@@ -33,6 +33,7 @@ src/lib/components/images/ImageComponentName/
 ```
 
 **Key Points:**
+
 - All image components MUST be placed in `src/lib/components/images/`
 - Each image component gets its own subdirectory
 - Follow the standard three-file pattern (component, types, stories)
@@ -52,6 +53,7 @@ export interface ImageComponentProps extends HTMLAttributes<SVGSVGElement> {
 ```
 
 **Key Principles:**
+
 - Extend `HTMLAttributes<SVGSVGElement>` for SVG components
 - Extend `HTMLAttributes<HTMLImageElement>` for `<img>` components
 - Only define props that are unique to the component
@@ -72,11 +74,11 @@ export interface ImageComponentProps extends HTMLAttributes<SVGSVGElement> {
 
   const classes = $derived.by(() => {
     const classList: string[] = [];
-    
+
     if (className) {
       classList.push(String(className));
     }
-    
+
     return classList.join(' ');
   });
 </script>
@@ -109,6 +111,7 @@ Image components MUST include:
 4. **`<title>` element** - For meaningful images (conditionally rendered)
 
 **When to use `<title>`:**
+
 - ✅ Image conveys information not available in surrounding text
 - ✅ Image is the only content in a button or link
 - ❌ Image is purely decorative (flag in banner, background graphics)
@@ -117,10 +120,12 @@ Image components MUST include:
 ### Props Pattern
 
 #### Required Props
+
 - `class: className` - Allow custom CSS classes
 - `...restProps` - Pass through all native HTML attributes
 
 #### Optional Props
+
 - `size?: number` - Control width/height (for square images)
 - `width?: number` - Explicit width control
 - `height?: number` - Explicit height control
@@ -180,11 +185,13 @@ Image components MUST include:
 ### Common Mistakes to Avoid
 
 ❌ **Don't:** Hardcode dimensions
+
 ```svelte
 <svg width="16" height="11">
 ```
 
 ✅ **Do:** Use props for dimensions
+
 ```svelte
 <svg width={width} height={height}>
 ```
@@ -192,11 +199,13 @@ Image components MUST include:
 ---
 
 ❌ **Don't:** Omit accessibility attributes
+
 ```svelte
 <svg xmlns="http://www.w3.org/2000/svg">
 ```
 
 ✅ **Do:** Include full accessibility attributes
+
 ```svelte
 <svg
   xmlns="http://www.w3.org/2000/svg"
@@ -209,37 +218,41 @@ Image components MUST include:
 ---
 
 ❌ **Don't:** Redefine native HTML attributes
+
 ```typescript
 interface ImageProps extends HTMLAttributes<SVGSVGElement> {
-  width?: number;   // Already in HTMLAttributes
-  height?: number;  // Already in HTMLAttributes
-  onclick?: () => void;  // Already in HTMLAttributes
+  width?: number; // Already in HTMLAttributes
+  height?: number; // Already in HTMLAttributes
+  onclick?: () => void; // Already in HTMLAttributes
 }
 ```
 
 ✅ **Do:** Only define component-specific props
+
 ```typescript
 interface ImageProps extends HTMLAttributes<SVGSVGElement> {
-  size?: number;  // Custom prop not in HTMLAttributes
+  size?: number; // Custom prop not in HTMLAttributes
 }
 ```
 
 ---
 
 ❌ **Don't:** Use empty class derivation
+
 ```svelte
 const classes = $derived.by(() => {
   const classList: string[] = [];
-  
+
   if (className) {
     classList.push(String(className));
   }
-  
+
   return classList.join(' ');
 });
 ```
 
 ✅ **Do:** Use simpler pattern when no USWDS classes are needed
+
 ```svelte
 // Just pass className directly if no class composition needed
 <svg class={className} />
@@ -264,6 +277,7 @@ const classes = $derived.by(() => {
    - **User setup**: Users copy from `node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/` to their `public/assets/img/` or `static/assets/img/`
 
 4. **Image Component Pattern**
+
    ```svelte
    <script lang="ts">
      import type { USFlagProps } from './USFlag.types.js';
@@ -294,6 +308,7 @@ const classes = $derived.by(() => {
    - No barrel files inside component directories
 
 6. **Export Pattern**
+
    ```typescript
    // src/lib/index.ts
    export { default as USFlag } from "./components/images/USFlag/USFlag.svelte";
@@ -301,12 +316,14 @@ const classes = $derived.by(() => {
    ```
 
 7. **Import Pattern for Other Components**
+
    ```typescript
    // When using image components in other components
-   import USFlag from '../images/USFlag/USFlag.svelte';
+   import USFlag from "../images/USFlag/USFlag.svelte";
    ```
 
 8. **Setup Instructions for Users**
+
    ```bash
    # SvelteKit
    cp -r node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img static/assets/
