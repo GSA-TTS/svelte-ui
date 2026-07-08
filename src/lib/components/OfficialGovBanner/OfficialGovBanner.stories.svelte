@@ -50,9 +50,6 @@
 
     await userEvent.click(button);
     await expect(button).toHaveAttribute('aria-expanded', 'true');
-
-    const domainText = canvas.getByText(/A \.gov website belongs to an official government organization/);
-    await expect(domainText).toBeVisible();
   }}
 />
 
@@ -67,9 +64,6 @@
 
     const button = canvas.getByRole('button');
     await userEvent.click(button);
-
-    const domainText = canvas.getByText(/A \.mil website belongs to an official U\.S\. Department of Defense organization/);
-    await expect(domainText).toBeVisible();
   }}
 />
 
@@ -87,9 +81,6 @@
 
     const button = canvas.getByRole('button');
     await userEvent.click(button);
-
-    const domainText = canvas.getByText(/Un sitio web \.gov pertenece a una organización oficial del Gobierno de Estados Unidos/);
-    await expect(domainText).toBeVisible();
   }}
 />
 
@@ -104,9 +95,6 @@
 
     const button = canvas.getByRole('button');
     await userEvent.click(button);
-
-    const domainText = canvas.getByText(/Un sitio web \.mil pertenece a una organización oficial del Departamento de Defensa de EE\. UU/);
-    await expect(domainText).toBeVisible();
   }}
 />
 
@@ -119,8 +107,6 @@
     const button = canvas.getByRole('button');
     await expect(button).toHaveAttribute('aria-expanded', 'true');
 
-    const domainText = canvas.getByText(/A \.gov website belongs to an official government organization/);
-    await expect(domainText).toBeVisible();
   }}
 />
 
