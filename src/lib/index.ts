@@ -25,3 +25,15 @@ export type { RadioProps } from "./components/Radio/Radio.types.js";
 
 export { default as Icon } from "./components/Icon/Icon.svelte";
 export type { IconProps } from "./components/Icon/Icon.types.js";
+
+export { default as OfficialGovBanner } from "./components/OfficialGovBanner/OfficialGovBanner.svelte";
+export type { OfficialGovBannerProps } from "./components/OfficialGovBanner/OfficialGovBanner.types.js";
+
+export { default as DotGovIcon } from "./components/images/DotGovIcon/DotGovIcon.svelte";
+export type { DotGovIconProps } from "./components/images/DotGovIcon/DotGovIcon.types.js";
+
+export { default as HttpsIcon } from "./components/images/HttpsIcon/HttpsIcon.svelte";
+export type { HttpsIconProps } from "./components/images/HttpsIcon/HttpsIcon.types.js";
+
+export { default as USFlag } from "./components/images/USFlag/USFlag.svelte";
+export type { USFlagProps } from "./components/images/USFlag/USFlag.types.js";
