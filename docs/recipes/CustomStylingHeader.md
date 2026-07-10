@@ -1,0 +1,147 @@
+# Custom Styling: Dark Header
+
+This recipe demonstrates how to override USWDS Header component styles to create a dark header with white text.
+
+## The Challenge
+
+USWDS provides default link colors that may not work well with custom backgrounds. When applying a dark background to the Header component, you need to override several nested link styles to ensure text remains visible and accessible.
+
+## Solution
+
+Add custom CSS in your project to override USWDS link colors when a specific class is applied to the Header.
+
+### Step 1: Add Custom CSS
+
+Create or update your project's CSS file:
+
+```css
+/* app.css or global.css */
+
+/* Override logo link color */
+.usa-header.text-white .usa-logo a {
+  color: white;
+}
+
+/* Override navigation link colors */
+.usa-header.text-white .usa-nav__link,
+.usa-header.text-white .usa-nav-link {
+  color: white;
+}
+
+/* Override menu button color */
+.usa-header.text-white .usa-menu-btn {
+  color: white;
+}
+
+/* Optional: Override hover states */
+.usa-header.text-white .usa-logo a:hover,
+.usa-header.text-white .usa-nav__link:hover,
+.usa-header.text-white .usa-nav-link:hover {
+  color: #e0e0e0;
+}
+```
+
+### Step 2: Apply Classes to Header
+
+Use the `class` prop to apply your custom styling:
+
+```svelte
+<script>
+  import { Header, HeaderNavBar, HeaderLogo, HeaderNavMenu, HeaderNav, HeaderNavPrimary, HeaderNavItem } from '@gsa-tts/svelte-ui-uswds';
+</script>
+
+<Header class="bg-black text-white">
+  <HeaderNavBar>
+    <HeaderLogo href="/" title="My Project" />
+    <HeaderNavMenu variant="menu" />
+  </HeaderNavBar>
+  <HeaderNav>
+    <HeaderNavPrimary>
+      <HeaderNavItem label="Home" href="/" />
+      <HeaderNavItem label="About" href="/about" />
+      <HeaderNavItem label="Contact" href="/contact" />
+    </HeaderNavPrimary>
+  </HeaderNav>
+</Header>
+```
+
+## Alternative: CSS Custom Properties
+
+For more flexibility, use CSS custom properties:
+
+```css
+/* Define custom properties for dark theme */
+.usa-header.dark-theme {
+  background-color: var(--dark-bg, #1a1a1a);
+  --logo-color: var(--dark-text, white);
+  --nav-link-color: var(--dark-text, white);
+  --menu-btn-color: var(--dark-text, white);
+}
+
+.usa-header.dark-theme .usa-logo a {
+  color: var(--logo-color);
+}
+
+.usa-header.dark-theme .usa-nav__link,
+.usa-header.dark-theme .usa-nav-link {
+  color: var(--nav-link-color);
+}
+
+.usa-header.dark-theme .usa-menu-btn {
+  color: var(--menu-btn-color);
+}
+```
+
+Then use it in your component:
+
+```svelte
+<Header class="dark-theme" style="--dark-bg: #2d3748; --dark-text: #f7fafc;">
+  <!-- Header content -->
+</Header>
+```
+
+## Accessibility Considerations
+
+When customizing header colors:
+
+1. **Contrast Ratio**: Ensure text meets WCAG AA contrast requirements (4.5:1 for normal text, 3:1 for large text)
+2. **Focus Indicators**: Make sure focus states are visible on dark backgrounds
+3. **Test with Screen Readers**: Verify navigation remains accessible with assistive technologies
+
+```css
+/* Add visible focus states for dark backgrounds */
+.usa-header.text-white a:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+```
+
+## Using with Tailwind CSS
+
+If you're using Tailwind CSS, you can use arbitrary variants:
+
+```svelte
+<Header class="bg-slate-900">
+  <HeaderNavBar class="[&_.usa-logo_a]:text-white [&_.usa-menu-btn]:text-white">
+    <HeaderLogo href="/" title="My Project" />
+    <HeaderNavMenu variant="menu" />
+  </HeaderNavBar>
+  <HeaderNav>
+    <HeaderNavPrimary class="[&_.usa-nav__link]:text-white [&_.usa-nav-link]:text-white">
+      <HeaderNavItem label="Home" href="/" />
+      <HeaderNavItem label="About" href="/about" />
+    </HeaderNavPrimary>
+  </HeaderNav>
+</Header>
+```
+
+## Related Components
+
+- [Header](/components/Header) - Main Header component documentation
+- [HeaderLogo](/components/HeaderLogo) - Logo component
+- [HeaderNav](/components/HeaderNav) - Navigation container
+
+## Further Reading
+
+- [USWDS Header Component](https://designsystem.digital.gov/components/header/)
+- [WCAG Color Contrast Guidelines](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)
