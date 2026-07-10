@@ -28,7 +28,7 @@
     return classList.join(' ');
   });
 
-  function handleClick(event: MouseEvent) {
+  function handleClick(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) {
     if (headerContext) {
       if (variant === 'menu') {
         headerContext.toggleMobileMenu();
