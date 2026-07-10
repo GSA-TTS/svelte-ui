@@ -25,7 +25,7 @@
     return classList.join(' ');
   });
 
-  function handleClick(event: MouseEvent) {
+  function handleClick() {
     if (headerContext) {
       headerContext.closeMobileMenu();
     }
