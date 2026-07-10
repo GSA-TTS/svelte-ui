@@ -37,3 +37,30 @@ export type { HttpsIconProps } from "./components/images/HttpsIcon/HttpsIcon.typ
 
 export { default as USFlag } from "./components/images/USFlag/USFlag.svelte";
 export type { USFlagProps } from "./components/images/USFlag/USFlag.types.js";
+
+export { default as Header } from "./components/Header/Header.svelte";
+export type { HeaderProps } from "./components/Header/Header.types.js";
+
+export { default as HeaderNavBar } from "./components/Header/HeaderNavBar.svelte";
+export type { HeaderNavBarProps } from "./components/Header/HeaderNavBar.types.js";
+
+export { default as HeaderLogo } from "./components/Header/HeaderLogo.svelte";
+export type { HeaderLogoProps } from "./components/Header/HeaderLogo.types.js";
+
+export { default as HeaderNav } from "./components/Header/HeaderNav.svelte";
+export type { HeaderNavProps } from "./components/Header/HeaderNav.types.js";
+
+export { default as HeaderNavMenu } from "./components/Header/HeaderNavMenu.svelte";
+export type { HeaderNavMenuProps } from "./components/Header/HeaderNavMenu.types.js";
+
+export { default as HeaderNavPrimary } from "./components/Header/HeaderNavPrimary.svelte";
+export type { HeaderNavPrimaryProps } from "./components/Header/HeaderNavPrimary.types.js";
+
+export { default as HeaderNavItem } from "./components/Header/HeaderNavItem.svelte";
+export type { HeaderNavItemProps } from "./components/Header/HeaderNavItem.types.js";
+
+export { default as HeaderOverlay } from "./components/Header/HeaderOverlay.svelte";
+export type { HeaderOverlayProps } from "./components/Header/HeaderOverlay.types.js";
+
+export { default as HeaderSearchPlaceholder } from "./components/Header/HeaderSearchPlaceholder.svelte";
+export type { HeaderSearchPlaceholderProps } from "./components/Header/HeaderSearchPlaceholder.types.js";
