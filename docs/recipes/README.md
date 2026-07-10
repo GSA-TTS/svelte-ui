@@ -5,7 +5,7 @@ This directory contains recipes and patterns for using Svelte UI components in c
 ## Available Recipes
 
 - [Form Validation with Zod](./FormValidationWithZod.mdx) - Integrate Zod schema validation with form components
-- [Custom Styling: Dark Header](./CustomStylingHeader.md) - Override USWDS styles to create a dark header with white text
+- [Custom Styling: Dark Header](./CustomStylingHeader.mdx) - Override USWDS styles to create a dark header with white text
 
 ## What are Recipes?
 
@@ -29,4 +29,4 @@ If you have a useful pattern or integration you'd like to share, please:
 
 ### Styling & Theming
 
-- [Custom Styling: Dark Header](./CustomStylingHeader.md)
+- [Custom Styling: Dark Header](./CustomStylingHeader.mdx)
