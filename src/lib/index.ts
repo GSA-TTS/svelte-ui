@@ -41,8 +41,8 @@ export type { USFlagProps } from "./components/images/USFlag/USFlag.types.js";
 export { default as Header } from "./components/Header/Header.svelte";
 export type { HeaderProps } from "./components/Header/Header.types.js";
 
-export { default as HeaderNavBar } from "./components/Header/HeaderNavbar.svelte";
-export type { HeaderNavBarProps } from "./components/Header/HeaderNavbar.types.js";
+export { default as HeaderNavBar } from "./components/Header/HeaderNavBar.svelte";
+export type { HeaderNavBarProps } from "./components/Header/HeaderNavBar.types.js";
 
 export { default as HeaderLogo } from "./components/Header/HeaderLogo.svelte";
 export type { HeaderLogoProps } from "./components/Header/HeaderLogo.types.js";
