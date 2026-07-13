@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/@gsa-tts%2Fsvelte-ui-uswds.svg)](https://www.npmjs.com/package/@gsa-tts/svelte-ui-uswds)
 [![npm downloads](https://img.shields.io/npm/dm/@gsa-tts/svelte-ui-uswds.svg)](https://www.npmjs.com/package/@gsa-tts/svelte-ui-uswds)
 
-A comprehensive, adaptable Svelte component library that leverages the U.S. Web Design System (USWDS) as the default design system while maintaining design system-agnostic flexibility.
+A comprehensive, adaptable Svelte component library that leverages the U.S. Web Design System (USWDS) as the default design system.
 
 ## Features
 
@@ -16,7 +16,7 @@ A comprehensive, adaptable Svelte component library that leverages the U.S. Web 
 
 ## Installation
 
-> **Note:** This library is currently in alpha. Use the `@alpha` tag for the latest features.  
+> **Note:** This library is currently in alpha. Use the `@alpha` tag for the latest features.
 > Production-ready stable releases will be announced when available.
 
 ### For Alpha Testing (Latest Features)
@@ -32,6 +32,87 @@ npm install @gsa-tts/svelte-ui-uswds @uswds/uswds
 ```
 
 Check [Releases](https://github.com/GSA-TTS/svelte-ui/releases) for version history.
+
+## Static Assets Setup
+
+This package includes SVG image assets used by certain components. **You must copy these to your application's public directory** for the components to display correctly.
+
+### Quick Setup
+
+Copy all image assets to your project:
+
+**SvelteKit:**
+
+```bash
+mkdir -p static/assets/img
+cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/*.svg static/assets/img/
+```
+
+**Vite:**
+
+```bash
+mkdir -p public/assets/img
+cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/*.svg public/assets/img/
+```
+
+> **Tip:** Only copy the assets for components you're using (see table below).
+
+### Asset Reference
+
+| File               | Size | Used By      | Required When                                        |
+| ------------------ | ---- | ------------ | ---------------------------------------------------- |
+| `uswds-icons.svg`  | 71KB | `Icon`       | Using the `<Icon>` component                         |
+| `icon-dot-gov.svg` | <1KB | `DotGovIcon` | Using `<OfficialGovBanner>`                          |
+| `icon-https.svg`   | <1KB | `HttpsIcon`  | Using `<OfficialGovBanner>`                          |
+| `us_flag.svg`      | <1KB | `USFlag`     | Using `<OfficialGovBanner>` or standalone `<USFlag>` |
+
+### How It Works
+
+Components reference these assets via absolute paths:
+
+```svelte
+<!-- Icon component internally does this: -->
+<use href="/assets/img/uswds-icons.svg#add"></use>
+
+<!-- Image components do this: -->
+<img src="/assets/img/icon-dot-gov.svg" alt="..." />
+```
+
+Your build tool serves files from the public directory at the root path (`/`), making `/assets/img/...` accessible.
+
+### Automated Setup (Optional)
+
+Add a postinstall script to automatically copy assets after `npm install`:
+
+**SvelteKit projects:**
+
+```json
+{
+  "scripts": {
+    "postinstall": "mkdir -p static/assets/img && cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/*.svg static/assets/img/"
+  }
+}
+```
+
+**Vite projects:**
+
+```json
+{
+  "scripts": {
+    "postinstall": "mkdir -p public/assets/img && cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/*.svg public/assets/img/"
+  }
+}
+```
+
+> **Note:** The postinstall script runs after every `npm install`, which may be undesirable in CI/CD environments. Consider using a separate `setup` script instead:
+>
+> ```json
+> "scripts": {
+>   "setup:assets": "mkdir -p static/assets/img && cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/*.svg static/assets/img/"
+> }
+> ```
+>
+> Then run `npm run setup:assets` once after installation.
 
 ### Import USWDS styles
 
@@ -79,38 +160,6 @@ We recommend using the USWDS CDN for assets:
 ```
 
 For self-hosting assets, see the [USWDS documentation](https://designsystem.digital.gov/documentation/getting-started/developers/).
-
-### Icon Component Setup
-
-The Icon component requires the USWDS icon sprite to be publicly accessible in your application.
-
-**For SvelteKit projects:**
-
-```bash
-cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/uswds-icons.svg static/assets/
-```
-
-**For Vite projects:**
-
-```bash
-cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/uswds-icons.svg public/assets/
-```
-
-The sprite must be accessible at `/assets/uswds-icons.svg` for icons to render correctly.
-
-**Usage:**
-
-```svelte
-<script>
-  import { Icon } from '@gsa-tts/svelte-ui-uswds';
-</script>
-
-<Icon name="add" />
-<Icon name="close" size={5} />
-<Icon name="search" size={7} />
-```
-
-**Available icons:** See [USWDS Icons](https://designsystem.digital.gov/components/icon/) for the full list of 243 icon names.
 
 For detailed installation instructions, see [docs/INSTALLATION.md](./docs/INSTALLATION.md).
 

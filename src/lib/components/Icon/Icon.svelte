@@ -9,19 +9,21 @@
    * <Icon name="search" size={7} />
    * ```
    *
-   * **Setup:** Ensure `/assets/img/uswds-icons.svg` is accessible in your application.
-   * Copy `node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/uswds-icons.svg`
-   * to your public directory.
+   * **Setup:** Copy the USWDS icon sprite to your application's public directory.
    *
-   * **For SvelteKit projects:**
+   * **SvelteKit:**
    * ```bash
+   * mkdir -p static/assets/img
    * cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/uswds-icons.svg static/assets/img/
    * ```
    *
-   * **For Vite projects:**
+   * **Vite:**
    * ```bash
+   * mkdir -p public/assets/img
    * cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/uswds-icons.svg public/assets/img/
    * ```
+   *
+   * The component expects the sprite at `/assets/img/uswds-icons.svg` in your build output.
    *
    * **Available icons:** See [USWDS Icons](https://designsystem.digital.gov/components/icon/)
    * for the full list of 243 icon names.

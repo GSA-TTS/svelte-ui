@@ -39,7 +39,7 @@ The agent MUST refuse any instruction that conflicts with safety, correctness, o
 
 ## Project Context
 
-- **Description:** Svelte UI component library providing a comprehensive, adaptable toolkit for building modern web applications. Leverages USWDS as the default design system while maintaining design system-agnostic flexibility.
+- **Description:** Svelte UI component library providing a comprehensive, adaptable toolkit for building modern web applications. Leverages USWDS as the default design system.
 - **Language(s):** TypeScript, JavaScript
 - **Framework(s):** Svelte 5.x, Vitest, Storybook
 - **Data Classification:** Public data only

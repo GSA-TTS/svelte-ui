@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/GSA-TTS/svelte-ui/compare/v1.2.0...v1.3.0) (2026-07-13)
+
+## [1.2.1](https://github.com/GSA-TTS/svelte-ui/compare/v1.2.0...v1.2.1) (2026-07-13)
+
+### Features
+
+- **assets:** add package exports for image assets ([#xxx](https://github.com/GSA-TTS/svelte-ui/issues/xxx))
+  - Export image assets via `./assets/*` package export path
+  - Enables developers to easily reference and copy assets to their public directories
+  - Assets include: `uswds-icons.svg`, `icon-dot-gov.svg`, `icon-https.svg`, `us_flag.svg`
+
+### Documentation
+
+- **assets:** add comprehensive static assets setup guide
+  - Added "Static Assets Setup" section to README with copy commands for SvelteKit and Vite
+  - Updated Icon component JSDoc with clearer setup instructions
+  - Added asset reference table showing which components require which assets
+  - Included postinstall script examples for automated asset copying
+
 ## [1.2.0](https://github.com/GSA-TTS/svelte-ui/compare/v1.1.1...v1.2.0) (2026-07-13)
 
 ### Features
