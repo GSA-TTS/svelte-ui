@@ -11,7 +11,7 @@
 </script>
 
 <img
-  src="/assets/img/us_flag.svg"
+  src="./assets/img/us_flag.svg"
   {alt}
   {width}
   {height}
