@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { USFlagProps } from './USFlag.types.js';
+  import iconUrl from '../../../assets/img/us_flag.svg?url';
 
   let {
     width = 16,
@@ -11,7 +12,7 @@
 </script>
 
 <img
-  src="./assets/img/us_flag.svg"
+  src={iconUrl}
   {alt}
   {width}
   {height}

@@ -29,6 +29,7 @@
    * for the full list of 243 icon names.
    */
   import type { IconProps } from './Icon.types.js';
+  import uswdsIconUrl from '../../assets/img/uswds-icons.svg?url';
 
   let {
     name,
@@ -59,5 +60,5 @@
   role="img"
   {...restProps}
 >
-  <use href="./assets/img/uswds-icons.svg#{name}"></use>
+  <use href={`${uswdsIconUrl}#${name}`}></use>
 </svg>

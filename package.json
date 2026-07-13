@@ -1,6 +1,6 @@
 {
   "name": "@gsa-tts/svelte-ui-uswds",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Svelte UI component library with USWDS styling",
   "type": "module",
   "scripts": {
@@ -9,6 +9,7 @@
     "verify-package": "bash scripts/verify-package.sh",
     "prepublishOnly": "npm run verify-package",
     "release": "standard-version",
+    "release:patch": "standard-version --release-as patch",
     "release:minor": "standard-version --release-as minor",
     "release:major": "standard-version --release-as major",
     "release:alpha": "standard-version --prerelease alpha",
