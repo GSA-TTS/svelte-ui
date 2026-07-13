@@ -10,7 +10,7 @@
 </script>
 
 <img
-  src="/assets/img/icon-dot-gov.svg"
+  src="./assets/img/icon-dot-gov.svg"
   alt=""
   {width}
   {height}

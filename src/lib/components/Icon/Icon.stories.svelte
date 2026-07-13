@@ -43,7 +43,7 @@
     await expect(svg?.classList.contains('usa-icon')).toBe(true);
 
     const use = svg?.querySelector('use');
-    await expect(use?.getAttribute('href')).toBe('/assets/img/uswds-icons.svg#add');
+    await expect(use?.getAttribute('href')).toBe('./assets/img/uswds-icons.svg#add');
 
     await expect(svg?.getAttribute('aria-hidden')).toBe('true');
     await expect(svg?.getAttribute('focusable')).toBe('false');

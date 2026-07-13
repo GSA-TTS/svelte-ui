@@ -59,5 +59,5 @@
   role="img"
   {...restProps}
 >
-  <use href="/assets/img/uswds-icons.svg#{name}"></use>
+  <use href="./assets/img/uswds-icons.svg#{name}"></use>
 </svg>
