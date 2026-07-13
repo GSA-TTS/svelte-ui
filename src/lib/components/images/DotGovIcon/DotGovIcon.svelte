@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { DotGovIconProps } from './DotGovIcon.types.js';
-
+  import iconUrl from '../../../assets/img/icon-dot-gov.svg?url';
   let {
     width = 40,
     height = 40,
@@ -10,7 +10,7 @@
 </script>
 
 <img
-  src="./assets/img/icon-dot-gov.svg"
+  src={iconUrl}
   alt=""
   {width}
   {height}
