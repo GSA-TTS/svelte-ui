@@ -9,7 +9,7 @@ export default create({
     '"Roboto Mono Web", "Bitstream Vera Sans Mono", "Consolas", "Courier", monospace',
 
   brandTitle: "Svelte UI Library",
-  brandUrl: "https://github.com/GSA/svelte-ui",
+  brandUrl: "https://github.com/GSA-TTS/svelte-ui",
   brandTarget: "_self",
 
   colorPrimary: "#005ea2",
