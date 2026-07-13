@@ -41,7 +41,8 @@
     "./styles": "./src/lib/styles/index.css",
     "./styles/uswds.css": "./src/lib/styles/uswds.css",
     "./styles/theme.css": "./src/lib/styles/theme.css",
-    "./styles/components/button-theme.css": "./src/lib/styles/components/button-theme.css"
+    "./styles/components/button-theme.css": "./src/lib/styles/components/button-theme.css",
+    "./assets/*": "./src/lib/assets/*"
   },
   "files": [
     "dist",
