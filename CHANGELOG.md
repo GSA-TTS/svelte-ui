@@ -4,10 +4,9 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [1.2.0](https://github.com/GSA-TTS/svelte-ui/compare/v1.1.1...v1.2.0) (2026-07-13)
 
-
 ### Features
 
-* added banner component and added coding desing patterns doc ([9c94acb](https://github.com/GSA-TTS/svelte-ui/commit/9c94acb3a32a56526e6e514f4fccbb679a3134cb))
+- added banner component and added coding desing patterns doc ([9c94acb](https://github.com/GSA-TTS/svelte-ui/commit/9c94acb3a32a56526e6e514f4fccbb679a3134cb))
 
 ### [1.1.1](https://github.com/GSA-TTS/svelte-ui/compare/v1.0.0...v1.1.1) (2026-07-06)
 
