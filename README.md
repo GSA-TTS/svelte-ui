@@ -42,12 +42,14 @@ This package includes SVG image assets used by certain components. **You must co
 Copy all image assets to your project:
 
 **SvelteKit:**
+
 ```bash
 mkdir -p static/assets/img
 cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/*.svg static/assets/img/
 ```
 
 **Vite:**
+
 ```bash
 mkdir -p public/assets/img
 cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/*.svg public/assets/img/
@@ -57,16 +59,17 @@ cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/*.svg public/assets/
 
 ### Asset Reference
 
-| File | Size | Used By | Required When |
-|------|------|---------|---------------|
-| `uswds-icons.svg` | 71KB | `Icon` | Using the `<Icon>` component |
-| `icon-dot-gov.svg` | <1KB | `DotGovIcon` | Using `<OfficialGovBanner>` |
-| `icon-https.svg` | <1KB | `HttpsIcon` | Using `<OfficialGovBanner>` |
-| `us_flag.svg` | <1KB | `USFlag` | Using `<OfficialGovBanner>` or standalone `<USFlag>` |
+| File               | Size | Used By      | Required When                                        |
+| ------------------ | ---- | ------------ | ---------------------------------------------------- |
+| `uswds-icons.svg`  | 71KB | `Icon`       | Using the `<Icon>` component                         |
+| `icon-dot-gov.svg` | <1KB | `DotGovIcon` | Using `<OfficialGovBanner>`                          |
+| `icon-https.svg`   | <1KB | `HttpsIcon`  | Using `<OfficialGovBanner>`                          |
+| `us_flag.svg`      | <1KB | `USFlag`     | Using `<OfficialGovBanner>` or standalone `<USFlag>` |
 
 ### How It Works
 
 Components reference these assets via absolute paths:
+
 ```svelte
 <!-- Icon component internally does this: -->
 <use href="/assets/img/uswds-icons.svg#add"></use>
@@ -82,6 +85,7 @@ Your build tool serves files from the public directory at the root path (`/`), m
 Add a postinstall script to automatically copy assets after `npm install`:
 
 **SvelteKit projects:**
+
 ```json
 {
   "scripts": {
@@ -91,6 +95,7 @@ Add a postinstall script to automatically copy assets after `npm install`:
 ```
 
 **Vite projects:**
+
 ```json
 {
   "scripts": {
@@ -100,11 +105,13 @@ Add a postinstall script to automatically copy assets after `npm install`:
 ```
 
 > **Note:** The postinstall script runs after every `npm install`, which may be undesirable in CI/CD environments. Consider using a separate `setup` script instead:
+>
 > ```json
 > "scripts": {
 >   "setup:assets": "mkdir -p static/assets/img && cp node_modules/@gsa-tts/svelte-ui-uswds/src/lib/assets/img/*.svg static/assets/img/"
 > }
 > ```
+>
 > Then run `npm run setup:assets` once after installation.
 
 ### Import USWDS styles
