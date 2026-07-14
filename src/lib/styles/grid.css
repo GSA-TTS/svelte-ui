@@ -1,0 +1,59 @@
+/**
+ * USWDS Grid Utilities
+ * 
+ * Provides responsive grid layout utilities for card components and other layouts.
+ * Based on USWDS 3.13.0 grid system.
+ * 
+ * Documentation: https://designsystem.digital.gov/utilities/layout-grid/
+ */
+
+[class*="grid-col"] {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.usa-card-group {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 64em) {
+  .tablet-lg\:grid-col-6 {
+    flex: 0 1 auto;
+    width: 50%;
+  }
+
+  .tablet-lg\:grid-col-4 {
+    flex: 0 1 auto;
+    width: 33.3333333333%;
+  }
+
+  .tablet-lg\:grid-col {
+    flex: 1 1 0%;
+    width: auto;
+  }
+}
+
+@media (min-width: 87.5em) {
+  .widescreen\:grid-col-4 {
+    flex: 0 1 auto !important;
+    width: 33.3333333333% !important;
+  }
+
+  .widescreen\:grid-col-6 {
+    flex: 0 1 auto !important;
+    width: 50% !important;
+  }
+
+  .widescreen\:grid-col {
+    flex: 1 1 0% !important;
+    width: auto !important;
+  }
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}

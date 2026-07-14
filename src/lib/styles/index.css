@@ -3,6 +3,7 @@
  *
  * Import this file to get the complete Svelte UI design system:
  *   - USWDS foundation (from CDN)
+ *   - USWDS grid utilities
  *   - Custom overrides for USWDS styles
  *
  * Usage:
@@ -10,6 +11,7 @@
  */
 
 @import "./uswds.css";
+@import "./grid.css";
 
 .usa-label--error {
   margin-top: 1.5rem;
