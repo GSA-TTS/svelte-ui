@@ -1,4 +1,13 @@
 // Components
+export { default as Accordion } from "./components/Accordion/Accordion.svelte";
+export type {
+  AccordionProps,
+  AccordionContextType,
+} from "./components/Accordion/Accordion.types.ts";
+
+export { default as AccordionItem } from "./components/Accordion/AccordionItem.svelte";
+export type { AccordionItemProps } from "./components/Accordion/AccordionItem.types.ts";
+
 export { default as Button } from "./components/Button/Button.svelte";
 export type { ButtonProps } from "./components/Button/Button.types.js";
 

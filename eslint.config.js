@@ -50,11 +50,26 @@ export default [
     },
     plugins: {
       svelte,
+      "@typescript-eslint": ts,
     },
     rules: {
       ...svelte.configs.recommended.rules,
       "svelte/no-unused-svelte-ignore": "warn",
       "svelte/valid-compile": "error",
+      "no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
     },
   },
   {
