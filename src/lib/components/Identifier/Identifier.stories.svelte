@@ -1,6 +1,6 @@
 <script module lang="ts">
   import { defineMeta } from '@storybook/addon-svelte-csf';
-  import { expect, within } from 'storybook/test';
+  import { expect } from 'storybook/test';
   import Identifier from './Identifier.svelte';
   import IdentifierMasthead from './IdentifierMasthead.svelte';
   import IdentifierLogo from './IdentifierLogo.svelte';
@@ -155,7 +155,7 @@
   play={async ({ canvasElement }) => {
     const logos = canvasElement.querySelectorAll('.usa-identifier__logo');
     await expect(logos.length).toBe(2);
-    
+
     const disclaimer = canvasElement.querySelector('.usa-identifier__identity-disclaimer');
     await expect(disclaimer?.textContent).toContain('and the');
   }}
