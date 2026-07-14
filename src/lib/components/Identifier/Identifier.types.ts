@@ -5,5 +5,10 @@ export interface IdentifierProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   "children"
 > {
-  children?: Snippet;
+  domain?: string;
+  includeTaxpayerDisclaimer?: boolean;
+  requiredLinksAriaLabel?: string;
+  logos?: Snippet;
+  agencyLinks?: Snippet;
+  requiredLinks?: Snippet;
 }
