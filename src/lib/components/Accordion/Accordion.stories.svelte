@@ -164,8 +164,10 @@
     const button1 = canvasElement.querySelector('[aria-controls="d-first-amendment"]');
     await expect(button1).toHaveAttribute('aria-expanded', 'true');
 
-    await userEvent.click(button1);
-    await expect(button1).toHaveAttribute('aria-expanded', 'false');
+    if (button1) {
+      await userEvent.click(button1);
+      await expect(button1).toHaveAttribute('aria-expanded', 'false');
+    }
     await expect(content1).toHaveAttribute('hidden');
   }}
 >
