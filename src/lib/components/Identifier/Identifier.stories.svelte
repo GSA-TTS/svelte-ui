@@ -2,10 +2,9 @@
   import { defineMeta } from '@storybook/addon-svelte-csf';
   import { expect } from 'storybook/test';
   import Identifier from './Identifier.svelte';
-  import IdentifierMasthead from './IdentifierMasthead.svelte';
   import IdentifierLogo from './IdentifierLogo.svelte';
-  import IdentifierRequiredLinks from './IdentifierRequiredLinks.svelte';
-  import IdentifierUSAGov from './IdentifierUSAGov.svelte';
+  import IdentifierRequiredLinksItem from './IdentifierRequiredLinksItem.svelte';
+  import Link from '../Link/Link.svelte';
 
   const { Story } = defineMeta({
     title: 'Components/Identifier',
@@ -40,35 +39,24 @@
   }}
 >
   <Identifier>
-    <IdentifierMasthead>
+    {#snippet logos()}
       <IdentifierLogo
         src="/assets/img/circle-gray-20.svg"
         alt="<Parent agency> logo"
       />
-    </IdentifierMasthead>
-    <IdentifierRequiredLinks />
-    <IdentifierUSAGov />
-  </Identifier>
-</Story>
-
-<Story
-  name="With Placeholder Defaults"
-  asChild
-  play={async ({ canvasElement }) => {
-    const domain = canvasElement.querySelector('.usa-identifier__identity-domain');
-    await expect(domain?.textContent).toBe('domain.gov');
-
-    const disclaimer = canvasElement.querySelector('.usa-identifier__identity-disclaimer');
-    await expect(disclaimer?.textContent).toContain('<Parent agency>');
-
-    const description = canvasElement.querySelector('.usa-identifier__usagov-description');
-    await expect(description?.textContent).toContain('Looking for U.S. government information');
-  }}
->
-  <Identifier>
-    <IdentifierMasthead />
-    <IdentifierRequiredLinks />
-    <IdentifierUSAGov />
+    {/snippet}
+    {#snippet agencyLinks()}
+      <Link href="">&lt;Parent agency&gt;</Link>
+    {/snippet}
+    {#snippet requiredLinks()}
+      <IdentifierRequiredLinksItem href="javascript:void(0)">About &lt;Parent shortname&gt;</IdentifierRequiredLinksItem>
+      <IdentifierRequiredLinksItem href="">Accessibility statement</IdentifierRequiredLinksItem>
+      <IdentifierRequiredLinksItem href="">FOIA requests</IdentifierRequiredLinksItem>
+      <IdentifierRequiredLinksItem href="">No FEAR Act data</IdentifierRequiredLinksItem>
+      <IdentifierRequiredLinksItem href="">Office of the Inspector General</IdentifierRequiredLinksItem>
+      <IdentifierRequiredLinksItem href="">Performance reports</IdentifierRequiredLinksItem>
+      <IdentifierRequiredLinksItem href="">Privacy policy</IdentifierRequiredLinksItem>
+    {/snippet}
   </Identifier>
 </Story>
 
@@ -86,19 +74,20 @@
     await expect(logo?.getAttribute('alt')).toBe('GSA logo');
   }}
 >
-  <Identifier>
-    <IdentifierMasthead
-      domain="example.gov"
-      agencies={[{ name: 'General Services Administration', href: 'https://www.gsa.gov' }]}
-    >
+  <Identifier domain="example.gov">
+    {#snippet logos()}
       <IdentifierLogo
         src="/assets/img/circle-gray-20.svg"
         alt="GSA logo"
         href="https://www.gsa.gov"
       />
-    </IdentifierMasthead>
-    <IdentifierRequiredLinks />
-    <IdentifierUSAGov />
+    {/snippet}
+    {#snippet agencyLinks()}
+      <Link href="https://www.gsa.gov">General Services Administration</Link>
+    {/snippet}
+    {#snippet requiredLinks()}
+      <IdentifierRequiredLinksItem href="javascript:void(0)">About &lt;Parent shortname&gt;</IdentifierRequiredLinksItem>
+    {/snippet}
   </Identifier>
 </Story>
 
@@ -111,23 +100,24 @@
     await expect(links[0]?.textContent).toBe('Contact Us');
     await expect(links[1]?.textContent).toBe('Help');
     await expect(links[2]?.textContent).toBe('Terms of Service');
+    await expect(links[1]?.className).toContain('usa-link--external');
   }}
 >
   <Identifier>
-    <IdentifierMasthead>
+    {#snippet logos()}
       <IdentifierLogo
         src="/assets/img/circle-gray-20.svg"
         alt="<Parent agency> logo"
       />
-    </IdentifierMasthead>
-    <IdentifierRequiredLinks
-      links={[
-        { text: 'Contact Us', href: 'javascript:void(0)' },
-        { text: 'Help', href: 'javascript:void(0)', variant: 'external' },
-        { text: 'Terms of Service', href: 'javascript:void(0)' },
-      ]}
-    />
-    <IdentifierUSAGov />
+    {/snippet}
+    {#snippet agencyLinks()}
+      <Link href="">&lt;Parent agency&gt;</Link>
+    {/snippet}
+    {#snippet requiredLinks()}
+      <IdentifierRequiredLinksItem href="javascript:void(0)">Contact Us</IdentifierRequiredLinksItem>
+      <IdentifierRequiredLinksItem href="javascript:void(0)" variant="external">Help</IdentifierRequiredLinksItem>
+      <IdentifierRequiredLinksItem href="javascript:void(0)">Terms of Service</IdentifierRequiredLinksItem>
+    {/snippet}
   </Identifier>
 </Story>
 
@@ -143,9 +133,12 @@
   }}
 >
   <Identifier>
-    <IdentifierMasthead />
-    <IdentifierRequiredLinks />
-    <IdentifierUSAGov />
+    {#snippet agencyLinks()}
+      <Link href="">&lt;Parent agency&gt;</Link>
+    {/snippet}
+    {#snippet requiredLinks()}
+      <IdentifierRequiredLinksItem href="javascript:void(0)">About &lt;Parent shortname&gt;</IdentifierRequiredLinksItem>
+    {/snippet}
   </Identifier>
 </Story>
 
@@ -160,14 +153,8 @@
     await expect(disclaimer?.textContent).toContain('and the');
   }}
 >
-  <Identifier>
-    <IdentifierMasthead
-      agencies={[
-        { name: '<Parent agency>', href: '' },
-        { name: '<Other agency>', href: 'javascript:void(0)' }
-      ]}
-      domain="domain.gov"
-    >
+  <Identifier domain="domain.gov">
+    {#snippet logos()}
       <IdentifierLogo
         src="/assets/img/circle-gray-20.svg"
         alt="<Parent agency> logo"
@@ -178,9 +165,13 @@
         alt="<Other agency> logo"
         href="javascript:void(0)"
       />
-    </IdentifierMasthead>
-    <IdentifierRequiredLinks />
-    <IdentifierUSAGov />
+    {/snippet}
+    {#snippet agencyLinks()}
+      <Link href="">&lt;Parent agency&gt;</Link> and the <Link href="javascript:void(0)">&lt;Other agency&gt;</Link>
+    {/snippet}
+    {#snippet requiredLinks()}
+      <IdentifierRequiredLinksItem href="javascript:void(0)">About &lt;Parent shortname&gt;</IdentifierRequiredLinksItem>
+    {/snippet}
   </Identifier>
 </Story>
 
@@ -192,15 +183,19 @@
     await expect(disclaimer?.textContent).toContain('Produced and published at taxpayer expense');
   }}
 >
-  <Identifier>
-    <IdentifierMasthead includeTaxpayerDisclaimer={true}>
+  <Identifier includeTaxpayerDisclaimer={true}>
+    {#snippet logos()}
       <IdentifierLogo
         src="/assets/img/circle-gray-20.svg"
         alt="<Parent agency> logo"
       />
-    </IdentifierMasthead>
-    <IdentifierRequiredLinks />
-    <IdentifierUSAGov />
+    {/snippet}
+    {#snippet agencyLinks()}
+      <Link href="">&lt;Parent agency&gt;</Link>
+    {/snippet}
+    {#snippet requiredLinks()}
+      <IdentifierRequiredLinksItem href="javascript:void(0)">About &lt;Parent shortname&gt;</IdentifierRequiredLinksItem>
+    {/snippet}
   </Identifier>
 </Story>
 
@@ -213,13 +208,17 @@
   }}
 >
   <Identifier class="margin-top-2">
-    <IdentifierMasthead>
+    {#snippet logos()}
       <IdentifierLogo
         src="/assets/img/circle-gray-20.svg"
         alt="<Parent agency> logo"
       />
-    </IdentifierMasthead>
-    <IdentifierRequiredLinks />
-    <IdentifierUSAGov />
+    {/snippet}
+    {#snippet agencyLinks()}
+      <Link href="">&lt;Parent agency&gt;</Link>
+    {/snippet}
+    {#snippet requiredLinks()}
+      <IdentifierRequiredLinksItem href="javascript:void(0)">About &lt;Parent shortname&gt;</IdentifierRequiredLinksItem>
+    {/snippet}
   </Identifier>
 </Story>

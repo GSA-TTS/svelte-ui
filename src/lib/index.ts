@@ -77,11 +77,11 @@ export type {
 export { default as IdentifierLogo } from "./components/Identifier/IdentifierLogo.svelte";
 export type { IdentifierLogoProps } from "./components/Identifier/IdentifierLogo.types.js";
 
-export { default as IdentifierRequiredLinks } from "./components/Identifier/IdentifierRequiredLinks.svelte";
-export type {
-  IdentifierRequiredLinksProps,
-  RequiredLinkItem,
-} from "./components/Identifier/IdentifierRequiredLinks.types.js";
+export { default as IdentifierRequiredLinkList } from "./components/Identifier/IdentifierRequiredLinkList.svelte";
+export type { IdentifierRequiredLinkListProps } from "./components/Identifier/IdentifierRequiredLinkList.types.js";
+
+export { default as IdentifierRequiredLinkItem } from "./components/Identifier/IdentifierRequiredLinkItem.svelte";
+export type { IdentifierRequiredLinkItemProps } from "./components/Identifier/IdentifierRequiredLinkItem.types.js";
 
 export { default as IdentifierUSAGov } from "./components/Identifier/IdentifierUSAGov.svelte";
 export type { IdentifierUSAGovProps } from "./components/Identifier/IdentifierUSAGov.types.js";
