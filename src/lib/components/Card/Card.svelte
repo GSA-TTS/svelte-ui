@@ -46,9 +46,7 @@
       </div>
     {/if}
     {#if media}
-      <div class="usa-card__media">
-        {@render media()}
-      </div>
+      {@render media()}
     {/if}
     {#if body}
       <div class="usa-card__body">
