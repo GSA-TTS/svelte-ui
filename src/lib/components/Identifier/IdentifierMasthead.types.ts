@@ -6,7 +6,10 @@ export interface Agency {
   href: string;
 }
 
-export interface IdentifierMastheadProps extends Omit<HTMLAttributes<HTMLElement>, "children"> {
+export interface IdentifierMastheadProps extends Omit<
+  HTMLAttributes<HTMLElement>,
+  "children"
+> {
   domain?: string;
   agencies?: Agency[];
   includeTaxpayerDisclaimer?: boolean;

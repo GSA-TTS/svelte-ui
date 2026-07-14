@@ -6,7 +6,10 @@ export interface RequiredLinkItem {
   variant?: "default" | "external";
 }
 
-export interface IdentifierRequiredLinksProps extends Omit<HTMLAttributes<HTMLElement>, "children"> {
+export interface IdentifierRequiredLinksProps extends Omit<
+  HTMLAttributes<HTMLElement>,
+  "children"
+> {
   links?: RequiredLinkItem[];
   ariaLabel?: string;
 }
