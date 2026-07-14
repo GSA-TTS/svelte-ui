@@ -64,3 +64,24 @@ export type { HeaderOverlayProps } from "./components/Header/HeaderOverlay.types
 
 export { default as HeaderSearchPlaceholder } from "./components/Header/HeaderSearchPlaceholder.svelte";
 export type { HeaderSearchPlaceholderProps } from "./components/Header/HeaderSearchPlaceholder.types.js";
+
+export { default as Identifier } from "./components/Identifier/Identifier.svelte";
+export type { IdentifierProps } from "./components/Identifier/Identifier.types.js";
+
+export { default as IdentifierMasthead } from "./components/Identifier/IdentifierMasthead.svelte";
+export type {
+  IdentifierMastheadProps,
+  Agency,
+} from "./components/Identifier/IdentifierMasthead.types.js";
+
+export { default as IdentifierLogo } from "./components/Identifier/IdentifierLogo.svelte";
+export type { IdentifierLogoProps } from "./components/Identifier/IdentifierLogo.types.js";
+
+export { default as IdentifierRequiredLinks } from "./components/Identifier/IdentifierRequiredLinks.svelte";
+export type {
+  IdentifierRequiredLinksProps,
+  RequiredLinkItem,
+} from "./components/Identifier/IdentifierRequiredLinks.types.js";
+
+export { default as IdentifierUSAGov } from "./components/Identifier/IdentifierUSAGov.svelte";
+export type { IdentifierUSAGovProps } from "./components/Identifier/IdentifierUSAGov.types.js";
