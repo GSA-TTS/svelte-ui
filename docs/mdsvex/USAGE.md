@@ -36,6 +36,23 @@ Add mdsvex to your `svelte.config.js`:
 import adapter from "@sveltejs/adapter-auto";
 import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 import { mdsvex } from "mdsvex";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const docsLayoutPath = join(
+  __dirname,
+  "node_modules",
+  "@gsa-tts",
+  "svelte-ui-uswds",
+  "src",
+  "lib",
+  "mdsvex",
+  "layouts",
+  "DocsLayout.svelte",
+);
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -45,7 +62,7 @@ const config = {
     vitePreprocess(),
     mdsvex({
       extensions: [".svx"],
-      layout: "@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte",
+      layout: docsLayoutPath,
     }),
   ],
 
@@ -56,6 +73,8 @@ const config = {
 
 export default config;
 ```
+
+**Why absolute paths?** mdsvex uses Node.js `fs.readFileSync()` internally to read layout files, which requires absolute file paths. It does not support npm package resolution like Svelte/Vite does.
 
 ### Vite + Svelte Project
 
@@ -79,9 +98,33 @@ export default defineConfig({
 
 ## Using DocsLayout
 
+### SvelteKit File Structure
+
+**Important:** In SvelteKit, `.svx` files must be named `+page.svx` to be recognized as routes.
+
+```
+src/routes/
+├── docs/
+│   ├── getting-started/
+│   │   └── +page.svx          ← URL: /docs/getting-started
+│   ├── installation/
+│   │   └── +page.svx          ← URL: /docs/installation
+│   └── test/
+│       └── +page.svx          ← URL: /docs/test
+```
+
+Each `.svx` file should be named `+page.svx` inside a directory that matches the desired URL slug.
+
+**Common mistake:**
+
+```
+❌ src/routes/docs/test.svx         (results in 404)
+✓ src/routes/docs/test/+page.svx   (works correctly)
+```
+
 ### Basic Usage
 
-Create a `.svx` file with frontmatter:
+Create a `+page.svx` file with frontmatter:
 
 ```mdsvex
 ---
@@ -225,12 +268,30 @@ For more details, see [USWDS Typography](https://designsystem.digital.gov/compon
 If you need different layouts for different types of content:
 
 ```javascript
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const docsLayoutPath = join(
+  __dirname,
+  "node_modules",
+  "@gsa-tts",
+  "svelte-ui-uswds",
+  "src",
+  "lib",
+  "mdsvex",
+  "layouts",
+  "DocsLayout.svelte",
+);
+
 mdsvex({
   extensions: [".svx"],
   layout: {
-    docs: "@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte",
+    docs: docsLayoutPath,
     // Add more layouts as needed
-    _: "@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte", // fallback
+    _: docsLayoutPath, // fallback
   },
 });
 ```
@@ -314,12 +375,17 @@ my-docs/
 ├── src/
 │   ├── routes/
 │   │   ├── docs/
-│   │   │   ├── getting-started.svx
-│   │   │   ├── installation.svx
+│   │   │   ├── getting-started/
+│   │   │   │   └── +page.svx
+│   │   │   ├── installation/
+│   │   │   │   └── +page.svx
 │   │   │   └── components/
-│   │   │       ├── button.svx
-│   │   │       ├── link.svx
-│   │   │       └── tag.svx
+│   │   │       ├── button/
+│   │   │       │   └── +page.svx
+│   │   │       ├── link/
+│   │   │       │   └── +page.svx
+│   │   │       └── tag/
+│   │   │           └── +page.svx
 │   │   └── +layout.svelte
 │   └── app.css
 └── svelte.config.js
@@ -332,9 +398,10 @@ my-blog/
 ├── src/
 │   ├── routes/
 │   │   ├── blog/
-│   │   │   ├── posts/
-│   │   │   │   ├── 2026-06-01-first-post.svx
-│   │   │   │   └── 2026-06-15-second-post.svx
+│   │   │   ├── 2026-06-01-first-post/
+│   │   │   │   └── +page.svx
+│   │   │   ├── 2026-06-15-second-post/
+│   │   │   │   └── +page.svx
 │   │   │   └── +page.svelte
 │   │   └── +layout.svelte
 └── svelte.config.js
@@ -392,11 +459,53 @@ Make sure:
 2. mdsvex is in your `preprocess` array
 3. Files have the `.svx` extension
 
+### 404 Error - Page Not Found
+
+**Problem:** Navigating to `/docs/test` returns a 404 error.
+
+**Solution:** In SvelteKit, `.svx` files must be named `+page.svx` to be recognized as routes.
+
+```
+❌ src/routes/docs/test.svx         (results in 404)
+✓ src/routes/docs/test/+page.svx   (works correctly)
+```
+
+### Layout Path Not Found Error
+
+**Problem:** Error like `ENOENT: no such file or directory, open '@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte'`
+
+**Solution:** mdsvex requires absolute file paths, not npm package paths. Use the path resolution pattern shown in the Configuration section:
+
+```javascript
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const docsLayoutPath = join(
+  __dirname,
+  "node_modules",
+  "@gsa-tts",
+  "svelte-ui-uswds",
+  "src",
+  "lib",
+  "mdsvex",
+  "layouts",
+  "DocsLayout.svelte",
+);
+
+mdsvex({
+  extensions: [".svx"],
+  layout: docsLayoutPath, // Use absolute path
+});
+```
+
 ### Custom elements not being replaced
 
 Verify that:
 
-1. You're using the correct layout path
+1. You're using the correct layout path (absolute path, not package name)
 2. DocsLayout is being applied to your `.svx` files
 3. You're not overriding the layout with `layout: false` in frontmatter
 
