@@ -170,6 +170,10 @@ This library requires:
 - **USWDS 3.13.x or higher** (but not 4.x)
 - **Svelte 5.56.x or higher** (but not 6.x)
 
+Optional:
+
+- **mdsvex 0.12.x or higher** - For markdown content support (see [mdsvex Support](#mdsvex-support))
+
 See [docs/VERSIONING.md](./docs/VERSIONING.md) for our version compatibility policy.
 
 ## Quick Start
@@ -283,6 +287,78 @@ svelte-ui/
 - **Radio** - Radio button input component
 
 See [Storybook documentation](https://svelte-ui-library.app.cloud.gov) for interactive examples.
+
+## mdsvex Support (Optional)
+
+This library provides optional mdsvex support for building documentation sites, blogs, and content-heavy applications with USWDS styling.
+
+### What is mdsvex?
+
+mdsvex is a markdown preprocessor for Svelte that allows you to use Svelte components inside markdown files (`.svx`). Think of it as MDX for Svelte.
+
+### Quick Start
+
+**1. Install mdsvex:**
+
+```bash
+npm install -D mdsvex
+```
+
+**2. Configure in `svelte.config.js`:**
+
+```javascript
+import { mdsvex } from "mdsvex";
+
+export default {
+  extensions: [".svelte", ".svx"],
+  preprocess: mdsvex({
+    layout: "@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte",
+  }),
+};
+```
+
+**3. Create `.svx` files:**
+
+```mdsvex
+---
+title: Getting Started
+description: Learn how to use this component library.
+author: Jane Doe
+date: 2026-06-25
+---
+
+# Installation
+
+Run the following command:
+
+\`\`\`bash
+npm install @gsa-tts/svelte-ui-uswds
+\`\`\`
+
+<script>
+  import { Button } from '@gsa-tts/svelte-ui-uswds';
+</script>
+
+<Button>Interactive Button</Button>
+```
+
+### Features
+
+- **DocsLayout component** - USWDS-styled layout for markdown content
+- **Automatic element replacement** - Links, headings, and paragraphs use USWDS components
+- **Component integration** - Use any library component in your `.svx` files
+- **Frontmatter support** - Add metadata (title, author, date, description)
+- **USWDS prose styling** - Automatic typography with optimal readability
+
+### Documentation
+
+For complete mdsvex usage guide, see [docs/mdsvex/USAGE.md](./docs/mdsvex/USAGE.md).
+
+**Example files:**
+
+- [Basic usage](./docs/mdsvex/examples/basic-usage.svx)
+- [With components](./docs/mdsvex/examples/with-components.svx)
+- [Custom elements](./docs/mdsvex/examples/custom-elements.svx)
 
 ## Testing
 
