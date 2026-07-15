@@ -1,0 +1,129 @@
+---
+title: Using Components in mdsvex
+description: Examples of using Svelte UI components inside markdown files.
+author: Jane Doe
+date: 2026-06-25
+---
+
+<script>
+  import { Button, Link, Tag, Card } from '@gsa-tts/svelte-ui-uswds';
+  
+  let count = $state(0);
+</script>
+
+# Interactive Components in Markdown
+
+One of the powerful features of mdsvex is the ability to embed Svelte components directly in your markdown content.
+
+## Buttons
+
+You can add interactive buttons:
+
+<Button onclick={() => count++}>
+  Clicked {count} times
+</Button>
+
+<Button variant="secondary" onclick={() => count = 0}>
+  Reset
+</Button>
+
+The count is: **{count}**
+
+## Links
+
+Links can be styled with USWDS classes:
+
+<Link href="https://designsystem.digital.gov" variant="external">
+  USWDS Documentation
+</Link>
+
+Or use regular markdown links, which are automatically converted to Link components:
+
+Visit the [Svelte documentation](https://svelte.dev) for more information.
+
+## Tags
+
+Tags are useful for labeling and categorization:
+
+<Tag>Important</Tag>
+<Tag>New Feature</Tag>
+<Tag>Documentation</Tag>
+
+## Cards
+
+Cards can organize content in a structured way:
+
+<Card>
+  {#snippet children()}
+    <h3>Card Title</h3>
+    <p>This is a card with some content inside. Cards are great for organizing information.</p>
+  {/snippet}
+</Card>
+
+## Typography Features
+
+### Headings
+
+This document demonstrates all heading levels with USWDS prose styling.
+
+#### Level 4 Heading
+
+##### Level 5 Heading
+
+###### Level 6 Heading
+
+### Lists
+
+Unordered lists:
+
+- First item
+- Second item
+- Third item
+  - Nested item
+  - Another nested item
+
+Ordered lists:
+
+1. First step
+2. Second step
+3. Third step
+
+### Code Examples
+
+Inline code: `const greeting = "Hello, World!";`
+
+Code blocks with syntax highlighting:
+
+```javascript
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+
+console.log(greet('World'));
+```
+
+```typescript
+interface User {
+  name: string;
+  email: string;
+}
+
+const user: User = {
+  name: 'Jane Doe',
+  email: 'jane@example.com'
+};
+```
+
+## Best Practices
+
+When using components in mdsvex:
+
+1. Import components in the `<script>` tag at the top
+2. Use components with proper props and event handlers
+3. Leverage Svelte's reactivity with `$state` and other runes
+4. Keep markdown and components balanced - don't overuse components
+5. Test interactive features thoroughly
+
+## Conclusion
+
+mdsvex provides the best of both worlds: the simplicity of markdown with the power of Svelte components. This makes it ideal for documentation sites, blogs, and content-heavy applications.
