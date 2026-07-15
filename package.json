@@ -39,10 +39,14 @@
       "svelte": "./src/lib/index.ts",
       "default": "./dist/svelte-ui.es.js"
     },
+    "./mdsvex": {
+      "types": "./dist/src/lib/mdsvex/index.d.ts",
+      "svelte": "./src/lib/mdsvex/index.ts"
+    },
+    "./mdsvex/layouts/DocsLayout.svelte": "./src/lib/mdsvex/layouts/DocsLayout.svelte",
     "./styles": "./src/lib/styles/index.css",
     "./styles/uswds.css": "./src/lib/styles/uswds.css",
     "./styles/theme.css": "./src/lib/styles/theme.css",
-    "./styles/components/button-theme.css": "./src/lib/styles/components/button-theme.css",
     "./assets/*": "./src/lib/assets/*"
   },
   "files": [
@@ -54,11 +58,15 @@
   ],
   "peerDependencies": {
     "@uswds/uswds": "^3.13.0",
+    "mdsvex": "^0.12.3",
     "svelte": "^5.56.1"
   },
   "peerDependenciesMeta": {
     "@uswds/uswds": {
       "optional": false
+    },
+    "mdsvex": {
+      "optional": true
     }
   },
   "devDependencies": {
@@ -81,6 +89,7 @@
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-svelte": "3.19.0",
     "jsdom": "29.1.1",
+    "mdsvex": "0.12.3",
     "prettier": "3.8.3",
     "prettier-plugin-svelte": "4.1.0",
     "sass": "1.83.4",
