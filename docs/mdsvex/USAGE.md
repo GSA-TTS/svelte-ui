@@ -51,7 +51,7 @@ const docsLayoutPath = join(
   "lib",
   "mdsvex",
   "layouts",
-  "DocsLayout.svelte"
+  "DocsLayout.svelte",
 );
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -116,6 +116,7 @@ src/routes/
 Each `.svx` file should be named `+page.svx` inside a directory that matches the desired URL slug.
 
 **Common mistake:**
+
 ```
 ❌ src/routes/docs/test.svx         (results in 404)
 ✓ src/routes/docs/test/+page.svx   (works correctly)
@@ -282,7 +283,7 @@ const docsLayoutPath = join(
   "lib",
   "mdsvex",
   "layouts",
-  "DocsLayout.svelte"
+  "DocsLayout.svelte",
 );
 
 mdsvex({
@@ -491,13 +492,13 @@ const docsLayoutPath = join(
   "lib",
   "mdsvex",
   "layouts",
-  "DocsLayout.svelte"
+  "DocsLayout.svelte",
 );
 
 mdsvex({
   extensions: [".svx"],
-  layout: docsLayoutPath,  // Use absolute path
-})
+  layout: docsLayoutPath, // Use absolute path
+});
 ```
 
 ### Custom elements not being replaced
