@@ -1,8 +1,6 @@
 <script module>
-  import Link from '../../components/Link/Link.svelte';
-  import { h1, h2, h3, h4, h5, h6, p } from './custom-elements';
-  
-  export { Link as a, h1, h2, h3, h4, h5, h6, p };
+  export { default as a } from '../../components/Link/Link.svelte';
+  export { h1, h2, h3, h4, h5, h6, p } from './custom-elements';
 </script>
 
 <script lang="ts">

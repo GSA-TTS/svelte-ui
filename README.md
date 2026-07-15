@@ -171,6 +171,7 @@ This library requires:
 - **Svelte 5.56.x or higher** (but not 6.x)
 
 Optional:
+
 - **mdsvex 0.12.x or higher** - For markdown content support (see [mdsvex Support](#mdsvex-support))
 
 See [docs/VERSIONING.md](./docs/VERSIONING.md) for our version compatibility policy.
@@ -306,13 +307,13 @@ npm install -D mdsvex
 **2. Configure in `svelte.config.js`:**
 
 ```javascript
-import { mdsvex } from 'mdsvex';
+import { mdsvex } from "mdsvex";
 
 export default {
-  extensions: ['.svelte', '.svx'],
+  extensions: [".svelte", ".svx"],
   preprocess: mdsvex({
-    layout: '@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte'
-  })
+    layout: "@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte",
+  }),
 };
 ```
 
@@ -354,6 +355,7 @@ npm install @gsa-tts/svelte-ui-uswds
 For complete mdsvex usage guide, see [docs/mdsvex/USAGE.md](./docs/mdsvex/USAGE.md).
 
 **Example files:**
+
 - [Basic usage](./docs/mdsvex/examples/basic-usage.svx)
 - [With components](./docs/mdsvex/examples/with-components.svx)
 - [Custom elements](./docs/mdsvex/examples/custom-elements.svx)

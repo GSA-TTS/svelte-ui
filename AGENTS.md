@@ -5,11 +5,14 @@ status: canonical
 tier: 1
 last_updated: "2026-06-25"
 audience: "developers"
-keywords: ["AGENTS.md", "svelte", "component-library", "uswds", "agent-rules"]
+keywords:
+  ["AGENTS.md", "svelte", "component-library", "uswds", "mdsvex", "agent-rules"]
 related_files:
   [
     "../agentic-coding-playbook/docs/CODING_STANDARDS_COMPACT.md",
     ".ai-agent/skills/storybook-component-stories.md",
+    "docs/mdsvex/USAGE.md",
+    "docs/adr/0004-mdsvex-support.md",
   ]
 load_priority: "always"
 review_cycle: "quarterly"
@@ -19,7 +22,7 @@ review_cycle: "quarterly"
 
 > **System:** Svelte UI Component Library | **Impact Level:** FIPS Low | **Agency:** GSA
 >
-> **Last Updated:** 2026-06-25 | **Reviewed By:** Jeff Keene, Engineer
+> **Last Updated:** 2026-07-15 | **Reviewed By:** Jeff Keene, Engineer
 >
 > This document defines the behavioral rules for AI coding agents operating within this project. The AI agent MUST follow these rules without exception.
 
@@ -191,6 +194,128 @@ File organization:
 - **DO NOT create** separate `.test.ts` files - tests go in stories
 - **DO NOT create** `.stories.ts` files - use `.stories.svelte` with Svelte CSF
 - **ONLY** `src/lib/index.ts` should exist as the library's public API entry point
+
+---
+
+## mdsvex Development Rules
+
+When working with mdsvex components and layouts, the agent MUST:
+
+### General Rules
+
+- [ ] Follow same coding standards as regular components (Svelte 5, TypeScript, etc.)
+- [ ] Run `svelte-autofixer` on all `.svelte` files including layouts
+- [ ] Create Storybook stories for mdsvex components (DocsLayout, etc.)
+- [ ] Ensure proper TypeScript types for all components
+- [ ] Maintain USWDS styling standards
+
+### mdsvex-Specific Rules
+
+- [ ] mdsvex components MUST live in `src/lib/mdsvex/` directory
+- [ ] DocsLayout MUST use `<script module>` for custom element exports
+- [ ] Custom element wrappers MUST be thin pass-through components
+- [ ] DocsLayout MUST wrap content in `<article class="usa-prose">`
+- [ ] Frontmatter props MUST be properly typed in `.types.ts` files
+- [ ] NO explicit USWDS classes on custom element wrappers (rely on `.usa-prose` container)
+
+### Layout Component Rules
+
+When creating or modifying layout components:
+
+1. **Module-level exports** - Use `<script module>` to export custom elements:
+
+   ```svelte
+   <script module>
+     import Link from '../../components/Link/Link.svelte';
+     import { h1, h2, h3, h4, h5, h6, p } from './custom-elements';
+     export { Link as a, h1, h2, h3, h4, h5, h6, p };
+   </script>
+   ```
+
+2. **Frontmatter props** - Accept frontmatter as component props:
+
+   ```typescript
+   interface LayoutProps {
+     title?: string;
+     description?: string;
+     author?: string;
+     date?: string;
+   }
+   ```
+
+3. **USWDS prose wrapper** - Always wrap content in `.usa-prose`:
+   ```svelte
+   <article class="usa-prose">
+     {@render children?.()}
+   </article>
+   ```
+
+### Custom Element Wrapper Rules
+
+When creating custom HTML element wrappers:
+
+1. **Minimal components** - Just accept children and restProps:
+
+   ```svelte
+   <script lang="ts">
+     let { children, ...restProps } = $props();
+   </script>
+   <h1 {...restProps}>{@render children?.()}</h1>
+   ```
+
+2. **NO explicit classes** - Let `.usa-prose` container handle styling
+3. **Pass through attributes** - Always spread `...restProps`
+4. **Proper TypeScript** - Extend appropriate HTML element types
+
+### Testing mdsvex Components
+
+- [ ] Create Storybook stories with `play` props for interaction tests
+- [ ] Test with various frontmatter combinations
+- [ ] Test custom element replacements work correctly
+- [ ] Verify USWDS prose styling applies
+- [ ] Test with complex content (lists, code blocks, tables)
+
+### Documentation Requirements
+
+When adding mdsvex features:
+
+- [ ] Update `docs/mdsvex/USAGE.md` if adding new layouts or features
+- [ ] Create example `.svx` files demonstrating usage
+- [ ] Update README.md if adding significant features
+- [ ] Create ADR for architectural decisions
+- [ ] Document TypeScript types and module declarations
+
+### Example `.svx` File Structure
+
+```mdsvex
+---
+title: Document Title
+description: Brief description
+author: Author Name
+date: 2026-06-25
+---
+
+<script>
+  import { Button, Link } from '@gsa-tts/svelte-ui-uswds';
+</script>
+
+# Main Heading
+
+Regular markdown content here.
+
+<Button>Interactive Component</Button>
+
+More markdown content.
+```
+
+### Troubleshooting
+
+If custom elements aren't being replaced:
+
+1. Verify `<script module>` exports are correct
+2. Check that layout is being applied to `.svx` files
+3. Ensure `.usa-prose` class is on the container
+4. Verify mdsvex configuration in `svelte.config.js`
 
 ---
 

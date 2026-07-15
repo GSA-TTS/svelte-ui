@@ -33,25 +33,25 @@ npm install @uswds/uswds
 Add mdsvex to your `svelte.config.js`:
 
 ```javascript
-import adapter from '@sveltejs/adapter-auto';
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
-import { mdsvex } from 'mdsvex';
+import adapter from "@sveltejs/adapter-auto";
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
+import { mdsvex } from "mdsvex";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  extensions: ['.svelte', '.svx'],
-  
+  extensions: [".svelte", ".svx"],
+
   preprocess: [
     vitePreprocess(),
     mdsvex({
-      extensions: ['.svx'],
-      layout: '@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte'
-    })
+      extensions: [".svx"],
+      layout: "@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte",
+    }),
   ],
 
   kit: {
-    adapter: adapter()
-  }
+    adapter: adapter(),
+  },
 };
 
 export default config;
@@ -60,20 +60,20 @@ export default config;
 ### Vite + Svelte Project
 
 ```javascript
-import { defineConfig } from 'vite';
-import { svelte } from '@sveltejs/vite-plugin-svelte';
-import { mdsvex } from 'mdsvex';
+import { defineConfig } from "vite";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { mdsvex } from "mdsvex";
 
 export default defineConfig({
   plugins: [
     svelte({
-      extensions: ['.svelte', '.svx'],
+      extensions: [".svelte", ".svx"],
       preprocess: mdsvex({
-        extensions: ['.svx'],
-        layout: '@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte'
-      })
-    })
-  ]
+        extensions: [".svx"],
+        layout: "@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte",
+      }),
+    }),
+  ],
 });
 ```
 
@@ -112,12 +112,12 @@ import { Button, Link } from '@gsa-tts/svelte-ui-uswds';
 
 DocsLayout accepts the following frontmatter properties:
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `title` | `string` | Document title (displayed as h1) |
-| `description` | `string` | Intro text (styled with `usa-intro` class) |
-| `author` | `string` | Author name |
-| `date` | `string` | Publication date (ISO 8601 format recommended) |
+| Property      | Type     | Description                                    |
+| ------------- | -------- | ---------------------------------------------- |
+| `title`       | `string` | Document title (displayed as h1)               |
+| `description` | `string` | Intro text (styled with `usa-intro` class)     |
+| `author`      | `string` | Author name                                    |
+| `date`        | `string` | Publication date (ISO 8601 format recommended) |
 
 ### Custom Classes
 
@@ -166,13 +166,13 @@ Tags are useful too:
 
 DocsLayout automatically replaces standard HTML elements with USWDS-styled versions:
 
-| Markdown Element | Replaced With | Notes |
-|-----------------|---------------|-------|
-| `# Heading` | Custom `h1` component | USWDS prose styling |
-| `## Heading` | Custom `h2` component | USWDS prose styling |
-| `### Heading` | Custom `h3` component | USWDS prose styling |
-| `[link](url)` | `Link` component | Your library's Link component |
-| `paragraph` | Custom `p` component | USWDS prose spacing |
+| Markdown Element | Replaced With         | Notes                         |
+| ---------------- | --------------------- | ----------------------------- |
+| `# Heading`      | Custom `h1` component | USWDS prose styling           |
+| `## Heading`     | Custom `h2` component | USWDS prose styling           |
+| `### Heading`    | Custom `h3` component | USWDS prose styling           |
+| `[link](url)`    | `Link` component      | Your library's Link component |
+| `paragraph`      | Custom `p` component  | USWDS prose spacing           |
 
 ### Example
 
@@ -226,13 +226,13 @@ If you need different layouts for different types of content:
 
 ```javascript
 mdsvex({
-  extensions: ['.svx'],
+  extensions: [".svx"],
   layout: {
-    docs: '@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte',
+    docs: "@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte",
     // Add more layouts as needed
-    _: '@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte' // fallback
-  }
-})
+    _: "@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte", // fallback
+  },
+});
 ```
 
 Then specify in frontmatter:
@@ -250,29 +250,29 @@ mdsvex uses PrismJS by default. Import a Prism theme in your app:
 
 ```javascript
 // In your main layout or +layout.svelte
-import 'prismjs/themes/prism-tomorrow.css';
+import "prismjs/themes/prism-tomorrow.css";
 ```
 
 Or use a custom highlighter like Shiki:
 
 ```javascript
-import { mdsvex, escapeSvelte } from 'mdsvex';
-import { createHighlighter } from 'shiki';
+import { mdsvex, escapeSvelte } from "mdsvex";
+import { createHighlighter } from "shiki";
 
-const theme = 'github-dark';
+const theme = "github-dark";
 const highlighter = await createHighlighter({
   themes: [theme],
-  langs: ['javascript', 'typescript', 'svelte', 'bash']
+  langs: ["javascript", "typescript", "svelte", "bash"],
 });
 
 mdsvex({
   highlight: {
-    highlighter: async (code, lang = 'text') => {
+    highlighter: async (code, lang = "text") => {
       const html = escapeSvelte(highlighter.codeToHtml(code, { lang, theme }));
       return `{@html \`${html}\` }`;
-    }
-  }
-})
+    },
+  },
+});
 ```
 
 ## TypeScript Support
@@ -280,11 +280,11 @@ mdsvex({
 TypeScript declarations are included for all mdsvex components:
 
 ```typescript
-import type { DocsLayoutProps } from '@gsa-tts/svelte-ui-uswds/mdsvex';
+import type { DocsLayoutProps } from "@gsa-tts/svelte-ui-uswds/mdsvex";
 
 // .svx and .md files are typed as SvelteComponents
-import MyDoc from './my-doc.svx';
-import type { metadata } from './my-doc.svx';
+import MyDoc from "./my-doc.svx";
+import type { metadata } from "./my-doc.svx";
 ```
 
 ### Module Declarations
@@ -387,6 +387,7 @@ export const prerender = true;
 ### mdsvex not processing .svx files
 
 Make sure:
+
 1. `extensions: ['.svelte', '.svx']` is in your Svelte config
 2. mdsvex is in your `preprocess` array
 3. Files have the `.svx` extension
@@ -394,6 +395,7 @@ Make sure:
 ### Custom elements not being replaced
 
 Verify that:
+
 1. You're using the correct layout path
 2. DocsLayout is being applied to your `.svx` files
 3. You're not overriding the layout with `layout: false` in frontmatter
@@ -401,6 +403,7 @@ Verify that:
 ### Styling issues
 
 Ensure:
+
 1. USWDS CSS is imported in your app
 2. The `.usa-prose` class is being applied (check browser DevTools)
 3. No conflicting CSS is overriding USWDS styles
@@ -408,6 +411,7 @@ Ensure:
 ### TypeScript errors with .svx imports
 
 Check that:
+
 1. Your `tsconfig.json` includes the library's type definitions
 2. Type declarations for `.svx` modules are loaded
 3. You're using the correct import syntax
@@ -423,5 +427,6 @@ Check that:
 ## Support
 
 For issues or questions:
+
 - [GitHub Issues](https://github.com/GSA-TTS/svelte-ui/issues)
 - [USWDS Community](https://designsystem.digital.gov/about/community/)
