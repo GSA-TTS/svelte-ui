@@ -1,36 +1,100 @@
-# mdsvex Support - Usage Guide
+import { Meta } from "@storybook/addon-docs/blocks";
 
-## Overview
+<Meta title="Recipes/Markdown Integration Guide with mdsvex" />
 
-`@gsa-tts/svelte-ui-uswds` provides optional mdsvex support for building documentation sites, blogs, and content-heavy applications with USWDS styling.
+# Markdown Integration Guide with mdsvex
+
+This recipe demonstrates how to integrate mdsvex with Svelte UI components to build documentation sites, blogs, and content-heavy applications with USWDS styling.
+
+### Overview
 
 **What is mdsvex?** mdsvex is a markdown preprocessor for Svelte that allows you to use Svelte components inside markdown files (`.svx`). Think of it as MDX for Svelte.
 
-## Installation
+### Installation
 
-### 1. Install the Component Library
+#### 1. Install the Component Library
 
 ```bash
 npm install @gsa-tts/svelte-ui-uswds
 ```
 
-### 2. Install mdsvex (Optional Peer Dependency)
+#### 2. Install mdsvex (Optional Peer Dependency)
 
 ```bash
 npm install -D mdsvex
 ```
 
-### 3. Install USWDS (Required Peer Dependency)
+#### 3. Install USWDS (Required Peer Dependency)
 
 ```bash
 npm install @uswds/uswds
 ```
 
-## Configuration
+### Creating Your DocsLayout
 
-### SvelteKit Project
+To use mdsvex with USWDS styling, you'll need to create a custom layout component in your project. This layout wraps your markdown content and provides USWDS prose styling plus custom element replacements.
 
-Add mdsvex to your `svelte.config.js`:
+#### Step 1: Create the DocsLayout Component
+
+Create a new file at `src/lib/layouts/DocsLayout.svelte`:
+
+```svelte
+<script module>
+  // Export as 'a' to replace markdown links
+  export { Link as a } from '@gsa-tts/svelte-ui-uswds';
+</script>
+
+<script lang="ts">
+  import type { Snippet } from 'svelte';
+  import type { HTMLAttributes } from 'svelte/elements';
+
+  interface DocsLayoutProps extends HTMLAttributes<HTMLElement> {
+    title?: string;
+    description?: string;
+    children?: Snippet;
+  }
+
+  let {
+    title,
+    description,
+    class: className,
+    children,
+    ...restProps
+  }: DocsLayoutProps = $props();
+
+  const classes = $derived.by(() => {
+    const classList: string[] = ['usa-prose'];
+
+    if (className) {
+      classList.push(String(className));
+    }
+
+    return classList.join(' ');
+  });
+</script>
+
+<div class={classes} {...restProps}>
+  <header>
+    <h1>{title}</h1>
+    <p class="usa-intro">{description}</p>
+  </header>
+
+  {@render children?.()}
+</div>
+```
+
+**What this layout does:**
+
+- **Module exports**: The `<script module>` block exports component replacements for markdown elements. Links become the USWDS `Link` component ensure USWDS styles apply correctly.
+- **Frontmatter props**: Accepts `title`, `description` from your `.svx` file frontmatter.
+- **USWDS prose wrapper**: Wraps all content in `.usa-prose` class for proper typography.
+- **Metadata header**: Displays document title, description when provided.
+
+#### Step 2: Configure mdsvex
+
+##### SvelteKit Project
+
+Update your `svelte.config.js` to use your custom layout:
 
 ```javascript
 import adapter from "@sveltejs/adapter-auto";
@@ -42,14 +106,11 @@ import { dirname, join } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// Point to your local DocsLayout
 const docsLayoutPath = join(
   __dirname,
-  "node_modules",
-  "@gsa-tts",
-  "svelte-ui-uswds",
   "src",
   "lib",
-  "mdsvex",
   "layouts",
   "DocsLayout.svelte",
 );
@@ -74,14 +135,27 @@ const config = {
 export default config;
 ```
 
-**Why absolute paths?** mdsvex uses Node.js `fs.readFileSync()` internally to read layout files, which requires absolute file paths. It does not support npm package resolution like Svelte/Vite does.
+**Why absolute paths?** mdsvex uses Node.js `fs.readFileSync()` internally to read layout files, which requires absolute file paths.
 
-### Vite + Svelte Project
+##### Vite + Svelte Project
 
 ```javascript
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import { mdsvex } from "mdsvex";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const docsLayoutPath = join(
+  __dirname,
+  "src",
+  "lib",
+  "layouts",
+  "DocsLayout.svelte",
+);
 
 export default defineConfig({
   plugins: [
@@ -89,16 +163,16 @@ export default defineConfig({
       extensions: [".svelte", ".svx"],
       preprocess: mdsvex({
         extensions: [".svx"],
-        layout: "@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte",
+        layout: docsLayoutPath,
       }),
     }),
   ],
 });
 ```
 
-## Using DocsLayout
+### Using Markdown within Svelte Routes
 
-### SvelteKit File Structure
+#### SvelteKit File Structure
 
 **Important:** In SvelteKit, `.svx` files must be named `+page.svx` to be recognized as routes.
 
@@ -122,7 +196,7 @@ Each `.svx` file should be named `+page.svx` inside a directory that matches the
 ✓ src/routes/docs/test/+page.svx   (works correctly)
 ```
 
-### Basic Usage
+#### Basic Usage
 
 Create a `+page.svx` file with frontmatter:
 
@@ -130,8 +204,6 @@ Create a `+page.svx` file with frontmatter:
 ---
 title: Getting Started
 description: Learn how to use this component library in your project.
-author: Jane Doe
-date: 2026-06-25
 ---
 
 # Installation
@@ -151,7 +223,7 @@ import { Button, Link } from '@gsa-tts/svelte-ui-uswds';
 \`\`\`
 ```
 
-### Frontmatter Properties
+#### Frontmatter Properties
 
 DocsLayout accepts the following frontmatter properties:
 
@@ -159,10 +231,8 @@ DocsLayout accepts the following frontmatter properties:
 | ------------- | -------- | ---------------------------------------------- |
 | `title`       | `string` | Document title (displayed as h1)               |
 | `description` | `string` | Intro text (styled with `usa-intro` class)     |
-| `author`      | `string` | Author name                                    |
-| `date`        | `string` | Publication date (ISO 8601 format recommended) |
 
-### Custom Classes
+#### Custom Classes
 
 You can add custom classes via frontmatter:
 
@@ -175,7 +245,7 @@ class: custom-styling
 Content here...
 ```
 
-## Using Components in .svx Files
+### Using Components in .svx Files
 
 You can import and use any component from the library inside your `.svx` files:
 
@@ -205,19 +275,16 @@ Tags are useful too:
 <Tag>Important</Tag>
 ```
 
-## Custom HTML Element Replacements
+### Custom HTML Element Replacements
 
 DocsLayout automatically replaces standard HTML elements with USWDS-styled versions:
 
 | Markdown Element | Replaced With         | Notes                         |
 | ---------------- | --------------------- | ----------------------------- |
-| `# Heading`      | Custom `h1` component | USWDS prose styling           |
-| `## Heading`     | Custom `h2` component | USWDS prose styling           |
-| `### Heading`    | Custom `h3` component | USWDS prose styling           |
 | `[link](url)`    | `Link` component      | Your library's Link component |
-| `paragraph`      | Custom `p` component  | USWDS prose spacing           |
 
-### Example
+
+#### Example
 
 This markdown:
 
@@ -240,9 +307,9 @@ Is automatically rendered as:
 <p>Another paragraph here.</p>
 ```
 
-All wrapped in `<article class="usa-prose">` for proper USWDS typography.
+All wrapped in `<div class="usa-prose">` for proper USWDS typography.
 
-## USWDS Prose Styling
+### USWDS Prose Styling
 
 DocsLayout wraps all content in the USWDS `.usa-prose` class, which provides:
 
@@ -252,7 +319,7 @@ DocsLayout wraps all content in the USWDS `.usa-prose` class, which provides:
 - Consistent spacing between elements
 - Responsive typography
 
-### Typography Features
+#### Typography Features
 
 - **Font size:** Body text uses comfortable reading size (16px equivalent)
 - **Line height:** 1.5 for running text, tighter for headings
@@ -261,9 +328,9 @@ DocsLayout wraps all content in the USWDS `.usa-prose` class, which provides:
 
 For more details, see [USWDS Typography](https://designsystem.digital.gov/components/typography/).
 
-## Advanced Configuration
+### Advanced Configuration
 
-### Multiple Layouts
+#### Multiple Layouts
 
 If you need different layouts for different types of content:
 
@@ -274,22 +341,28 @@ import { dirname, join } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// Point to your local DocsLayout
 const docsLayoutPath = join(
   __dirname,
-  "node_modules",
-  "@gsa-tts",
-  "svelte-ui-uswds",
   "src",
   "lib",
-  "mdsvex",
   "layouts",
   "DocsLayout.svelte",
+);
+// Point to your local DocsLayout
+const adminLayoutPath = join(
+  __dirname,
+  "src",
+  "lib",
+  "layouts",
+  "AdminLayout.svelte",
 );
 
 mdsvex({
   extensions: [".svx"],
   layout: {
     docs: docsLayoutPath,
+    admin: adminLayoutPath,
     // Add more layouts as needed
     _: docsLayoutPath, // fallback
   },
@@ -304,8 +377,9 @@ layout: docs
 title: My Documentation
 ---
 ```
+This is optional. Will also use the url path to determine the correct layout. [Named Layouts](https://mdsvex.pngwn.io/docs#named-layouts)
 
-### Syntax Highlighting
+#### Syntax Highlighting
 
 mdsvex uses PrismJS by default. Import a Prism theme in your app:
 
@@ -336,23 +410,17 @@ mdsvex({
 });
 ```
 
-## TypeScript Support
+### TypeScript Support
 
-TypeScript declarations are included for all mdsvex components:
+To enable TypeScript support for `.svx` and `.md` files, you need to create ambient type declarations in your project.
 
-```typescript
-import type { DocsLayoutProps } from "@gsa-tts/svelte-ui-uswds/mdsvex";
+#### Step 1: Create Type Declaration File
 
-// .svx and .md files are typed as SvelteComponents
-import MyDoc from "./my-doc.svx";
-import type { metadata } from "./my-doc.svx";
-```
-
-### Module Declarations
-
-The library includes ambient type declarations for `.svx` and `.md` files:
+Create a new file at `src/app.d.ts` (or add to your existing `app.d.ts`):
 
 ```typescript
+/// <reference types="@sveltejs/kit" />
+
 declare module "*.svx" {
   import type { SvelteComponent } from "svelte";
   export default class Comp extends SvelteComponent {}
@@ -366,9 +434,82 @@ declare module "*.md" {
 }
 ```
 
-## Examples
+#### Step 2: Update tsconfig.json
 
-### Example 1: Documentation Site
+Ensure your `tsconfig.json` includes the type declaration file:
+
+```json
+{
+  "extends": "./.svelte-kit/tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true
+  },
+  "include": [
+    "src/**/*.d.ts",
+    "src/**/*.ts",
+    "src/**/*.js",
+    "src/**/*.svelte"
+  ]
+}
+```
+
+#### Using TypeScript in .svx Files
+
+Now you can import and use `.svx` files with full TypeScript support:
+
+```typescript
+// Importing a .svx document
+import MyDoc from "./my-doc.svx";
+import type { metadata } from "./my-doc.svx";
+
+// The component is typed as a SvelteComponent
+// metadata is typed as Record<string, unknown>
+```
+
+#### Optional: Type Your DocsLayout Props
+
+You can also create a type definition for your DocsLayout props:
+
+```typescript
+// src/lib/layouts/DocsLayout.types.ts
+import type { HTMLAttributes } from "svelte/elements";
+import type { Snippet } from "svelte";
+
+export interface DocsLayoutProps extends HTMLAttributes<HTMLElement> {
+  title?: string;
+  description?: string;
+  author?: string;
+  date?: string;
+  children?: Snippet;
+}
+```
+
+Then import and use in your DocsLayout component:
+
+```svelte
+<script lang="ts">
+  import type { DocsLayoutProps } from './DocsLayout.types.js';
+
+  let {
+    title,
+    description,
+    class: className,
+    children,
+    ...restProps
+  }: DocsLayoutProps = $props();
+</script>
+```
+
+### Complete Examples
+
+#### Example 1: Documentation Site
 
 ```
 my-docs/
@@ -391,7 +532,7 @@ my-docs/
 └── svelte.config.js
 ```
 
-### Example 2: Blog
+#### Example 2: Blog
 
 ```
 my-blog/
@@ -407,9 +548,9 @@ my-blog/
 └── svelte.config.js
 ```
 
-## Best Practices
+### Best Practices
 
-### 1. Use Semantic Frontmatter
+#### 1. Use Semantic Frontmatter
 
 Always include meaningful frontmatter:
 
@@ -417,30 +558,28 @@ Always include meaningful frontmatter:
 ---
 title: Clear, Descriptive Title
 description: Brief summary of content (1-2 sentences)
-author: Your Name
-date: 2026-06-25
 ---
 ```
 
-### 2. Leverage USWDS Typography
+#### 2. Leverage USWDS Typography
 
 Let USWDS handle typography - don't override spacing unless necessary.
 
-### 3. Keep Content Accessible
+#### 3. Keep Content Accessible
 
 - Use proper heading hierarchy (don't skip levels)
 - Provide alt text for images
 - Use semantic HTML
 - Test with screen readers
 
-### 4. Organize Content Logically
+#### 4. Organize Content Logically
 
 - Use headings to structure content
 - Keep paragraphs focused and concise
 - Use lists for multiple related items
 - Use code blocks for code examples
 
-### 5. Static Site Generation
+#### 5. Static Site Generation
 
 For best performance, use SvelteKit's `prerender` option:
 
@@ -449,9 +588,9 @@ For best performance, use SvelteKit's `prerender` option:
 export const prerender = true;
 ```
 
-## Troubleshooting
+### Troubleshooting
 
-### mdsvex not processing .svx files
+#### mdsvex not processing .svx files
 
 Make sure:
 
@@ -459,7 +598,7 @@ Make sure:
 2. mdsvex is in your `preprocess` array
 3. Files have the `.svx` extension
 
-### 404 Error - Page Not Found
+#### 404 Error - Page Not Found
 
 **Problem:** Navigating to `/docs/test` returns a 404 error.
 
@@ -470,11 +609,11 @@ Make sure:
 ✓ src/routes/docs/test/+page.svx   (works correctly)
 ```
 
-### Layout Path Not Found Error
+#### Layout Path Not Found Error
 
-**Problem:** Error like `ENOENT: no such file or directory, open '@gsa-tts/svelte-ui-uswds/mdsvex/layouts/DocsLayout.svelte'`
+**Problem:** Error like `ENOENT: no such file or directory` when mdsvex tries to load your layout.
 
-**Solution:** mdsvex requires absolute file paths, not npm package paths. Use the path resolution pattern shown in the Configuration section:
+**Solution:** mdsvex requires absolute file paths, not relative paths. Use the path resolution pattern shown in the "Creating Your DocsLayout" section:
 
 ```javascript
 import { fileURLToPath } from "url";
@@ -485,12 +624,8 @@ const __dirname = dirname(__filename);
 
 const docsLayoutPath = join(
   __dirname,
-  "node_modules",
-  "@gsa-tts",
-  "svelte-ui-uswds",
   "src",
   "lib",
-  "mdsvex",
   "layouts",
   "DocsLayout.svelte",
 );
@@ -501,7 +636,7 @@ mdsvex({
 });
 ```
 
-### Custom elements not being replaced
+#### Custom elements not being replaced
 
 Verify that:
 
@@ -509,7 +644,7 @@ Verify that:
 2. DocsLayout is being applied to your `.svx` files
 3. You're not overriding the layout with `layout: false` in frontmatter
 
-### Styling issues
+#### Styling issues
 
 Ensure:
 
@@ -517,7 +652,7 @@ Ensure:
 2. The `.usa-prose` class is being applied (check browser DevTools)
 3. No conflicting CSS is overriding USWDS styles
 
-### TypeScript errors with .svx imports
+#### TypeScript errors with .svx imports
 
 Check that:
 
@@ -532,10 +667,5 @@ Check that:
 - [USWDS Prose Component](https://designsystem.digital.gov/components/prose/)
 - [Svelte Documentation](https://svelte.dev/)
 - [SvelteKit Documentation](https://kit.svelte.dev/)
-
-## Support
-
-For issues or questions:
-
 - [GitHub Issues](https://github.com/GSA-TTS/svelte-ui/issues)
 - [USWDS Community](https://designsystem.digital.gov/about/community/)
