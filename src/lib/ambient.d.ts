@@ -11,20 +11,3 @@ declare module "*.svelte" {
   // Allow type exports from Svelte components
   export * from "svelte";
 }
-
-/**
- * mdsvex type declarations
- * Allows importing .svx and .md files as Svelte components
- */
-
-declare module "*.svx" {
-  import type { SvelteComponent } from "svelte";
-  export default class Comp extends SvelteComponent {}
-  export const metadata: Record<string, unknown>;
-}
-
-declare module "*.md" {
-  import type { SvelteComponent } from "svelte";
-  export default class Comp extends SvelteComponent {}
-  export const metadata: Record<string, unknown>;
-}
