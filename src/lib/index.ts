@@ -91,3 +91,11 @@ export type { CardGroupProps } from "./components/Card/CardGroup.types.js";
 
 export { default as CardImage } from "./components/Card/CardImage.svelte";
 export type { CardImageProps } from "./components/Card/CardImage.types.js";
+
+export { default as SideNav } from "./components/SideNav/SideNav.svelte";
+export type { SideNavProps } from "./components/SideNav/SideNav.types.js";
+
+export { default as SideNavItem } from "./components/SideNav/SideNavItem.svelte";
+export type { SideNavItemProps } from "./components/SideNav/SideNavItem.types.js";
+
+export { isCurrentPage } from "./components/SideNav/SideNav.utils.js";
