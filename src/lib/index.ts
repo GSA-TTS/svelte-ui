@@ -99,3 +99,9 @@ export { default as SideNavItem } from "./components/SideNav/SideNavItem.svelte"
 export type { SideNavItemProps } from "./components/SideNav/SideNavItem.types.js";
 
 export { isCurrentPage } from "./components/SideNav/SideNav.utils.js";
+
+export { default as InPageNav } from "./components/InPageNav/InPageNav.svelte";
+export type {
+  InPageNavProps,
+  NavItem,
+} from "./components/InPageNav/InPageNav.types.js";
