@@ -227,10 +227,10 @@ import { Button, Link } from '@gsa-tts/svelte-ui-uswds';
 
 DocsLayout accepts the following frontmatter properties:
 
-| Property      | Type     | Description                                    |
-| ------------- | -------- | ---------------------------------------------- |
-| `title`       | `string` | Document title (displayed as h1)               |
-| `description` | `string` | Intro text (styled with `usa-intro` class)     |
+| Property      | Type     | Description                                |
+| ------------- | -------- | ------------------------------------------ |
+| `title`       | `string` | Document title (displayed as h1)           |
+| `description` | `string` | Intro text (styled with `usa-intro` class) |
 
 #### Custom Classes
 
@@ -279,10 +279,9 @@ Tags are useful too:
 
 DocsLayout automatically replaces standard HTML elements with USWDS-styled versions:
 
-| Markdown Element | Replaced With         | Notes                         |
-| ---------------- | --------------------- | ----------------------------- |
-| `[link](url)`    | `Link` component      | Your library's Link component |
-
+| Markdown Element | Replaced With    | Notes                         |
+| ---------------- | ---------------- | ----------------------------- |
+| `[link](url)`    | `Link` component | Your library's Link component |
 
 #### Example
 
@@ -377,6 +376,7 @@ layout: docs
 title: My Documentation
 ---
 ```
+
 This is optional. Will also use the url path to determine the correct layout. [Named Layouts](https://mdsvex.pngwn.io/docs#named-layouts)
 
 #### Syntax Highlighting
@@ -451,12 +451,7 @@ Ensure your `tsconfig.json` includes the type declaration file:
     "sourceMap": true,
     "strict": true
   },
-  "include": [
-    "src/**/*.d.ts",
-    "src/**/*.ts",
-    "src/**/*.js",
-    "src/**/*.svelte"
-  ]
+  "include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.svelte"]
 }
 ```
 
