@@ -8,6 +8,12 @@ export type {
 export { default as AccordionItem } from "./components/Accordion/AccordionItem.svelte";
 export type { AccordionItemProps } from "./components/Accordion/AccordionItem.types.ts";
 
+export { default as Breadcrumb } from "./components/Breadcrumb/Breadcrumb.svelte";
+export type {
+  BreadcrumbProps,
+  BreadcrumbItem,
+} from "./components/Breadcrumb/Breadcrumb.types.js";
+
 export { default as Button } from "./components/Button/Button.svelte";
 export type { ButtonProps } from "./components/Button/Button.types.js";
 
