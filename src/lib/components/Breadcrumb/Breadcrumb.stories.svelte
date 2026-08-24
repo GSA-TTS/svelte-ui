@@ -1,6 +1,6 @@
 <script module lang="ts">
   import { defineMeta } from '@storybook/addon-svelte-csf';
-  import { expect, within } from 'storybook/test';
+  import { expect } from 'storybook/test';
   import Breadcrumb from './Breadcrumb.svelte';
   import type { BreadcrumbItem } from './Breadcrumb.types.js';
 
@@ -83,8 +83,6 @@
   name="Default"
   args={{ items: defaultItems }}
   play={async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
     const nav = canvasElement.querySelector('nav');
     await expect(nav).toBeInTheDocument();
     await expect(nav?.className).toContain('usa-breadcrumb');
@@ -110,8 +108,6 @@
   name="Truncated"
   args={{ items: longItems, truncate: true }}
   play={async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
     const nav = canvasElement.querySelector('nav');
     await expect(nav?.className).toContain('usa-breadcrumb--truncate');
   }}
@@ -121,8 +117,6 @@
   name="With RDFa Metadata"
   args={{ items: defaultItems, withRDFa: true }}
   play={async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
     const list = canvasElement.querySelector('.usa-breadcrumb__list');
     await expect(list).toHaveAttribute('vocab', 'http://schema.org/');
     await expect(list).toHaveAttribute('typeof', 'BreadcrumbList');
@@ -154,8 +148,6 @@
     ],
   }}
   play={async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
     const items = canvasElement.querySelectorAll('.usa-breadcrumb__list-item');
     await expect(items).toHaveLength(2);
 
@@ -168,8 +160,6 @@
   name="Long Breadcrumb Trail"
   args={{ items: longItems }}
   play={async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
     const currentItem = canvasElement.querySelector('.usa-current');
     await expect(currentItem?.textContent).toContain('Economically disadvantaged');
   }}
@@ -214,8 +204,6 @@ Apply the custom class to the Breadcrumb component:
     },
   }}
   play={async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
     const nav = canvasElement.querySelector('nav');
     await expect(nav?.className).toContain('usa-breadcrumb');
     await expect(nav?.className).toContain('custom-breadcrumb');
@@ -231,8 +219,6 @@ Apply the custom class to the Breadcrumb component:
     ariaLabel: 'Page navigation breadcrumbs',
   }}
   play={async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
     const nav = canvasElement.querySelector('nav');
     await expect(nav).toHaveAttribute('aria-label', 'Page navigation breadcrumbs');
   }}
@@ -244,8 +230,6 @@ Apply the custom class to the Breadcrumb component:
     items: [{ label: 'Current Page' }],
   }}
   play={async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
     const items = canvasElement.querySelectorAll('.usa-breadcrumb__list-item');
     await expect(items).toHaveLength(1);
 
@@ -270,8 +254,6 @@ Apply the custom class to the Breadcrumb component:
     ],
   }}
   play={async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
     const items = canvasElement.querySelectorAll('.usa-breadcrumb__list-item');
     await expect(items).toHaveLength(6);
 

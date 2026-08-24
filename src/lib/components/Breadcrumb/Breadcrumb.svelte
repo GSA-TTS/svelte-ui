@@ -35,7 +35,7 @@
       : { class: 'usa-breadcrumb__list' }
   );
 
-  function getLiProps(index: number) {
+  function getLiProps(_index: number) {
     if (!withRDFa) {
       return { class: 'usa-breadcrumb__list-item' };
     }
@@ -46,7 +46,7 @@
     };
   }
 
-  function getLinkProps(index: number) {
+  function getLinkProps(_index: number) {
     if (!withRDFa) {
       return { class: 'usa-breadcrumb__link' };
     }
