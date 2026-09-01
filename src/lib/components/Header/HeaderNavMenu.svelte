@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { HeaderNavMenuProps } from './HeaderNavMenu.types.js';
   import { getContext } from 'svelte';
+  import Icon from '../Icon/Icon.svelte';
   import type { HeaderContextValue } from './Header.types.js';
 
   let {
@@ -56,8 +57,9 @@
     type="button"
     class={classes}
     onclick={handleClick}
+    aria-label="Close"
     {...restProps}
   >
-    <img src="/assets/img/usa-icons/close.svg" alt="Close" />
+    <Icon name="close" size={3} />
   </button>
 {/if}
