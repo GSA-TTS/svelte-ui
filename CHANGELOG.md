@@ -2,12 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [2.3.0](https://github.com/GSA-TTS/svelte-ui/compare/v2.2.0...v2.3.0) (2026-09-02)
-
-### Bug Fixes
-
-- **header:** use Icon for mobile nav close button ([8bc7b16](https://github.com/GSA-TTS/svelte-ui/commit/8bc7b161ec7a3d8eb2766b3cbb8259ba9a4cf542))
-
 ## [2.2.0](https://github.com/GSA-TTS/svelte-ui/compare/v2.1.0...v2.2.0) (2026-08-19)
 
 ## [2.1.0](https://github.com/GSA-TTS/svelte-ui/compare/v2.0.0...v2.1.0) (2026-07-15)
