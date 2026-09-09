@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { HeaderSearchPlaceholderProps } from './HeaderSearchPlaceholder.types.js';
+  import Icon from '../Icon/Icon.svelte';
 
   let {
     ariaLabel = 'Search component',
@@ -31,12 +32,8 @@
         type="search"
         name="search"
       />
-      <button class="usa-button" type="submit">
-        <img
-          src="/assets/img/usa-icons-bg/search--white.svg"
-          class="usa-search__submit-icon"
-          alt="Search"
-        />
+      <button class="usa-button" type="submit" aria-label="Search">
+        <Icon name="search" class="usa-search__submit-icon" />
       </button>
     </form>
   {/if}

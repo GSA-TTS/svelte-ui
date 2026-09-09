@@ -25,7 +25,6 @@
   const expanded = $derived(
     Boolean(hasDropdown && headerContext?.expandedNavItem === label)
   );
-  $inspect(expanded, headerContext?.expandedNavItem)
 
   const classes = $derived.by(() => {
     const classList: string[] = ['usa-nav__primary-item'];
@@ -57,7 +56,6 @@
   );
 
   function toggleDropdown() {
-    console.log("toggleDropDown")
     if (headerContext) {
       if (expanded) {
         headerContext.setExpandedNavItem(null);
